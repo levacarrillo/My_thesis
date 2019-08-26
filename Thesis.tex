@@ -21,13 +21,14 @@
 %	\section{Objetivos}
 %	\section{Descripción del documento}
 \chapter{Antecedentes}
+\textcolor{red}{Un robot bípedo es un tipo de robot que... }
+
 	\section{Robots bípedos}
 		\subsection{Sistema con extremidades}
-Citando a \cite{siciliano2016springer}	\textit{Limbed system} es un robot móvil que debe tener un cuerpo y al menos una pierna (extremidad inferior) para apoyarse e impulsarse.
-
-	Una de sus piernas interactúa con el medio con su actuador final (pie) y 			puede tener un arbitrario número de brazos (extremidades superiores) para 					manipular objetos con sus actuadores finales (manos). \\ \\
+		\textcolor{red}{Un robot con piernas es un robot móvil que .... \cite{siciliano2016springer}.}
+Citando a \cite{siciliano2016springer}	\textit{Limbed system} es un robot móvil que debe tener un cuerpo y al menos una pierna (extremidad inferior) para apoyarse e impulsarse. Una de sus piernas interactúa con el medio con su actuador final (pie) y 			puede tener un arbitrario número de brazos (extremidades superiores) para 					manipular objetos con sus actuadores finales (manos). \\ \\
 	
-\textbf{Cuestiones del diseño conceptual}				
+\textbf{Características del diseño conceptual de un robot con piernas}				
 \begin{itemize}
 \item \textbf{Tipo de marcha (\textit{Gait type}):} Es el patrón de movimientos de piernas del robot (caminata).
 
@@ -238,29 +239,29 @@ La cámara está localizada en la cabeza del humanoide, por lo que su centro
 de visión se puede representar por un eje que va de la cámara al centroide del 
 objeto, en este caso un balón de football.
 Para estimar la posición de un objeto que cruce por el centro de visión de la
-cámara se necesita establecer un vector unitario, a este vector se le conoce
-como \textit{look at}, tal como se observa en la imagen (Figura 3.2)
+cámara se necesita establecer un vector unitario
+\[\hat{u} = (u_x, u_y, u_z)\]
+conocido en computación gráfica como vector \textit{look at}, (ver figura \ref{fig:LookAt}). Para obtener la ecuación vectorial de la recta paralela al vector \textit{look at} se toma un punto que contenga la recta, en este caso la posición de la cabeza en donde se encuentra la cámara: 
 
 \begin{figure}
 	\centering		
 	\includegraphics[scale=2]{images/robot_lookat.png}
 	\caption{Representación del vector \textit{look at} utilizado en visión computacional.}		
+	\label{fig:LookAt}
 \end{figure}
 
+\begin{equation}
+\label{eq:LookAt}
+r(\lambda) = (r_x, r_y, r_z)\quad +\quad \lambda (u_x, u_y, u_z)
+\end{equation}
 
-Una vez teniendo el sistema de referencia y la posición inicial de nuestro vector de interés, se procede a hacer un desarrollo matemático. Empezando por nombrar al vector \textit{look at} con la siguiente expresión:
-
-\[\hat{u} = (u_x, u_y, u_z)\]
- 
-Para obtener la ecuación vectorial de la recta paralela al vector \textit{look at} se toma un punto que contenga la recta, en este caso la posición de la cabeza en donde se encuentra la cámara:
-\[r(\lambda) = (r_x, r_y, r_z)\quad +\quad \lambda (u_x, u_y, u_z)...............................................................(1)\]
 
 En donde $(r_x, r_y, r_z)$ es la posición en el espacio de la cámara utilizada, referida al sistema de referencia anteriormente mencionado. Se considera que el objetivo siempre estará en el suelo, por lo que el punto de intersección de la ecuación de la recta con el suelo hacen que la variable de altura sea igual a cero, conforme a la siguiente expresión:
 \[r = (x, y, 0) = (r_x, r_y, r_z) + \lambda (u_x, u_y, u_z)\]
-Despejando lamda del tercer término de la expresión anterior se puede obtener fácilmente lamda:
+Despejando $\lambda$ del tercer término de la expresión anterior se obtiene:
 \[\lambda = -\frac{r_z}{u_z}\]
 
-De esta manera, substituyendo lamnda en la ecuación (1), se obtiene:
+De esta manera, substituyendo $\lambda$ en (\ref{eq:LookAt}), se obtiene:
 \[x = r_x-\frac{r_z u_x}{u_z}\]
 \[y = r_y-\frac{r_z u_y}{u_z}\]
 
