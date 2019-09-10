@@ -8,6 +8,7 @@
 \usepackage{xcolor}
 \usepackage{verbatim} 
 \usepackage{enumerate} % enumerados
+\usepackage{svg}
 
 %\usepackage[natbibapa]{apacite}
 %\usepackage[hyperpageref]{backref}
@@ -21,63 +22,56 @@
 %	\section{Objetivos}
 %	\section{Descripción del documento}
 \chapter{Antecedentes}
-\textcolor{red}{Un robot bípedo es un tipo de robot que... }
+\section{Robots bípedos}
+\subsection{Conceptos básicos}
+Un robot con piernas es un robot móvil que debe tener un cuerpo, al menos una pierna (extremidad inferior) y un número arbitrario de brazos (extremidades superiores). Generalmente sus piernas deben tener un actuador final con el cual apoyarse e impusarse  y sus brazos, un actuador para manipular objetos\cite{siciliano2016springer}. Por lo tanto, se puede deducir que un \textit{robot bípedo} es un robot con dos piernas las cuales usa para moverse, de forma similar al caminado.
+\\
 
-	\section{Robots bípedos}
-		\subsection{Sistema con extremidades}
-		\textcolor{red}{Un robot con piernas es un robot móvil que .... \cite{siciliano2016springer}.}
-Citando a \cite{siciliano2016springer}	\textit{Limbed system} es un robot móvil que debe tener un cuerpo y al menos una pierna (extremidad inferior) para apoyarse e impulsarse. Una de sus piernas interactúa con el medio con su actuador final (pie) y 			puede tener un arbitrario número de brazos (extremidades superiores) para 					manipular objetos con sus actuadores finales (manos). \\ \\
-	
-\textbf{Características del diseño conceptual de un robot con piernas}				
+Entre los \textit{robots bípedos} más conocidos se encuentran los \textit{robots humanoides} (figura \ref{fig:humanoids}) que poseen las siguientes características:
+
 \begin{itemize}
-\item \textbf{Tipo de marcha (\textit{Gait type}):} Es el patrón de movimientos de piernas del robot (caminata).
+\item Tienen la apariencia y forma de un ser humano.
+\item Pueden caminar y moverse como un ser humano.
+\item Pueden interactuar con humanos usando reconocimiento de voz y de imágenes.
+\end{itemize}
+
+Uno de los mayores retos a la hora de diseñar y modelar a los robot bípedos, es su movimiento. A comparación de otros robots móviles, los robots con piernas tienden a tener un mayor número de grados de libertad en sus extremidades y estos deben estar muy bien coordinados para no hacer caer al robot. 
+\\
+
+\textbf{Características para el diseño de un robot con piernas}				
+\begin{itemize}
+\item \textbf{Tipo de marcha:} Es el patrón de movimientos de piernas del robot (caminata).
 
 \item \textbf{Biomímesis:} Es el diseño de algunos robots para imitar la estructura mecánica de una criatura viviente de tal manera que sea tan precisa como se pueda.
 
 \item \textbf{Bioinspiración mecánica:} Es el diseño que sirve para reproducir lo robusto y la versatilidad de la locomoción de animales, algunos diseñadores prestan más atención en la dinámica esencial de la locomoción que en la mecánica.
 
-\item \textbf{Mechanical simplicity:} Con esto se pretende usar el menor número de actuadores posibles para cumplir sólo con las tareas realizadas.
+\item \textbf{Simplicidad mecánica:} Con esto se pretende usar el menor número de actuadores posibles para cumplir sólo con las tareas realizadas.
 
-\item \textbf{Espacio de trabajo de la extremidad \textit{(Limb workspace):}} Señala que una extremidad debería tener al menos 3GDL para moverse libremente en el espacio. Para que se pueda tener una arbitraria orientación en el efector final en un espacio 3-D se debe contar con almenos 6GDL.
+\item \textbf{Espacio de trabajo de la extremidad } Señala que una extremidad debería tener al menos 3GDL para moverse libremente en el espacio. Para que se pueda tener una arbitraria orientación en el efector final en un espacio 3-D se debe contar con almenos 6GDL.
 
-\item \textbf{Cargado del cojinete \textit{(Load bearing)}:} Es la asignación apropiada de juntas que pueden reducir el torque para soportar el peso. 
 \end{itemize}
 
 
-\textbf{Serial vs paralelas}
-		Las piernas de algunos sistemas con extremidades pueden ser configurados ya sea como estructuras seriales o paralelas, en la mayoría de los casos cada pierna de un robot bípedo es diseñada como una cadena serial de seis actuadores, donde tres son usados en la cadera (para realizar los movimientos roll, pitch y yaw) , uno en la rodilla y otros dos en el tobillo.\\
-
-		\textbf{Grado de Biomímesis}
-	Se puede incrementar el grado de biomímesis agregando GDL.
-La primera versión del robot ASIMO tiene 26 GDL en total, 6 por cada pierna, 5 por cada brazo uno por cada mano y dos para la cabeza. 
-Cybernetic human HRP-4C fue diseñado para ser tan cercano como un humano en consideración para aplicaciones en la industria del entretenimiento. Tiene 44 GDL en total. 7 por cada pierna, 6 por cada brazo, dos por cada mano y, tres para sus cintura, 3 para su cuello y ocho para su cara. Ver la Figura 1.1. %(Ver página 423).
-\\
 
 \begin{figure}
 	\centering		
 	\includegraphics[scale=0.5]{images/asimov_and_HRP-4C.png}
-	\caption{Diseño de robots humanoides (a) Asimov (2000); (b)HRP-4C (2009) (Tomado de: Siciliano and Khatib, 2016).}		
+	\caption{Ejemplo de robots humanoides (a) Asimov (2000); (b)HRP-4C (2009) (Tomado de: Siciliano and Khatib, 2016).}		
+\label{fig:humanoids}%(Ver página 423).
 \end{figure}
 
 
-		\textbf{Diseño conceptual}
-El Humano cibernético o humanoide se define por las siguientes características:
-\begin{itemize}
-\item Tiene la apariencia y forma de un ser humano.
-\item Puede caminar y moverse como un ser humano.
-\item Puede interactuar con humanos usando reconocimiento de voz y de imágenes.
-\end{itemize}
-Tales robots pueden ser usados en la industria del entretenimiento, por ejemplo, en exhibiciones y presentaciones de moda. También se pueden usar como un simulador de humanos para evaluar dispositivos para humanos.\\
 
 \subsection{Modelado y Control de Robots con Piernas}
 	\textbf{Una Breve Historia de los Robots con piernas}\\
 		Los robots con piernas controlados digitalmente empezaron a aparecer a finales de los 1960's. Entre los pioneros, Robert McGhee inicializó una serie de robots cuadrúpedos y hexápodos en \textit{University of South California}.\\
 
 	\textbf{Dinámica del movimiento de los sistemas con piernas}\\
-		Una de las mayores dificultades para hacer que un robot con extremidades camine o corra es mantener su balance: ¿Dónde debería caminar el robot?, ¿Cómo debería moverse su cuerpo a fin de moverse de manera segura en una dada dirección, incluso si hay fuertes perturbaciones?.\\ 
+Como ya se había dicho con anterioridad, las mayores dificultades para hacer que un robot camine o corra es mantener su balance, de esta forma suelen formularse las siguientes preguntas: ¿Dónde debería caminar el robot?, ¿Cómo debería moverse su cuerpo a fin de moverse de manera segura en una dada dirección, incluso si hay fuertes perturbaciones?.\\ 
 
 	\textbf{Análisis de estabilidad}\\
-Para el control del sistema dinámico no lineal hay  un número de conceptos relativos para su seguridad y estabilidad los cuales son:
+Para el control del sistema dinámico no lineal hay  un número de conceptos relativos para su seguridad y estabilidad:
 
 \begin{itemize}
 \item \textit{Puntos fijos} : Representan las posturas estáticas en cuáles el robot puede estar de pie de manera segura.
@@ -103,44 +97,52 @@ Para el control del sistema dinámico no lineal hay  un número de conceptos rel
 %	\section{Trabajo relacionado}		
 \chapter{ Segmentación de imágenes con base en color}
 \section{Modelo de cámara Estenopeica \textit{(Pinhole)}}
-De acuerdo con \cite{bradski2008learning} la visión es la detección de la luz del mundo. Esa luz empieza cuando un rayo emana desde una fuente hacia un objeto. Cuando la luz choca con el objeto, mucha de la luz es absorbida y la que no es absorbida, nosotros la podemos percibir como el color de la luz, de esta manera, la luz reflejada hace su camino hacia nuestra cámara. Esto es de particular importancia para la visión computacional.
+De acuerdo con \cite{bradski2008learning} la visión es la detección de la luz del mundo. El proceso de visión empieza cuando un rayo de luz es emanado desde una fuente hacia un objeto. Cuando la luz choca con el objeto, mucha de esta luz es absorbida, la que no, se puede percibir como el color, de esta manera, la luz reflejada hace su camino hacia el sensor óptico.
 
-El modelo más simple de cómo sucede el anterior fenómeno es el de la cámara estenopeica o \textit{pinhole}. Una cámara estenopeica se puede imaginar como una habitación sin ventanas en donde la luz únicamente entra por una pequeña apertura en el centro de la pared y que proyecta una imagen dentro de la habitación.
+El modelo más simple de cómo sucede la captura de luz, es el de la cámara estenopeica o \textit{pinhole}. Una cámara estenopeica se puede imaginar como una habitación sin ventanas en donde la luz únicamente entra por una pequeña apertura en el centro de la pared proyectando así una imagen dentro de la habitación. Véase la Figura(\ref{fig:pinholeCamera}).
 
-En cámara estenopeica se considera que sólo un rayo de luz entra desde un punto en particular, este punto es luego \textit{proyectado} sobre una superficie generalmente plana. Como resultado, la imagen en este plano (también llamado plano proyectivo), está siempre en el foco y su tamaño se relaciona a la distancia del objeto por un sólo parámetro de la cámara: \textit{la distancia focal}. La principal diferencia entre la imagen real y la que aparece en una cámara Pinhole, es que la imagen aparece invertida. 
+\begin{figure}
+	\centering		
+	\includegraphics[scale=0.7]{images/pinholeCamera.pdf}
+	\caption{Ejemplo en la vida real de la proyección de una imagen con la cámara estenopéica (Tomada de: https://www.pinterest.com.mx/pin/371828512962028619/).}		
+	\label{fig:pinholeCamera}
+\end{figure}
+
+En la cámara estenopeica se considera que sólo un rayo de luz entra desde un punto en particular, este punto es luego \textit{proyectado} sobre una superficie generalmente plana. Como resultado, la imagen en este plano (también llamado plano proyectivo), está siempre en el foco y su tamaño se relaciona a la distancia del objeto por un sólo parámetro: \textit{la distancia focal}. La principal diferencia entre la imagen real y la que aparece en una cámara Pinhole, es que la imagen aparece invertida. 
 	
-El punto dentro del Pinhole es reinterpretado como el centro de proyección. Para este tipo de cámara, la distancia desde la abertura del Pinhole hacia la pantalla, es precisamente la distancia focal. Como puede verse en la Figura 2.1.\\
+El punto dentro del Pinhole es reinterpretado como el centro de proyección. Para este tipo de cámara, la distancia desde la abertura del Pinhole hacia la pantalla, es precisamente la distancia focal. Como puede verse en la Figura \ref{fig:pinholeScheme}.\\
 	
 \begin{figure}
 	\centering		
-	\includegraphics[scale=0.4]{images/pinhole.png}
-	\caption{Esquema del modelo de cámara estenopeica (Tomado de: Bradski and Kaehler, 2008).}		
+	\includegraphics[scale=0.8]{images/pinholeScheme.pdf}
+	\caption{Esquema del modelo de cámara estenopeica (Modificado de: Bradski and Kaehler, 2008).}		
+	\label{fig:pinholeScheme}
 \end{figure}
 
-En la Figura 2.1, $f$ es representada como la distancia focal de la cámara, $Z$ es la distancia de la cámara al objeto, $X$ es la longitud del objeto, y $x$ es la longitud de la la imagen proyectada en el plano. Dentro de la figura, se pueden ver dos triángulos semejantes los cuales cumplen que $-x/f = X/Z$, o expresado de otra manera:
-
+En la Figura(\ref{fig:pinholeScheme}), $f$ es representada como la distancia focal de la cámara, $Z$ es la distancia de la cámara al objeto, $X$ es la longitud del objeto, y $x$ es la longitud de la la imagen proyectada en el plano. Dentro de la figura, se pueden ver dos triángulos semejantes de los cuales se puede deducir la siguiente expresión:
 \[x = -f \frac{X}{Z}\]
 	
-A fin de obtener ecuaciones equivalentes, pero sin signos negativos (correspondientes a la inversión de la imagen) se propone hacer un rearreglo en el cual se coloca al frente de un centro de proyección al plano proyectivo. Tal y como se ve en la Figura 2.2.
+Para fines prácticos, el modelo \textit{Pinhole} no es conveniente de usar en exposiciones rápidas, ya que toda su luz proviene de un solo punto. A fin de obtener otro modelo de cámara que recopile mayor cantidad de luz y tenga ecuaciones similares, pero sin signos negativos (correspondientes a la inversión de la imagen) se propone hacer un rearreglo en el que se coloca al frente del centro de proyección el plano proyectivo. Tal y como se ve en la Figura \ref{fig:rearrange_pinhole_scheme}.
 	
 \begin{figure}
 	\centering
-	\includegraphics[scale=0.4]{images/rearreglo_pinhole.png}
-    \caption{Rearreglo de una cámara estenopeica (Tomado de: Bradski and Kaehler, 2008).}
+	\includegraphics[scale=0.8]{images/rearrange_pinhole_scheme.pdf}
+    \caption{Rearreglo de una cámara estenopeica (Modificado de: Bradski and Kaehler, 2008).}
+    \label{fig:rearrange_pinhole_scheme}
 \end{figure} 
 
-Con este nuevo cambio, el punto en el Pinhole es reinterpretado como el \textit{centro de proyección}, así cada rayo de luz deja un punto en el objeto distante y se dirije hacia el centro de proyección. El punto de intersección del plano proyectivo y el eje óptico es conocido como \textit{el punto principal}. El nuevo plano de imagen frontal es equivalente al anterior plano proyectivo, el cual la imagen del objeto distante tiene exactamente el mismo tamaño que en el esquema mostrado en la Figura 2.1, la diferencia es que en este caso la imagen no queda invertida, por lo tanto la relación de los triángulos quedaría de la siguiente manera: 
-\[x/f = X/Z\]
+Con este nuevo cambio, cada rayo de luz proveniente del objeto distante se dirije hacia el \textit{centro de proyección} y deja un punto en el \textit{plano proyectivo}. El punto de intersección del plano proyectivo y el eje óptico es conocido como \textit{el punto principal}. La imagen proyectada en este nuevo plano de imagen, tiene exactamente el mismo tamaño que en el esquema mostrado en la Figura(\ref{fig:pinholeScheme}) pero en este caso, la imagen no queda invertida, por lo que su relación de triángulos quedaría de la siguiente manera: 
 
-Se podría pensar que que \textit{el punto principal} es equivalente al centro de la imagen, sin embargo, este centro usualmente no está en el eje óptico, es por eso que se introducen dos nuevos parámetros, $c_{x}$ y $c_{y}$ para modelar un posible desplazamiento (perpendicular al eje óptico) del centro de coordenadas en el plano de proyección. El resultado es que un punto Q en el mundo físico cuyas coordenadas son  (X,Y,Z) es proyectado dentro de la pantalla en una localización de pixeles dada por $(x_{screen},y_{screen})$ de acuerdo con las siguientes ecuaciones:
+\[\frac{x}{f} = \frac{X}{Z}\]
 
-\[x_{screen}=f_{x}(\frac{X}{Z}) \quad + c_{x},\quad y_{screen}=f_{y}(\frac{Y}{Z}) + c_{y}\]	\\
+Se podría pensar que que \textit{el punto principal} es equivalente al centro de la imagen, sin embargo, este centro usualmente no está en el eje óptico, es por eso que se introducen dos nuevos parámetros, $c_{x}$ y $c_{y}$ para modelar un posible desplazamiento (perpendicular al eje óptico) del centro de coordenadas en el plano de proyección. El resultado es que un punto $Q$ en el mundo físico cuyas coordenadas son  (X,Y,Z) es proyectado dentro de la pantalla en una localización de pixeles dada por $(x_{screen},y_{screen})$ de acuerdo con las siguientes ecuaciones:
 
+\[x_{screen}=f_{x}\left(\frac{X}{Z}\right ) + c_{x}\]	
+\[y_{screen}=f_{y}\left(\frac{Y}{Z}\right ) + c_{y}\]
 
 Nótese que se han introducido dos diferentes distancias focales $f_{x}$ y $f_{y}$, la razón es porque generalmente los pixeles son rectangulares.
 		
 \section{Corrección de la distorsión}
-Desafortunadamente una verdadera cámara pinhole no es una muy buena forma de obtener imágenes, ya que no reune suficiente luz en una rápida exposición para crear una imagen aproximada a la real. Es por eso que los ojos y las cámaras usan lentes para reunir más luz que la que estaría disponible en un solo punto.
 
 \subsection{Geometría básica proyectiva}
 La relación que mapea los puntos $Q_{i}$ en el mundo físico con coordenadas $(X_{i},Y_{i},Z_{i})$ a los puntos en el plano de proyección con coordenadas $(x_{i},y_{i})$ es llamada una \textit{transformación proyectiva}. Cuando se trabaja con estas transformaciones es conveniente usar las \textit{coordenada homogéneas}. El plano de imagen es el espacio proyectado y tiene dos dimensiones, con lo que se pueden representar puntos en el plano como un vector tridimensional $q=(q_{1},q_{2},q_{3})$ ó $q=(x, y, w)$, en donde w es la orientación. Una forma de hacer un arreglo con los parámetros que definen a la cámara $f_{x},f_{y},c_{x}$ y $c_{y}$ dentro de una matriz de 3x3 es la llamada \textit{matriz de parámetros intrínsecos}. La proyección $q$ de los puntos del mundo físico en el plano de la imagen se puede calcular como: 
@@ -164,26 +166,48 @@ Z
 \end{bmatrix}
 \]
 \subsection{Distorsión de las lentes}
-La estimación de los parámetros internos es importante en la calibración de las cámaras \cite{bradski2008learning}.
 
+Debido a diversos factores en la manufactura, las lentes de una cámara no son perfectas, y al obtener una imagen, esta puede notarse distorsionada (véase la Figura \ref{fig:image_distorted}). La distorsión es un fenómeno que todas las cámaras tienen, no obstante, es más evidente en las cámaras de baja calidad o en las que tienen lentes tipo \textit{ojo de pescado}. Las distorsiones más características son: las \textit{Distorsiones radiales} y las \textit{Distorsiones tangenciales}. Las primeras surgen como resultado de la forma de las lentes y las segundas como resultado del proceso de ensamblado de la cámara.
 
-Dada la manufactura y diversos factores, las lentes no son perfectas, es por eso que se introducen dos nuevos conceptos a la distorsión de las lentes, las \textit{Distorsiones radiales} y las \textit{Distorsiones tangenciales}. Las primeras surgen como resultado de la forma de las lentes y las segundas como resultado del proceso de ensamblado de la cámara.
+\begin{figure}
+\centering
+\includegraphics[scale=0.5]{images/image_distorted.png}
+\caption{Ejemplo de distorsión de una cámara.}
+\label{fig:image_distorted}
+\end{figure}
 
-La distorsión radial es notable cuando la imagen se hace más pequeña conforme está más cerca de los pixeles de los extremos, esto es más evidente en las cámaras de baja calidad, sin embargo es un hecho que todas la tienen. En la práctica, se puede caracterizar esta distorsión con la serie de Taylor, las ecuaciones son:
+Cuando la imagen se hace más pequeña conforme está más cerca de los bordes se está viendo una \textit{distorsión radial} (véase la figura \ref{fig:radial_distortion}). En la práctica, se puede caracterizar con la serie de Taylor, las ecuaciones son:
 \[x_{corregida} = x(1+k_1r^2+k_2r^4+k_3r^6)\]
 \[y_{corregida} = y(1+k_1r^2+k_2r^4+k_3r^6)\]
 
 En donde $(x,y)$ son las coordenadas de la imagen, \textit{r} es la distancia del punto de la imagen al centro y las constantes $k_1$, $k_2$ y $k_3$ son parámetros que están relacionados a cada cámara en específico.
 
-Las \textit{Distorsiones tangenciales} son ocacionadas por no tener paralelas las lentes con el plano de la imagen. Para obtener expresiones que ayuden a corregir este tipo de distorsión se introducen dos parámetros: $p_{1}$ y $p_{2}$ dentro de las siguientes ecuaciones:
-\[x_{corrected} = x + [2p_1y+p_2(r^2+2x^2)]\]
-\[y_{corrected} = y + [p_1(r^2+2y^2)+2p_2x]\]
+\begin{figure}
+\centering
+\includegraphics[scale=0.7]{images/radial_distortion.png}
+\caption{Distribución de la distorsión radial de una imagen.}
+\label{fig:radial_distortion}
+\end{figure}
 
-Para poder hacer una corrección automática de todas las distorsiones, las herramientas de OpenCV usan los cinco parámetros antes mencionados dentro de una matriz de 1x5 llamada \textit{matriz de coeficientes de distorsión}, en donde cada parámetro se acomoda de la siguiente forma:
+Las \textit{Distorsiones tangenciales} son ocasionadas por no tener paralelas las lentes con el plano de la imagen, vea la distribución de la distorsión tangencial en la figura \ref{fig:tangential_distortion}. Para obtener expresiones que ayuden a corregir este tipo de distorsión se introducen dos parámetros: $p_{1}$ y $p_{2}$ dentro de las siguientes ecuaciones:
+\[x_{corregida} = x + [2p_1y+p_2(r^2+2x^2)]\]
+\[y_{corregida} = y + [p_1(r^2+2y^2)+2p_2x]\]
+
+La estimación de los parámetros internos es importante en la calibración de las cámaras, de esto depende la exactitud de las mediciones de distancia dadas por la visión computacional. \cite{bradski2008learning}.
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.7]{images/tangential_distortion.png}
+\caption{Distribución de la distorsión tangencial en una imagen.}
+\label{fig:tangential_distortion}
+\end{figure}
+
+Para poder hacer una corrección automática de todas las distorsiones, las herramientas de OpenCV (véase la sección 5.2) usan los cinco parámetros antes mencionados dentro de una matriz de 1x5 llamada \textit{matriz de coeficientes de distorsión}, en donde cada parámetro se acomoda de la siguiente forma:
 \[[k_1 \quad k_2 \quad p_1 \quad p_2 \quad k_3]\]
+
+
 \section{Los espacios de color RGB y HSV}
-Citando a \cite{gonzalez2002digital} se usa el color para el procesamiento de imagenes debido a que el color es un muy buen descriptor para la identificación de objetos (mejor que otro tipo de segmentación como el de escala de grises).
-\\
+El el pocesamiento de imágenes se usa el color debido a que es un buen descriptor para la identificación de objetos (mejor que otro tipo de segementación como el de escala de grises) \cite{gonzalez2002digital}.
 
 \textbf{Percepción del color}\\
 Según \cite{agoston2005computer} en el caso más simple, la percepción del color tiene tres características principales llamadas \textit{matiz, saturación y brillo}. 
@@ -202,28 +226,70 @@ El espacio de color \textit{HSV (Hue-Saturation-Value)} es especificado por por 
 
 \begin{figure}
 	\centering		
-	\includegraphics[scale=0.4]{images/RGB_model.png}
-	\caption{Modelo tridimensional del espacio de color RGB (Foto tomada de: \cite{agoston2005computer}).}		
+	\includegraphics[scale=0.8]{images/RGB_model.pdf}
+	\caption{Modelo tridimensional del espacio de color RGB (Foto tomada de: ).}		
 \end{figure}
 
 \begin{figure}
 	\centering		
-	\includegraphics[scale=0.6]{images/hexacono_HSV.png}
+	\includegraphics[scale=0.5]{images/hsv_space.pdf}
 	\caption{Modelo tridimensional del espacio de color HSV (Foto tomada de: \cite{agoston2005computer}).}		
 \end{figure}
 
 Tanto el espacio de color RGB y el HSV pueden representar la totalidad de los colores del espectro de luz visible, no obstante para el procesamiento de imágenes se utiliza el HSV ya que es una forma más sencilla para segmentar colores y es una forma más parecida a la que los seres humanos percibimos los colores.
 
 \section{Operadores morfológicos}	
-La gran mayoría de las veces, cuando se hace procesamiento de imágenes, se necesitan procesos para eliminar el ruido circundante y dejar al elemento de interés aislado, para esto OpenCV tiene provee los \textit{operadores morfológicos}. Los operadores básicos son \textit{erosión y dilatación} y tienen una gran variedad de características para realizar su función.
+La gran mayoría de las veces, cuando se hace procesamiento de imágenes, se necesitan ciertos procesos para eliminar el ruido circundante y dejar al elemento de interés aislado. Los \textit{operadores morfológicos} (erosión y dilatación) se pueden usar para este propósito.
 
-La \textit{dilatación} es una convolución sobre una región de la imagen a la que comunmente se le llama \textit{kernel}, la cual puede tener cualquier forma o tamaño y tiene definido un \textit{punto de anclaje}. La mayor parte de las veces como un cuadrado o un disco cuyo \textit{punto de anclaje} está en el centro. El \textit{kernel} puede ser pensado como como una plantilla o una máscara y su efecto para la dilatación es el de ensanchar un \textit{máximo local}, cada ensanchamiento hace que la figura total se ensanche de una manera uniforme, tal y como se ve en la Figura 2.5.
+Los \textit{operadores morfológicos} son operadores matemáticos basados en la forma de una imagen comunmente binaria (con pixeles blancos y negros) y sirven para preservar sus características y eliminar las irrelevancias. Dado que toda imagen está compuesta por pixeles, se pueden crear ciertos conjuntos de pixeles dentro de un vector para así poder aplicar operaciones matemáticas. 
+
+La \textit{erosión} es el primer operador que se aplica cuando se desea eliminar el ruido en una segmentación, eso es porque elimina una gran cantidad de pixeles que tienden a tener mucha menor área que la figura de interés. Para lograr esto se establecen dos conjutos (de coordenadas de pixeles) $A$ y $B$. Si $A$ y $B$ son conjuntos dentro de un espacio euclidiano de N elementos, entonces la erosión de $A$ por $B$ es el conjunto de elementos $x$ para el cual $x + b \in  A$ para cada $b \in B$. Entonces, de una manera más formal, la operación de erosión se puede definir con la expresión \ref{eq:erosion}.
+En la figura \ref{fig:erosion_diagram} se puede observar de una manera más visual cómo funciona la operación de erosión dentro de una imagen binaria.
+\begin{equation}
+A\thinspace\ominus\thinspace B\thinspace=\thinspace \left \{ x \in E^N  \mid x+b \in A \enspace \forall \; b \in B\right \}
+\label{eq:erosion}
+\end{equation}
+
+ Para entender de mejor manera cómo es esta operación se debe entender lo que es un \textit{kernel}. Un \textit{kernel} es un conjunto de pixeles de cualquier forma o tamaño que se caracteriza por tener un pixel de anclaje dentro de sí (en la figura \ref{fig:erosion_diagram} es el pixel con un punto blanco). En el ejemplo de la figura \ref{fig:erosion_diagram} se le llamará \textit{kernel} al conjunto $B$ y siempre debe ser de menor tamaño que el conjuto $A$. La intersección del conjunto $A$ con el $B$ al ir colocando el pixel de anclaje en cada pixel del conjunto $A$ es la imagen resultante para la erosión.
+ 
 \begin{figure}
-	\centering		
-	\includegraphics[scale=0.4]{images/dilatacion.png}
-	\caption{Efecto de la operación morfológica de la dilatación}		
+\centering 
+\includegraphics[scale=0.7]{images/erosion_diagram.pdf}
+\caption{Ejemplo de la operación de erosión en una imagen binaria.}
+\label{fig:erosion_diagram}
 \end{figure}
- La \textit{erosión} es la operación inversa a la dilatación, ya que opera sobre el mínimo local 
+
+En la figura \ref{fig:erosion_example} se ve que la erosión ha eliminado el ruido y la imagen se ve más limpia de puntos blancos que rodean la región de interés. El problema de hacer este procedimiento es que la imagen original suele verse afectada y tiende a encogerse o a deformarse, esto puede representar un problema para la detección de contornos. Para solucionarlo se procede a aplicar una operación opuesta a la erosión, mejor conocida como \textit{dilatación}.
+
+Una vez eliminado el ruido gracias a la erosión, la \textit{dilatación} procede a ensanchar la figura de interés utilizando la adición de dos conjuntos de elementos. De la misma manera en que se hizo la erosión se procede a nombrar dos conjuntos $A$ y $B$. Si $A$ y $B$ son conjuntos dentro de un espacio euclidiano de N elementos. Sean $a \in A$ y $b \in B$ en donde $a=(a_1, ... ,a_n)$ y $b=(b_1,...,b_n)$, es decir conjuntos con coordenadas de pixeles, entonces la dilatación de $A$ por $B$ es el conjunto de todas las posibles sumas de elementos, de $A$ y $B$. De forma formal \ref{eq: dilation}:
+\begin{equation}
+A\thinspace\oplus\thinspace B\thinspace=\thinspace \left \{ c \in E^N  \mid c=a+b \quad\forall \quad a \in A \; y\; \; b \in B\right \}
+\label{eq: dilation}
+\end{equation}
+
+
+\begin{figure}
+\centering
+\includegraphics[scale=1]{images/erosion_example.png}
+\caption{Eliminación de ruido alrededor de una figura de interés usando la erosión.}
+\label{fig:erosion_example}
+\end{figure}
+
+En la figura \ref{fig:dilation_diagram} se puede imaginar que si se coloca el \textit{kernel} dentro de los pixeles pertenecientes al conjunto $A$ y se suman, queda como resultado de $A \oplus B$ una imagen ensanchada, lo que puede ayudar a que la figura erosionada tenga mayor parecido a la imagen original \cite{4767941}. En la figura \ref{fig:dilation_example} está ya un ejemplo de cómo se ensancha una figura al aplicar la dilatación.
+
+\begin{figure}
+\centering
+\includegraphics[scale=1]{images/dilation_diagram.pdf}
+\caption{Ejemplificacion de la operación de dilatación en una imagen binaria.}
+\label{fig:dilation_diagram}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.7]{images/dilation_example.jpg}
+\caption{Ejemplificación de la dilatación aplicada en una segmentación de color.}
+\label{fig:dilation_example}
+\end{figure}
 
 \chapter{Estimación de posición y velocidad}
 	\section{Cálculo de la posición del objeto de interés}
@@ -237,9 +303,9 @@ Tal como se observa en la simulación de Gazebo (Figura 3.1), se decidió usar u
 
 La cámara está localizada en la cabeza del humanoide, por lo que su centro
 de visión se puede representar por un eje que va de la cámara al centroide del 
-objeto, en este caso un balón de football.
+objeto, en este caso un balón de fútbol.
 Para estimar la posición de un objeto que cruce por el centro de visión de la
-cámara se necesita establecer un vector unitario
+cámara se necesita establecer un vector unitario:
 \[\hat{u} = (u_x, u_y, u_z)\]
 conocido en computación gráfica como vector \textit{look at}, (ver figura \ref{fig:LookAt}). Para obtener la ecuación vectorial de la recta paralela al vector \textit{look at} se toma un punto que contenga la recta, en este caso la posición de la cabeza en donde se encuentra la cámara: 
 
@@ -266,18 +332,65 @@ De esta manera, substituyendo $\lambda$ en (\ref{eq:LookAt}), se obtiene:
 \[y = r_y-\frac{r_z u_y}{u_z}\]
 
 Ya teniendo estas expresiones se procede a sustituir al vector unitario \textit{look at} con coordenadas esféricas, tal y como se observa en la siguiente expresión:
-\[\hat{u}=(u_x, u_y, u_z)=(\sin{ \theta}\cos{\varphi},\sin{\theta}\sin{ \varphi},\cos{\theta})..............................................(2)\]
+\begin{equation}
+\label{eq:LookAtUnitary}
+\hat{u}=(u_x, u_y, u_z)=(\sin{ \theta}\cos{\varphi},\sin{\theta}\sin{ \varphi},\cos{\theta})
+\end{equation}
 
-Sustituyendo la expresión (2) dentro de los valores $x$ y $y$ quedan como:
+Sustituyendo la expresión (\ref{eq:LookAtUnitary}) dentro de los valores $x$ y $y$ quedan como:
 \[x=r_x - \frac{r_z \sin{ \theta} \cos{\varphi}}{\cos{\theta}}\]
 \[y=r_y - \frac{r_z \sin{\theta} \sin{ \varphi}}{\cos{\theta}}\]
 
 Utilizando la identidad trigonométrica:
 \[\tan{\theta} = \frac{\sin{\theta}}{\cos{\theta}}\]
 
-Por lo tanto, las ecuaciones para obtener la posición del objetivo siempre y cuando $z=0$ quedan:
-\[x=r_x - r_z \tan{\theta}  \cos{\varphi}\]
-\[y=r_y - r_z \tan{\theta} \sin{\varphi}\]
+Las ecuaciones para obtener la posición del objetivo siempre y cuando $z=0$ quedan:
+\begin{equation}
+\label{eq:xBidimentionalPosition}
+x=r_x - r_z \tan{\theta}  \cos{\varphi}
+\end{equation}
+
+\begin{equation}
+\label{eq:yBidimentionalPosition}
+y=r_y - r_z \tan{\theta} \sin{\varphi}
+\end{equation}
+
+No obstante, el objeto a considerar no es un objeto bidimensional, es un balón con forma esférica que está sobre el plano del suelo, debido a esto se procede a hacer complementar las ecuaciones \ref{eq:xBidimentionalPosition} y \ref{eq:yBidimentionalPosition}, para obtener la posición (x,y,z) del centro del balón.
+
+En la figura \ref{fig:ballProjection}(a) se observa un diagrama del balón en donde el vector \textit{look at} atravieza su centro e intersecta con el suelo en un punto en donde el balón no está. Esto representa un problema, ya que la posición en $x$ sufre una proyección, la cual incrementa mientras el balón tenga mayor radio. A esta proyección se le pondrá la variable $x_c$. Véase la figura \ref{fig:ballProjection}(b)
+
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=1.4]{images/ball_projection.pdf}
+	\caption{(a) Bosquejo del vector \textit{look at} atravezando el centro del balón esférico; (b) Diagrama de la obtención de la distancia de proyección $x_c$.}
+	\label{fig:ballProjection}
+\end{figure}
+
+Para obtener la magnitud de $x_c$ es necesario analizar el diagrama de la figura \ref{fig:ballProjection}(b), en donde $\theta$ es el ángulo \textit{pitch} y $\rho$ es el radio del balón. Así se puede obtener la siguiente igualdad:
+\[\cot{\theta} = \frac{x_c}{\rho}\]\\
+
+Despejando $x_c$
+\[x_c = \rho \cot{\theta}\]
+
+Debido a que $x_c$ se ve afectada también por la posición \textit{yaw} se deducen las siguientes igualdades para corregir el valor de la posición de $x$ y $y$ respectivamente:
+
+\begin{equation}
+\label{eq:xcForX}
+x_{cx} = \rho \cot{\theta} \cos{\varphi}
+\end{equation}
+
+\begin{equation}
+\label{eq:xcForY}
+x_{cy} = \rho \cot{\theta} \sin{\varphi}
+\end{equation}\\
+
+De esta manera, se resta \ref{eq:xcForX}  a \ref{eq:xBidimentionalPosition} y \ref{eq:xcForY} a \ref{eq:yBidimentionalPosition}. Finalmente las ecuaciones resultantes son:
+
+\[x = r_x - r_z \tan{\theta} \cos{\varphi} - \rho \cot{\theta} \cos{\varphi}\]
+\[y = r_y - r_z \tan{\theta} \sin{\varphi} - \rho \cot{\theta} \sin{\varphi}\]
+\[z = \rho \]
+
 %	\chapter{Implementación}
 %	\chapter{Resultados}
 %\bibliographystyle{apacite}

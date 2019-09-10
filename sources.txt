@@ -1,0 +1,11 @@
+//Operadores morfológicos
+http://ksloan.net/simple-captcha-solver/
+//Ejemplo de erosion
+http://what-when-how.com/introduction-to-video-and-image-processing/morphology-introduction-to-video-and-image-processing-part-2/
+//Ejemplo de dilatación
+https://docs.opencv.org/3.1.0/d3/db4/tutorial_py_watershed.html
+//Pinhole imagen
+https://www.pinterest.com.mx/pin/371828512962028619
+//Distorsiones radiales y tangenciales
+https://www.i-ciencias.com/pregunta/96683/que-es-el-tangencial-distorsion-de-opencv-en-realidad-tangencial
+
