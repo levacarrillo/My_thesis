@@ -5,7 +5,7 @@
 \usepackage{lmodern}
 \usepackage{graphicx}
 \usepackage{amsmath}
-\usepackage{xcolor}
+\usepackage{xcolor} 
 \usepackage{verbatim} 
 \usepackage{enumerate} % enumerados
 \usepackage{svg}
@@ -34,30 +34,30 @@ Entre los \textit{robots bípedos} más conocidos se encuentran los \textit{robo
 \item Pueden caminar y moverse como un ser humano.
 \item Pueden interactuar con humanos usando reconocimiento de voz y de imágenes.
 \end{itemize}
+\textcolor{red}{Aquí podrías citar al rulebook de la categoría de humanoides, donde además de los puntos que enlistas, también mencionan que debe ser cinemáticamente equivalente a un ser humano (es decir, la rodilla por ejemplo no debe poder doblarse hacia atrás)}
 
-Uno de los mayores retos a la hora de diseñar y modelar a los robot bípedos, es su movimiento. A comparación de otros robots móviles, los robots con piernas tienden a tener un mayor número de grados de libertad en sus extremidades y estos deben estar muy bien coordinados para no hacer caer al robot. 
+Uno de los mayores retos a la hora de diseñar y modelar a los robot bípedos es su movimiento. A comparación de otros robots móviles, los robots con piernas tienden a tener un mayor número de grados de libertad en sus extremidades y estos deben estar muy bien coordinados para no hacer caer al robot. 
 \\
-
-\textbf{Características para el diseño de un robot con piernas}				
+\textcolor{red}{En lugar de usar textbf, usa subsubsection* (el asterisco pone el título sin número)}
+%\textbf{Características para el diseño de un robot con piernas}				
+\subsubsection*{Características para el diseño de un robot con piernas}
 \begin{itemize}
 \item \textbf{Tipo de marcha:} Es el patrón de movimientos de piernas del robot (caminata).
 
-\item \textbf{Biomímesis:} Es el diseño de algunos robots para imitar la estructura mecánica de una criatura viviente de tal manera que sea tan precisa como se pueda.
+\item \textbf{Biomímesis:} Es el diseño de algunos robots para imitar la estructura mecánica de un ser vivo de tal manera que sea tan precisa como se pueda.
 
-\item \textbf{Bioinspiración mecánica:} Es el diseño que sirve para reproducir lo robusto y la versatilidad de la locomoción de animales, algunos diseñadores prestan más atención en la dinámica esencial de la locomoción que en la mecánica.
+\item \textbf{Bioinspiración mecánica:} Es el diseño que sirve para reproducir la robustez y versatilidad de la locomoción de animales, algunos diseñadores prestan más atención en la dinámica esencial de la locomoción que en la mecánica.
 
 \item \textbf{Simplicidad mecánica:} Con esto se pretende usar el menor número de actuadores posibles para cumplir sólo con las tareas realizadas.
 
-\item \textbf{Espacio de trabajo de la extremidad } Señala que una extremidad debería tener al menos 3GDL para moverse libremente en el espacio. Para que se pueda tener una arbitraria orientación en el efector final en un espacio 3-D se debe contar con almenos 6GDL.
+\item \textbf{Espacio de trabajo de la extremidad: } Señala que una extremidad debería tener al menos 3GDL para moverse libremente en el espacio. Para que se pueda tener una arbitraria orientación en el efector final en un espacio 3-D se debe contar con almenos 6GDL.
 
 \end{itemize}
-
-
 
 \begin{figure}
 	\centering		
 	\includegraphics[scale=0.5]{images/asimov_and_HRP-4C.png}
-	\caption{Ejemplo de robots humanoides (a) Asimov (2000); (b)HRP-4C (2009) (Tomado de: Siciliano and Khatib, 2016).}		
+	\caption{Ejemplos de robots humanoides (a) Asimov (2000); (b)HRP-4C (2009) (Tomado de: Siciliano and Khatib, 2016).}		
 \label{fig:humanoids}%(Ver página 423).
 \end{figure}
 
@@ -395,19 +395,47 @@ De esta manera, se resta \ref{eq:xcForX}  a \ref{eq:xBidimentionalPosition} y \r
 \section{La plataforma ROS}
 Citando a \cite{pyo2015ros} ROS es un meta sistema operativo \textit{open-source} que provee servicios a las aplicaciones de robótica, servicios que comunmente se esperan de un sistema operativo, tales como: abstracción de hardware, control de dispositivos a \textit{bajo nivel}, paso de mensajes entre procesos, ordenamiento y manejo de distintos tipos de paquetes. ROS también provee herramientas y bibliotecas para obtener, construir, escribir y ejecutar programas a través de multiples computadoras.\\
 
-ROS es la abreviación en inglés de \textit{Robot Operating System} lo cual se prodría traducir al español como Sistema Operativo de Robots. Con este nombre se podría pensar que ROS es un sistema operativo, sin embargo el término mejor empleado es el de \textit{Meta Sistema Operativo}. Aunque el término Meta Sistema Operativo no está definido en el diccionario, se puede describir como un sistema que realiza procesos tales como programación, ejecución, monitoreo, y manejo de errores, utilizando una capa de visualización entre aplicaciones y recursos informáticos distribuidos.\\
+ROS es la abreviación en inglés de \textit{Robot Operating System} lo cual se prodría traducir al español como Sistema Operativo de Robots. Con este nombre se podría pensar que ROS es un sistema operativo, sin embargo el término mejor empleado es el de \textit{Meta Sistema Operativo}. Aunque \textit{Meta Sistema Operativo} no está definido en el diccionario, se puede describir como un sistema que realiza procesos tales como programación, ejecución, monitoreo, y manejo de errores, utilizando una capa de visualización entre aplicaciones y recursos informáticos distribuidos.\\
 
-Dicho lo anterior, ROS no es un sistema operativo convencional, tal como \textit{Windows}, \textit{Linux}, o \textit{Android}, sino una plataforma que se ejecuta dentro del sistema operativo instalado. Comunmente para utilizar ROS se requiere tener instalado \textit{Ubuntu}, que es un sitema basado en las distribuciones de \textit{Linux}. No obstante, es posible usarse en distintos sitemas, tal y como se muestra en el esquema de la figura \ref{fig:meta_operating_system}. 
-
+Dicho lo anterior, ROS no es un sistema operativo convencional, tal como \textit{Windows}, \textit{Linux}, o \textit{Android}, sino una plataforma que se ejecuta dentro del sistema operativo instalado. A menudo, para utilizar ROS se requiere tener instalado \textit{Ubuntu}, que es un sitema basado en las distribuciones de \textit{Linux}. No obstante, es posible usarse en distintos sitemas, tal y como se muestra la figura \ref{fig:meta_operating_system}. 
 \begin{figure}
 \centering
 \includegraphics[scale=0.5]{images/meta_operating_system.png}
 \caption{Esquema de la abstracción de harware por ROS en distintos Systemas Operativos}
 \label{fig:meta_operating_system}
 \end{figure} 
- 
+
+\subsection*{Objetivos al utilizar ROS}
+Aunque existen diversas plataformas de robótica (OpenRTM, OPRoS, Player, Orca, Microsoft Robotics Studio, etc.), ROS está orientado a construir entornos de desarrollo para software de robótica a un nivel global, con esto se espera que el código de diferentes desarrolladores se pueda usar, modificar o mejorar para hacer crecer el entorno mismo. Para hacer de una manera sencilla el entorno de desarrollo, ROS tiene las siguientes características:
+
+\begin{itemize}
+\item \textbf{Distribución de procesos:}
+Están programados en unidades mínimas de procesamiento (nodos). Cada uno de estos procesos se ejecuta de manera independiente y es capaz de intercambiar datos con otros de manera sistemática.  
+\item \textbf{Manejo de paqueterías:}
+Cuando varios procesos tienen propósitos similares, estos se manejan dentro de un \textit{paquete} que haga los procesos más ordenados y fáciles de desarrollar.
+\item \textbf{Repositorios públicos:}
+Cada paquete se hace público dentro de un repositorio (por ejemplo GitHub) para que la comunidad de desarrolladores puedan acceder a él. 
+\item \textbf{API (Interfaz de Programación de Aplicaciones):}
+Cuando se desarrolla un programa en ROS, generalmente se llaman funciones ya existentes fácilmente insertarlas dentro del código que se esté construyendo.
+\item \textbf{Soporte de distintos lenguajes de programación:}
+La plataforma ROS posee una \textit{bilioteca de clientes} para facilitar el trabajo de los programadores. La biblioteca puede importar lenguajes de programación que son bastantes populares, tales como Python, C++, Java, C#, Ruby, Lips, entre otros.
+\end{itemize}
+\subsection*{Breve historia de ROS}
+\textit{Robot Operating System} fue creado en Mayo del 2007 por el Doctor Morgan Quigley (véase la figura \ref{fig:morga_quigley}) dentro del \textit{Standford Artificial Intelligence Laboratory}. Se podría decir que el predecesor de ROS es un proyecto llamado \textit{SwitchYard}, el cual es un programa creado por el mismo laboratorio para el desarrollo de inteligencia artificial.
+
+En noviembre del 2007 la compañía estadounidense \textit{Willow Garage} empezó el desarrollo de ROS dentro del campo de los robots de servicio. De esta manera ROS vino al mundo oficialmente el 22 de Enero del 2010 con la versión llamada \textit{ROS 1.0}, sin embargo la versión más conocida fue \textit{Box Turtle} lanzada en Marzo del mismo año.
+
+La plataforma ROS es actualizada cada dos años (entre el lapso de Abril-Octubre), lo que significa que cada versión tiene soporte durante la misma cantidad de tiempo. Para propósitos de esta tesis se optó por utilizar la versión \textit{ROS-Kinetic} instalado en Ubuntu 16.04 \textit{Xenial Xerus (LTS)}.
+\begin{figure}
+\centering
+\includegraphics[scale=0.7]{images/morgan_quigley.jpg}
+\caption{Dr. Morgan Quigley, uno de los principales fundadores de ROS. Imagen tomada de: https://web.stanford.edu/group/sailsbury_robotx/cgi-bin/salisbury_lab/?page_id=667}
+\label{fig:morga_quigley}
+\end{figure}
+
+
 %	\chapter{Resultados}
-%\bibliographystyle{apacite}
-\bibliographystyle{ieeetr}
+\bibliographystyle{apacite}
+%\bibliographystyle{ieeetr}
 \bibliography{References}
 \end{document}
