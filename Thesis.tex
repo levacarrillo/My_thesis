@@ -391,7 +391,21 @@ De esta manera, se resta \ref{eq:xcForX}  a \ref{eq:xBidimentionalPosition} y \r
 \[y = r_y - r_z \tan{\theta} \sin{\varphi} - \rho \cot{\theta} \sin{\varphi}\]
 \[z = \rho \]
 
-%	\chapter{Implementación}
+\chapter{Implementación}
+\section{La plataforma ROS}
+Citando a \cite{pyo2015ros} ROS es un meta sistema operativo \textit{open-source} que provee servicios a las aplicaciones de robótica, servicios que comunmente se esperan de un sistema operativo, tales como: abstracción de hardware, control de dispositivos a \textit{bajo nivel}, paso de mensajes entre procesos, ordenamiento y manejo de distintos tipos de paquetes. ROS también provee herramientas y bibliotecas para obtener, construir, escribir y ejecutar programas a través de multiples computadoras.\\
+
+ROS es la abreviación en inglés de \textit{Robot Operating System} lo cual se prodría traducir al español como Sistema Operativo de Robots. Con este nombre se podría pensar que ROS es un sistema operativo, sin embargo el término mejor empleado es el de \textit{Meta Sistema Operativo}. Aunque el término Meta Sistema Operativo no está definido en el diccionario, se puede describir como un sistema que realiza procesos tales como programación, ejecución, monitoreo, y manejo de errores, utilizando una capa de visualización entre aplicaciones y recursos informáticos distribuidos.\\
+
+Dicho lo anterior, ROS no es un sistema operativo convencional, tal como \textit{Windows}, \textit{Linux}, o \textit{Android}, sino una plataforma que se ejecuta dentro del sistema operativo instalado. Comunmente para utilizar ROS se requiere tener instalado \textit{Ubuntu}, que es un sitema basado en las distribuciones de \textit{Linux}. No obstante, es posible usarse en distintos sitemas, tal y como se muestra en el esquema de la figura \ref{fig:meta_operating_system}. 
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.5]{images/meta_operating_system.png}
+\caption{Esquema de la abstracción de harware por ROS en distintos Systemas Operativos}
+\label{fig:meta_operating_system}
+\end{figure} 
+ 
 %	\chapter{Resultados}
 %\bibliographystyle{apacite}
 \bibliographystyle{ieeetr}
