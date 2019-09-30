@@ -5,6 +5,7 @@
 \usepackage{lmodern}
 \usepackage{graphicx}
 \usepackage{amsmath}
+\usepackage{amssymb}
 \usepackage{xcolor} 
 \usepackage{verbatim} 
 \usepackage{enumerate} 
@@ -87,6 +88,19 @@ Para el control del sistema dinámico no lineal hay  un número de conceptos rel
 %	\section{Trabajo relacionado}		
 
 
+	\section{Conceptos básicos de visión computacional}
+		\subsection*{Visión computacional}
+	La \textit{visión computacional} es la transformación de datos desde una imagen o video cámara hacia una \textit{nueva representación} para lograr un fin en particular \cite{bradski2008learning}. Al decir esto, significa que se pueden usar ciertas características de la luz capturada en una imagen (o secuencia de imágenes) para transformarlas en variables numéricas que la computadora pueda abstraer y procesar (tómese de ejemplo la figura \ref{fig:camera_representation}).
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.6]{images/new_representation_image.png}
+\caption{Representación de cómo una imagen es representada por la computadora. Imagen modificada de:}
+\label{fig:camera_representation}
+\end{figure}
+
+Para los fines de este trabajo solamente se utilizarán funciones para segmentar objetos con base en su color, para obtener la posición del objeto en el espacio se hizo el análisis matemático de la sección 4.1.
+	
 	\section{El Filtro de Kalman}
 		\subsection*{Filtro de Kalman Discreto}
 	En 1060 Rudolf Emil Kalman publicó su famoso \textit{paper} en donde describe una recursiva solución para el problema del filtrado de datos discretos. Desde ese entonces el filtro ha sido sujeto de extensas investigaciones y aplicaciones en la ingeniería.
@@ -102,12 +116,23 @@ x_k = Ax_{k-1} + Bu_{k-1}+w_{k-1}
 \end{equation}
 
 En donde $A$ es una matriz de nxn que relaciona el estado anterior $k-1$ con el estado presente $k$. $B$ es una matriz de $nx1$ que relaciona la entrada de control opcional $u \in R^1$ al estado $x$. 
-El error en la medición $z \in \Re^m$ se puede modelar con la ecuación \ref{eq:measurement_equation}:
+La medición $z \in \Re^m$, también conocida como matriz de observación se puede modelar con la ecuación \ref{eq:measurement_equation}:
+
 \begin{equation}
 z_k = Hx_k+v_k
 \label{eq:measurement_equation}
 \end{equation}
-$H$ es una matriz de $mxn$ que relaciona el estado con la medición $z_k$.  Las variables aleatorias $w_k$ y $v_k$ representan el ruido del proceso y de la medición (respectivamente), asumiendo que son independientes una de la otra. Se dice que \ref{eq:kalman_filter} es una ecuación lineal \textit{estocástica} debido a que los datos adquiridos tienen un comportamiento no determinista.
+
+En \ref{eq:measurement_equation} $H$ es una matriz de $mxn$ que relaciona el estado con la medición $z_k$.  Las variables aleatorias $w_k$ y $v_k$ representan el ruido del proceso y de la medición (respectivamente), asumiendo que son independientes una de la otra. Las expresiones en \ref{eq:normal_distribution_w} y \ref{eq:normal_distribution_R} representan su distribucion normal.
+
+\begin{equation}
+p(w) \sim N(0,Q),
+\label{eq:normal_distribution_w}
+\end{equation}
+\begin{equation}
+p(w) \sim N(0,R)
+\label{eq:normal_distribution_R}
+\end{equation}
 
 Con el objetivo de encontrar una ecuación que calcule una estimación \textit{a posteriori} de un estado $\hat{x}_k$ como una combinación lineal de un estado \textit{a priori} $\hat{x}_k^-$ y una proporcional diferencia de una medición actual $z_k$ con una medición de la predicción $H\hat{x}_k^-$ se emplea la ecuación \ref{eq:posteriori_predicted}.
 
@@ -125,8 +150,25 @@ K_k = P_k^-H^T(HP_k^-H^T+R)^{-1} = \frac{P_k^-H^T}{HP_k^-H^T+R}
 
 De esta manera, cuando el error de covarianza en la medición $R$ se aproxima a cero, la ganancia $K$  tiene un mayor peso en la ecuación. Por el contrario, cuando el error de covarianza \textit{a posteriori} $P_k^-$ se aproxima a cero, la ganancia $K$ obtiene menor peso. 
 
+Otra forma de entender la utilidad de la ganancia de $K$ es pensar que mientras la ganancia de aproxime a 1, hará que la medición sea más \textit{confiable}, cuando las mediciones se aproximen a cero, serán menos confiables y se tomará como confiable los datos relacionados con el modelo matemático.
+		\subsubsection{Algoritmo de filtrado}
+El algoritmo consta de dos fases, la fase \textit{predictiva} y la fase \textit{correctiva}. La fase predictiva consta de utilizar un modelo matemático para obtener las posibles mediciones de un fenómeno. La fase correctiva obtiene los valores de la medición y las compara con las obtenidas con el modelo matemático, de manera que se obtienen los valores de salida, tal y como se observa en la figura \ref{eq:kalman_filter}.
 
-\chapter{ Segmentación de imágenes con base en color}
+\begin{figure}
+\centering
+\includegraphics[scale=0.7]{images/kalman_algorithm.pdf}
+\caption{Esquema ilustrativo del Filtro de Kalman}
+\label{fig:Kalman_scheme}
+\end{figure}
+
+		
+
+
+
+
+
+
+\chapter{Segmentación de imágenes con base en color}
 	\section{Modelo de cámara Estenopeica \textit{(Pinhole)}}
 
 De acuerdo con \cite{bradski2008learning} la visión es la detección de la luz del mundo. El proceso de visión empieza cuando un rayo de luz es emanado desde una fuente hacia un objeto. Cuando la luz choca con el objeto, mucha de esta luz es absorbida, la que no, se puede percibir como el color, de esta manera, la luz reflejada hace su camino hacia el sensor óptico.
@@ -319,6 +361,8 @@ En la figura \ref{fig:dilation_diagram} se puede imaginar que si se coloca el \t
 
 
 
+
+
 \chapter{Estimación de posición y velocidad}
 	\section{Cálculo de la posición del objeto de interés}
 Tal como se observa en la simulación de Gazebo (Figura 3.1), se decidió usar un sistema ortogonal derecho en la base de los pies como sistema de referencia que gobernará a todo el modelo.
@@ -420,22 +464,48 @@ De esta manera, se resta \ref{eq:xcForX}  a \ref{eq:xBidimentionalPosition} y \r
 \[z = \rho \]
 
 
+
+	\section{Estimación de estados mediante el Filtro de Kalman}
+	Para poder impementar el Filtro de Kalman, se necesita primero tener un modelo matemático del sistema que se pretende tomar mediciones. Analizando el digrama de cuerpo libre de la figura \ref{fig:dynamic_model} se puede hacer un análisis dinámico del balón utilizando la segunda ley de Newton.
+
+\begin{equation}
+\sum F = m \ddot{x}
+\label{eq:second_law}
+\end{equation}
+
+\begin{equation}
+F-f_{fricción} = m \ddot{x}
+\label{eq:equivalency_1}
+\end{equation}
+
+Cambiando el nombre de las variables a corde de nuestro diagrama y tomando en como fuerza de fricción dinámica $f_{fricción} = \mu_d m g $ la igualdad de fuerzas es:
+\begin{equation}
+F- \mu_d m g = m \ddot{x}
+\label{eq:equivalency_2}
+\end{equation}
+	
+Donde $\mu_d$ es el coeficiente de fricción dinámica, $m$ es la masa del balón y $g$ es la aceleración de la gravedad. Dado que ninguna fuerza mas que la de fricción es la que actúa sobre el balón, $F$ se iguala a cero, dejando el modelo el modelo cinemático de la expresión \ref{eq:mathematical_model}.
+
+\begin{equation}
+\ddot{x}= - \mu_d g
+\label{eq:mathematical_model}
+\end{equation}
+
+
+\begin{figure}
+\centering
+\includegraphics[scale=1.5]{images/dynamic_model.pdf}
+\caption{Diagrama de cuerpo libre del objeto de interés}
+\label{fig:dynamic_model}
+\end{figure}
+
+
+
 \chapter{Implementación}
 	\section{Las bilbiotecas OpenCV}
 OpenCV (\textit{Open Computer Vision}) es una biblioteca \textit{open source} diseñada para visión computacional. Esta biblioteca está escrita principalmente en C y C$++$ y es capaz de ejecutarse en diversos sistemas operativos, tales como: \textit{Windows}, \textit{Linux}, o \textit{Mac OS X}.
 
 OpenCV fue desarrollada para hacer procesos más eficientes cuando se hace visión con aplicaciones en tiempo real. Una de las metas de OpenCV es proveer una infraestructura sencilla y sofisticada para  diferentes tipos de usuarios, que van desde profesores, estudiantes, profesionistas, desarrolladores, y autodidactas. La librería cuenta con más de 500 funciones que se extienden en diversas áreas de visión, incluyendo inspección en la fabricación de productos, seguridad, calibración de cámaras, visión estéreo, robótica, etc.
-		\subsection*{Visión computacional}
-	La \textit{visión computacional} es la transformación de datos desde una imagen o video cámara hacia una \textit{nueva representación} para lograr un fin en particular \cite{bradski2008learning}. Al decir esto, significa que se pueden usar ciertas características de la luz capturada en una imagen (o secuencia de imágenes) para transformarlas en variables numéricas que la computadora pueda abstraer y procesar (tómese de ejemplo la figura \ref{fig:camera_representation}).
-
-\begin{figure}
-\centering
-\includegraphics[scale=0.6]{images/new_representation_image.png}
-\caption{Representación de cómo una imagen es representada por la computadora. Imagen modificada de:}
-\label{fig:camera_representation}
-\end{figure}
-
-Para los fines de este trabajo solamente se utilizarán funciones para segmentar objetos con base en su color, para obtener la posición del objeto en el espacio se hizo el análisis matemático de la sección 4.1.
 
 	\section{La plataforma ROS}
 		\subsection*{¿Qué es ROS?}
@@ -483,6 +553,8 @@ La plataforma ROS es actualizada cada dos años (entre el lapso de Abril-Octubre
 %	\chapter{Resultados}
 \bibliographystyle{apacite}
 %\bibliographystyle{ieeetr}
+
+
 
 
 
