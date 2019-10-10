@@ -1,9 +1,15 @@
 \chapter{Implementación}
+
+	\section{El robot bípedo Nimbro OP}
+	La implementación de estos algoritmos de visión artificial está planeada para usarse para el robot bípedo Nimbro OP (Open Platform) que está diseñado para jugar fútbol, en competencias como la RoboCup \textit{Humanoid League} y es compatible con la categoría \textit{KidSize}.
+	
 	\section{Las bilbiotecas OpenCV}
 OpenCV (\textit{Open Computer Vision}) es una biblioteca \textit{open source} diseñada para visión computacional. Esta biblioteca está escrita principalmente en C y C$++$ y es capaz de ejecutarse en diversos sistemas operativos, tales como: \textit{Windows}, \textit{Linux}, o \textit{Mac OS X}.
 
 OpenCV fue desarrollada para hacer procesos más eficientes cuando se hace visión con aplicaciones en tiempo real. Una de las metas de OpenCV es proveer una infraestructura sencilla y sofisticada para  diferentes tipos de usuarios, que van desde profesores, estudiantes, profesionistas, desarrolladores, y autodidactas. La librería cuenta con más de 500 funciones que se extienden en diversas áreas de visión, incluyendo inspección en la fabricación de productos, seguridad, calibración de cámaras, visión estéreo, robótica, etc.
 
+	Las principales funciones de OpenCV que se utilizaron para la elaboración de este trabajo fueron:  \textit{cv::calibrateCamera()} para hacer la corrección de las distorsiones (véase la sección 3.2), \textit{cv::cvtColor()} para cambiar del espacio de color RGB al HSV, \textit{cv::InRange()} para realizar la segmentación de color del objeto de interés (véase la sección 3.3), \textit{cv::erode()} y \textit{cv::dilate()} para implementar los operadores morfológicos, junto con \textit{cv::findNonZero()} para obtener el centroide de la figura proyectada en la imagen. 
+	
 	\section{La plataforma ROS}
 		\subsection*{¿Qué es ROS?}
 Citando a \cite{pyo2015ros} ROS es un meta sistema operativo \textit{open-source} que provee servicios a las aplicaciones de robótica, servicios que comunmente se esperan de un sistema operativo, tales como: abstracción de hardware, control de dispositivos a \textit{bajo nivel}, paso de mensajes entre procesos, ordenamiento y manejo de distintos tipos de paquetes. ROS también provee herramientas y bibliotecas para obtener, construir, escribir y ejecutar programas a través de multiples computadoras.\\
@@ -34,14 +40,8 @@ Cuando se desarrolla un programa en ROS, generalmente se llaman funciones ya exi
 La plataforma ROS posee una \textit{bilioteca de clientes} para facilitar el trabajo de los programadores. La biblioteca puede importar lenguajes de programación que son bastantes populares, tales como Python, C$++$, Java, Ruby, Lips, entre otros.
 \end{itemize}
 		\subsection*{Breve historia de ROS}
-\textit{Robot Operating System} fue creado en Mayo del 2007 por el Doctor Morgan Quigley (véase la figura \ref{fig:morga_quigley}) dentro del \textit{Standford Artificial Intelligence Laboratory}. Se podría decir que el predecesor de ROS es un proyecto llamado \textit{SwitchYard}, el cual es un programa creado para el desarrollo de inteligencia artificial de robots.
+\textit{Robot Operating System} fue creado en Mayo del 2007 dentro del \textit{Standford Artificial Intelligence Laboratory}. Se podría decir que el predecesor de ROS es un proyecto llamado \textit{SwitchYard}, el cual es un programa creado para el desarrollo de inteligencia artificial de robots.
 
 En noviembre del 2007 la compañía estadounidense \textit{Willow Garage} empezó el desarrollo de ROS dentro del campo de los robots de servicio. De esta manera ROS vino al mundo oficialmente el 22 de Enero del 2010 con la versión llamada \textit{ROS 1.0}, sin embargo la versión más conocida fue \textit{Box Turtle} lanzada en Marzo del mismo año.
 
 La plataforma ROS es actualizada cada dos años (entre el lapso de Abril-Octubre), lo que significa que cada versión tiene soporte durante la misma cantidad de tiempo. Para propósitos de esta tesis se optó por utilizar la versión \textit{ROS-Kinetic} instalado en Ubuntu 16.04 \textit{Xenial Xerus (LTS)}.
-\begin{figure}
-\centering
-\includegraphics[scale=0.7]{images/morgan_quigley.jpg}
-\caption{Dr. Morgan Quigley, uno de los principales fundadores de ROS. Imagen tomada de:}
-\label{fig:morga_quigley}
-\end{figure}
