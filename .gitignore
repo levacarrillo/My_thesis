@@ -3,6 +3,9 @@ Thesis.aux
 Thesis.log
 Thesis.pdf
 Thesis.synctex.gz
+Thesis.toc
+Index
+.Index.cc.swp
 
 /books/
 
@@ -11,3 +14,4 @@ Thesis.blg
 Thesis.fdb_latexmk
 Thesis.fls
 
+chapters/Ch01_Introduction.log
