@@ -8,4 +8,12 @@ https://docs.opencv.org/3.1.0/d3/db4/tutorial_py_watershed.html
 https://www.pinterest.com.mx/pin/371828512962028619
 //Distorsiones radiales y tangenciales
 https://www.i-ciencias.com/pregunta/96683/que-es-el-tangencial-distorsion-de-opencv-en-realidad-tangencial
+//Imágenes del robot nimbro
+http://www.nimbro.net/OP/NimbRo-OP.html
+//Imagenes Project Pigeon
+http://www.dieselpunks.org/profiles/blogs/project-orcon-the-pigeon-guided-missile
+//Darwin-OP
+https://www.trossenrobotics.com/p/darwin-OP-Deluxe-humanoid-robot.aspx
+//Ball segmentation 1
+https://www.researchgate.net/publication/233420007_RoboCup_2012_best_humanoid_award_winner_NimbRo_TeenSize
 

@@ -1,7 +1,48 @@
 \chapter{Implementación}
 
 	\section{El robot bípedo Nimbro OP}
-	La implementación de estos algoritmos de visión artificial está planeada para usarse para el robot bípedo Nimbro OP (Open Platform) que está diseñado para jugar fútbol, en competencias como la RoboCup \textit{Humanoid League} y es compatible con la categoría \textit{KidSize}.
+	La implementación de los algoritmos de visión artificial está planeada para usarse para el robot bípedo Nimbro OP (Open Platform) que está diseñado para jugar fútbol, en competencias como la RoboCup \textit{Humanoid League} y es compatible con la categoría \textit{TeenSize}.
+
+	\textit{Nimbro-OP} (Figura \ref{fig:Nimbro-OP}) fue el primer prototipo para modular a los humanoides \textit{open-source} para investigación y educación. 
+	\subsubsection*{Características de hardware}
+	\begin{itemize}
+	\item Cuenta con una altura de 95cm y un peso aproximado de 6.6kg.
+	\item 20 actuadores interconectados (motores Dynamixel).
+		\begin{itemize}
+			\item 6 por cada pierna (MX-106)
+			\item 3 por cada brazo (MX-64)
+			\item 2 en el cuello (MX-64)
+		\end{itemize}
+	\item PC con doble núcleo (Zotac ZBOX nano XS)
+		\begin{itemize}
+		\item Procesador AMD E-450(2x1.65GHz) 
+		\item 2GB RAM, 64GB SSD
+		\item USB 3.0, HDMI, Gigabit Ethernet
+		\end{itemize}
+	\item WiFi: IEEE 802.11b/g/n
+	\item Cámara de amplio ángulo de visión (Logitech C905)
+	\item Sensores de inercia (Dentro del controlador Ronotis CM-730)
+		\begin{itemize}
+		\item Acelerómetro de 3 ejes
+		\item Giroscopio de 3 ejes
+		\end{itemize}
+	\item Batería de Litio de 11.1V a 4.5Ah
+	\item Chasis de fibra de carbono, aluminio y ABS plus
+	\end{itemize}
+	
+	\subsubsection*{características de software}
+	\begin{itemize}
+	\item El software es compatible tanto para Linux como Windows.
+	\item Tiene un desarrollo basado en la plataforma ROS para proporcionar la abstracción de hardware.
+	\item Cuenta con software de código abierto que \textit{Robotis} lanzó para DARwin-OP para comportamientos y habilidades básicas en fútbol.
+	\end{itemize}
+	
+\begin{figure}
+\centering
+\includegraphics[scale=2.0]{images/Nimbro-OP.jpg}
+\caption{Robot humanoide tipo Nimbro-OP}
+\label{fig:Nimbro-OP}
+\end{figure} 
 	
 	\section{Las bilbiotecas OpenCV}
 OpenCV (\textit{Open Computer Vision}) es una biblioteca \textit{open source} diseñada para visión computacional. Esta biblioteca está escrita principalmente en C y C$++$ y es capaz de ejecutarse en diversos sistemas operativos, tales como: \textit{Windows}, \textit{Linux}, o \textit{Mac OS X}.

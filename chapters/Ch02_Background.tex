@@ -37,13 +37,6 @@ Uno de los mayores retos a la hora de diseñar y modelar a los robot bípedos es
 \end{figure}
 
 
-		\subsection*{Modelado y Control de Robots con Piernas}
-			\subsubsection*{Breve Historia de los Robots con piernas *Pendiente}
-		Los robots con piernas controlados digitalmente empezaron a aparecer a finales de los 1960's. Entre los pioneros, Robert McGhee inicializó una serie de robots cuadrúpedos y hexápodos en \textit{University of South California}.\\
-
-			\subsubsection*{Dinámica del movimiento de los sistemas con piernas}
-Como ya se había mencionado, las mayores dificultades para hacer que un robot camine o corra es mantener su balance, de esta forma suelen formularse las siguientes preguntas: ¿Dónde debería caminar el robot?, ¿Cómo debería moverse su cuerpo a fin de moverse de manera segura en una dada dirección, incluso si hay fuertes perturbaciones?.\\ 
-
 			\subsubsection*{Análisis de estabilidad}
 
 Para el control del sistema dinámico no lineal hay  un número de conceptos relativos para su seguridad y estabilidad:
@@ -67,13 +60,37 @@ Para el control del sistema dinámico no lineal hay  un número de conceptos rel
 
 \end{itemize}
 
-	\section{Aplicaciones en el juego de Futbol Soccer}
-	\section{Conceptos básicos de visión computacional}
-	\section{El filtro de Kalman}
-	\section{Trabajo relacionado}		
+	\section{Aplicaciones en el juego de Futbol Soccer}	
+		\subsubsection*{Futbol Soccer en el concurso RoboCup}
+		La \textit{RoboCup} es una internacional iniciativa para promover la inteligencia artificial y la tecnología robótica a través de la organización de competencias y encuentros científicos. Una de las categorías más famosas dentro de este concurso es el de robots humanoides para soccer (Humanoid League) cuyo objetivo es lograr que para la mitad del siglo XXI un equipo de robots humanoides autónomos sean capaces de ganar una partida de fútbol contra el recien campeón mundial de ese entonces, siguiendo las reglas oficiales de la FIFA.
+		
+		La categoría de soccer comenzó en el año de 1997 con simples y simulados robots con ruedas, desde entonces el desarrollo  fue creciendo hasta que en el 2002 se inició la liga de humanoides cuyos principales retos eran los comportamientos como caminar, patear y percibir el ambiente. Desde entonces, año con año las mejoras en los mecanismos, la electrónica y control han hecho evolucionar el desarrollo para que la \textit{biomímesis} sea la más parecida a la de un humano.\citep{gerndt2015humanoid}
+		
+		\subsubsection*{Liga de robots humanoides de categoría \textit{TeenSize}}
+		En los recientes años, la introducción de robots estandarizados, accesibles y de bajo costo ha tenido un formidable impacto para la creación y desarrollo de robots de soccer. Un ejemplo es el humanoide \textit{DARwIn-OP} (Figura \ref{fig:Darwin_OP}) que se organiza dentro de la categoría \textit{KidSize}. De esta manera, algunos comportamientos del soccer ya están implementados, de modo que los investigadores tienen la oportunidad de enfocarse en tareas de más alto nivel. \citep{schwarz2013humanoid}
+		
+		A pesar que \textit{DARwIn-OP} ha facilitado que los equipos lleguen a tener el número necesario de jugadores, no es lo mismo para otras categorías en donde los robots tienden a tener mayor tamaño (como en \textit{TeenSize} o \textit{AdultSize}) no se llega a tener el número deseado de jugadores y algunos competidores se ven forzados a participar con robots hechos por ellos mismos. Consecuentemente esto altera el desempeño de los partidos y retraza el desarrollo de nuevos comportamientos. Para solucionar este problema fue desarrollado un primer prototipo de plataforma abierta basado el \textit{Darwin-OP} para la categoría \textit{TeenSize} llamado \textit{Nimbro-OP} (véase la sección 5.1) el cual tiene un diseño de fácil manufactura, ensamblaje y mantenimiento.	 
 
+\begin{figure}
+\centering
+\includegraphics[scale=0.25]{images/Darwin_OP.jpg}
+\caption{Robot Humanoide Darwin-OP}
+\label{fig:Darwin_OP}
+\end{figure}
 
 	\section{Usos de la visión computacional}
+		\subsection*{Precedentes }
+	A falta de sistemas de visión para el reconocimiento y localización de objetos en misiles no tripulados durante la Segunda Guerra Mundial, la industria bélica norteamericana llegó financiar la investigación para misiles teleoperados por palomas (Figura \ref{fig:project_pigeon}a), siguiendo las nacientes investigaciones sobre el Condicionamiento Operante de B.F. Skinner. Este proyecto se llamó \textit{Project Pigeon}  \citep{capshew1993engineering} y consisitía en meter palomas dentro de misiles para que estas picotearan la imagen en donde aparecían los barcos en medio del mar, véase la Figura \ref{fig:project_pigeon}b.
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.3]{images/project_pigeon.png}
+\caption{(a) \textit{Proyecto Pigeon} para teleoperación de misiles de guerra; (b) Condicionamiento de palomas para la dirección de los misiles.}
+\label{fig:project_pigeon}
+\end{figure}
+
+	A pesar de lo ingenioso e innovador de este proyecto, las fuerzas armadas norteamericanas optaron por abandonarlo para no retrazar otros cuyas aplicaciones eran más prometedoras. 
+		
 		\subsection*{Visión computacional}
 	La \textit{visión computacional} es la transformación de datos desde una imagen o video cámara hacia una \textit{nueva representación} para lograr un fin en particular \cite{bradski2008learning}. Al decir esto, significa que se pueden usar ciertas características de la luz capturada en una imagen (o secuencia de imágenes) para transformarlas en variables numéricas que la computadora pueda abstraer y procesar (tómese de ejemplo la figura \ref{fig:camera_representation}).
 
@@ -145,3 +162,26 @@ El algoritmo consta de dos fases, la fase \textit{predictiva} y la fase \textit{
 \caption{Esquema ilustrativo del Filtro de Kalman}
 \label{fig:Kalman_scheme}
 \end{figure}
+
+	\section{Trabajo relacionado}
+		\subsubsection{Percepción del color}
+	Una de las técnicas más comunes y prácticas para realizar la detección de objetos para un robot Nimbro-OP es la segmentación por color, es por eso que es muy conveniente que los balones de fútbol en las competencias RoboCup tengan un color diferente al piso en donde descanzan (que generalmente es verde). No obstante, el balón elegido por la comunidad puede tener diferentes matices, por lo que se deben emplear sistemas de aprendizaje para que el robot distinga un balón de cualquier color. 
+	
+	Tal y como hizo el robot \textit{Dynaped} en 2012 \citep{missura2012robocup}, se obtienen ciertos parámetros de color del tapete usado en la cancha,  para poder encerrar en un contorno el color que no coincida. Véase la figura \ref{fig:ball_contour_1}.
+	
+\begin{figure}
+\centering
+\includegraphics[scale=0.7]{images/ball_contour_1.png}
+\caption{(a) Región de interés con un balón desconocido; (b) Segmentación del objeto.}
+\label{fig:ball_contour_1}
+\end{figure}
+
+	De acuerdo con \citep{behnke2006see} para este tipo de robots, la única fuente de información sobre el ambiente es la cámara, de modo que es conveniente que se disponga de una o más cámaras dentro o fuera del robot. Con una correcta configuración de cámaras se pueden obtener más parámetros del ambiente, tales como posicionamiento del robot, distancia con el objeto de interés, cercanía con otros robots y detección de obstáculos. 
+	
+	
+	
+	
+	
+	
+	
+	

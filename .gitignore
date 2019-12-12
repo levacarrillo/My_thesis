@@ -15,3 +15,5 @@ Thesis.fdb_latexmk
 Thesis.fls
 
 chapters/Ch01_Introduction.log
+chapters/Ch02_Background.log
+chapters/Ch05_Implementation.log
