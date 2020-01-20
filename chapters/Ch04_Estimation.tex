@@ -99,7 +99,7 @@ De esta manera, se resta \ref{eq:xcForX}  a \ref{eq:xBidimentionalPosition} y \r
 \[z = \rho \]
 
 
-
+		
 	\section{Estimación de estados mediante el Filtro de Kalman}
 	Para poder impementar el Filtro de Kalman, se necesita primero tener un modelo matemático del sistema que se pretende tomar mediciones. Analizando el digrama de cuerpo libre de la figura \ref{fig:dynamic_model} se puede hacer un análisis dinámico del balón utilizando la segunda ley de Newton.
 
@@ -115,17 +115,40 @@ F-f_{fricción} = m \ddot{x}
 
 Cambiando el nombre de las variables a corde de nuestro diagrama y tomando en como fuerza de fricción dinámica $f_{fricción} = \mu_d m g $ la igualdad de fuerzas es:
 \begin{equation}
-F- \mu_d m g = m \ddot{x}
+F- \mu_d m g = m  \frac{\mathrm{d} \dot{x}}{\mathrm{d} t}
 \label{eq:equivalency_2}
 \end{equation}
 	
-Donde $\mu_d$ es el coeficiente de fricción dinámica, $m$ es la masa del balón y $g$ es la aceleración de la gravedad. Dado que ninguna fuerza mas que la de fricción es la que actúa sobre el balón, $F$ se iguala a cero, dejando el modelo el modelo cinemático de la expresión \ref{eq:mathematical_model}.
+Donde $\mu_d$ es el coeficiente de fricción dinámica, $m$ es la masa del balón y $g$ es la aceleración de la gravedad. Dado que ninguna fuerza mas que la de fricción es la que actúa sobre el balón, $F$ se iguala a cero, dejando el modelo el modelo cinemático de la expresión \ref{eq:mathematical_model_1}.
 
 \begin{equation}
-\ddot{x}= - \mu_d g
-\label{eq:mathematical_model}
+\frac{\mathrm{d} \dot{x}}{\mathrm{d} t} = - \mu_d g
+\label{eq:mathematical_model_1}
 \end{equation}
 
+Despejando la variable $\dot{x}$ para se puede integrar la ecuación para obtener la velocidad en el tiempo $t$ del balón.
+\begin{equation}
+\int_{\dot{x}_0}^{\dot{x}} \mathrm{d} \dot{x} = -\mu_d g \int_{0}^{t} \mathrm{dt}  
+\label{eq:mathematical_model_2}
+\end{equation}
+
+Resolviendo la ecuacion \ref{eq:mathematical_model_2} y despejando $\dot{x}$ se puede obtener la siguiente expresión:
+\begin{equation}
+\dot{x} = \dot{x}_{0} - \mu_d g t 
+\label{eq:velocity_prediction}
+\end{equation}
+
+Una vez teniendo el modelo para predecir la velocidad del estado siguiente, se procede a integrar nuevamente para obtener su posición:
+\begin{equation}
+\int_{x_{0}}^{x} \mathrm{dx} = \int_{0}^{t} (\dot{x}_{0} - \mu_d g t) \mathrm{dt}
+\label{eq:mathematical_model_4}
+\end{equation}
+
+Integrando y despejando $x$ se obtiene:
+\begin{equation}
+x = x_0 + \dot{x}_0 t - \frac{1}{2} \mu_d g t^2
+\label{eq:position_prediction}
+\end{equation}
 
 \begin{figure}
 \centering
@@ -133,3 +156,115 @@ Donde $\mu_d$ es el coeficiente de fricción dinámica, $m$ es la masa del baló
 \caption{Diagrama de cuerpo libre del objeto de interés}
 \label{fig:dynamic_model}
 \end{figure}
+
+		\subsubsection*{Descripción del proceso de filtrado en el sistema}
+Una vez que se obtuvo el modelo dinámico que describe el movimiento del balón, se procede a escriibir las ecuaciones matriciales que describen al filtro de Kalman (Véase la sección 2.4). De este modo, este filtro es una serie de pasos que iterativamente se deben ir completando de facil cómputo para estimar posiciones y velocidades de un obejeto en movimiento (Figura: \ref{fig:kalman_extended_diagram}).
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.6]{images/kalman_extended_diagram.pdf}
+\caption{Diagrama extendidio del funcionamiento paso a paso del Filtro de Kalman}
+\label{fig:kalman_extended_diagram}
+\end{figure}
+
+		\subsubsection*{Modelado del sistema}
+Para desarrollar las ecuaciones de extrapolación de estado se considerará que el balón se desplazará en el suelo sin elevarse o tener rebotes, por lo que el vector de estado $$\hat{x}_n$$ que describe la estimación de posición y velocidad en el plano \textit{(x, y)} es \ref{eq:state_vector}, siguiendo la nomenclatura que se vio en la sección 2.4.
+
+\begin{equation}
+\hat{x}_n = \begin{bmatrix}
+x_n\\ 
+y_n\\ 
+\dot{x}_n\\ 
+\dot{y}_n
+\end{bmatrix}
+\label{eq:state_vector}
+\end{equation}
+
+Dado que la única fuerza de entrada en el balón es la fricción, la cual depende del coeficiente de fricción dinámica y la gravedad el vector \textit{û} queda representado como:
+\begin{equation}
+\hat{u}_n = \begin{bmatrix}
+-\mu_d g\\
+-\mu_d g
+\end{bmatrix}
+\label{eq:input_signal}
+\end{equation}
+
+La matriz de transición \textit{F} es:
+
+\begin{equation}
+F = \begin{bmatrix}
+1 & 0 & \Delta t & 0\\ 
+0 & 1 & 0 & \Delta t\\ 
+0 & 0 & 1 & 0\\ 
+0 & 0 & 0 & 1
+\end{bmatrix}
+\label{eq:transition_matrix}
+\end{equation}
+
+La matriz de control es:
+\begin{equation}
+G = \begin{bmatrix}
+\frac{1}{2}  \Delta t ^2 & 0 \\ 
+0 & \frac{1}{2} \Delta t ^2 \\ 
+ \Delta t & 0 \\ 
+0 & \Delta t
+\end{bmatrix}
+\label{eq:control_matrix}
+\end{equation}
+
+Por lo tanto, la ecuación de extrapolación de estado es:
+\begin{equation}
+\hat{x}_{n+1,n} = F \hat{x}_{n,n} + G \hat{u}_{n,n}
+\label{eq:extrapolation_equation}
+\end{equation}
+
+\begin{equation}
+\begin{bmatrix}
+x_{n+1,n}\\ 
+y_{n+1,n}\\ 
+\dot{x}_{n+1,n}\\ 
+\dot{y}_{n+1,n}
+\end{bmatrix}
+=
+\begin{bmatrix}
+1 & 0 & \Delta t & 0\\ 
+0 & 1 & 0 & \Delta t\\ 
+0 & 0 & 1 & 0\\ 
+0 & 0 & 0 & 1
+\end{bmatrix}
+\!
+\begin{bmatrix}
+x_{n,n}\\ 
+y_{n,n}\\ 
+\dot{x}_{n,n}\\ 
+\dot{y}_{n,n}
+\end{bmatrix}
++
+\begin{bmatrix}
+\frac{1}{2}  \Delta t ^2 & 0 \\ 
+0 & \frac{1}{2} \Delta t ^2 \\ 
+ \Delta t & 0 \\ 
+0 & \Delta t
+\end{bmatrix}
+\!
+\begin{bmatrix}
+-\mu_d g\\
+-\mu_d g
+\end{bmatrix}
+\end{equation}
+
+El resultado de la multiplicación matricial resulta:
+\begin{equation}
+\left\{\begin{matrix}
+x_{n+1, n} = & x_{n,n} + \dot{x}_{n,n} \Delta t - \frac{1}{2} \mu_d g \Delta t^2\\ 
+y_{n+1, n} = & y_{n,n} + \dot{y}_{n,n} \Delta t - \frac{1}{2} \mu_d g \Delta t^2\\ 
+\dot{x}_{n+1, n} = & \dot{x}_{n,n} - \mu_d g \Delta t\\ 
+\dot{y}_{n+1, n} = &\dot{y}_{n,n} - \mu_d g \Delta t 
+\end{matrix}\right.
+\end{equation}
+	
+	\section{Obtencion de los parametros}
+		\subsection*{Obtención de la incertidumbre en la estimacion}
+	Dado que el proceso de estimación en el Filtro de Kalman es un modelo basdo en la esperanza de una serie de variables aleatorias para obtener el valor "oculto" el cual se considera el real. Este proceso de filtrado considera que todos los errores tanto en medición como en estimación tienen una \textit{distribución normal} por lo que cada incertidumbre tiene que expresarse como la varianza de una recompilación de datos.	
+		\subsection*{Obtención de la incertidumbre en la medicion}
+		\subsection*{Obtención de la ganancia de Kalman}

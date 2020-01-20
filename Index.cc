@@ -38,7 +38,7 @@ int main()
 	//-------Estimación de posición y velocidad-------
 	cout << "\033[1;37m4. Estimación de posición y velocidad\033[0m\n";
 	cout << "\033[1;33m	4.1 Cálculo de la posición del objeto de interés\033[0m\n";
-	cout << "\033[1;37m	4.2 Estimación de estados mediante el Filtro de Kalman\033[0m\n";
+	cout << "\033[1;33m	4.2 Estimación de estados mediante el Filtro de Kalman\033[0m\n";
 	cout << "\033[1;37m	4.3 Obtención de los parámetros\033[0m\n";
 	//----------------Implementación------------------
 	cout << "\033[1;37m5. Implementación\033[0m\n";
