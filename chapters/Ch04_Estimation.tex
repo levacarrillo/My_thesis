@@ -158,7 +158,7 @@ x = x_0 + \dot{x}_0 t - \frac{1}{2} \mu_d g t^2
 \end{figure}
 
 		\subsubsection*{Descripción del proceso de filtrado en el sistema}
-Una vez que se obtuvo el modelo dinámico que describe el movimiento del balón, se procede a escriibir las ecuaciones matriciales que describen al filtro de Kalman (Véase la sección 2.4). De este modo, este filtro es una serie de pasos que iterativamente se deben ir completando de facil cómputo para estimar posiciones y velocidades de un obejeto en movimiento (Figura: \ref{fig:kalman_extended_diagram}).
+Una vez que se obtuvo el modelo dinámico que describe el movimiento del balón, se procede a escribir las ecuaciones matriciales del Filtro de Kalman (Véase la sección 2.4). De este modo, este filtro es una serie de pasos que iterativamente se deben ir completando para estimar posiciones y velocidades de un objeto en movimiento (Figura: \ref{fig:kalman_extended_diagram}).
 
 \begin{figure}
 \centering
@@ -168,7 +168,7 @@ Una vez que se obtuvo el modelo dinámico que describe el movimiento del balón,
 \end{figure}
 
 		\subsubsection*{Modelado del sistema}
-Para desarrollar las ecuaciones de extrapolación de estado se considerará que el balón se desplazará en el suelo sin elevarse o tener rebotes, por lo que el vector de estado $$\hat{x}_n$$ que describe la estimación de posición y velocidad en el plano \textit{(x, y)} es \ref{eq:state_vector}, siguiendo la nomenclatura que se vio en la sección 2.4.
+Para desarrollar las ecuaciones de extrapolación de estado se considerará que el balón se desplazará en el suelo sin elevarse o tener rebotes, por lo que el vector de estado $\hat{x}_n$ que describe la estimación de posición y velocidad en el plano \textit{(x, y)} es \ref{eq:state_vector}, siguiendo la nomenclatura que se vio en la sección 2.4.
 
 \begin{equation}
 \hat{x}_n = \begin{bmatrix}
@@ -262,9 +262,83 @@ y_{n+1, n} = & y_{n,n} + \dot{y}_{n,n} \Delta t - \frac{1}{2} \mu_d g \Delta t^2
 \dot{y}_{n+1, n} = &\dot{y}_{n,n} - \mu_d g \Delta t 
 \end{matrix}\right.
 \end{equation}
+
+		\subsubsection*{Extrapolación de la incertidumbre de estimación}
+	El proceso de estimación en el Filtro de Kalman es un modelo basado en la \textit{esperanza} de una serie de variables aleatorias para obtener el valor \textit{oculto} que se considera el real. Este proceso de filtrado considera que todos los errores tanto en medición como en estimación tienen una \textit{distribución gaussiana} por lo que cada incertidumbre tiene que expresarse como la varianza de una recompilación de datos.
 	
+\begin{equation}
+P_{n+1,n} = F P_{n,n} F^{T} + Q
+\label{eq:extrapolation_covariance}
+\end{equation}
+
+En donde:
+\begin{equation}
+Q =
+\begin{bmatrix}
+q_x & 0 & 0 & 0\\ 
+0 & q_y & 0 & 0\\ 
+0 & 0 & q_{\dot{x}} & 0\\ 
+0 & 0 & 0 & q_{\dot{y}}
+\end{bmatrix}
+\end{equation}	
+
+Dado que no se tiene estimación inicial, es conveniente que la varianza de estimación sea la matriz identidad, de este modo, en la primera corrección la ganancia de Kalman sería muy alta (cercana a 1) y tomaría como más confiables las mediciones R.
+
+\begin{equation}
+P_{0,0} =
+\begin{bmatrix}
+1 & 0 & 0 & 0\\ 
+0 & 1 & 0 & 0\\ 
+0 & 0 & 1 & 0\\ 
+0 & 0 & 0 & 1
+\end{bmatrix}
+\end{equation}	
+
+		\subsubsection*{Obtención de la ganancia de Kalman}
+	Una vez teniendo la predicción del estado siguiente, es posible comparar las mediciones con las predicciones préviamente hechas para hacer un proceso de corrección. Para esto es necesario obtener el peso de la ganancia de Kalman que se describe con la siguiente ecuación:
+\begin{equation}
+K_n = P_{n,n-1} H^T (H P_{n,n-1}H^T + R_n)^{-1}	
+\end{equation}
+	En dónde H es la matriz de observación que sirve para asegurar que se pueda realizar la suma de la matriz de la varianza de la estimación con la del error en medición. En este caso la matriz es igual a:
+	
+\begin{equation}
+H = 
+\begin{bmatrix}
+1 & 0 & 0 & 0\\ 
+0 & 1 & 0 & 0\\ 
+0 & 0 & 1 & 0\\ 
+0 & 0 & 0 & 1
+\end{bmatrix}
+\end{equation}
+	
+y la matriz para el error en la medición es:
+
+\begin{equation}
+R_n = 
+\begin{bmatrix}
+r_x & 0 & 0 & 0\\ 
+0 & r_y & 0 & 0\\ 
+0 & 0 & r_{\dot{x}} & 0\\ 
+0 & 0 & 0 & r_{\dot{y}}
+\end{bmatrix}
+\end{equation}
+
+		\subsubsection*{Corrección de estimación de estado}
+	Con cada nueva medición, se procede a hacer la corrección del estado presente, haciendo uso del la ganancia del filtro para poder \textit{decidir} si es más fiable la medición o la predicción.
+
+\begin{equation}
+\hat{x}_{n,n} = \hat{x}_{n,n-1} + K_n(z_n - H \hat{x}_{n,n-1})
+\end{equation}
+	
+		\subsubsection*{Corrección del error de covarianza}
+	De una manera muy similar el error de covarianza se puede actualizar utilizando la ganancia de Kalman:
+
+\begin{equation}
+P_{n,n} = (I - K_n H) P_{n,n-1}
+\end{equation}
+
 	\section{Obtencion de los parametros}
 		\subsection*{Obtención de la incertidumbre en la estimacion}
-	Dado que el proceso de estimación en el Filtro de Kalman es un modelo basdo en la esperanza de una serie de variables aleatorias para obtener el valor "oculto" el cual se considera el real. Este proceso de filtrado considera que todos los errores tanto en medición como en estimación tienen una \textit{distribución normal} por lo que cada incertidumbre tiene que expresarse como la varianza de una recompilación de datos.	
+	
 		\subsection*{Obtención de la incertidumbre en la medicion}
 		\subsection*{Obtención de la ganancia de Kalman}

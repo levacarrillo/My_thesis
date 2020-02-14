@@ -1,10 +1,10 @@
 \chapter{Antecedentes}
 	\section{Robots bípedos}
 		\subsection*{Conceptos básicos}
-Un robot con piernas es un robot móvil que debe tener un cuerpo, al menos una pierna (extremidad inferior) y un número arbitrario de brazos (extremidades superiores). Generalmente sus piernas deben tener un actuador final con el cual apoyarse e impusarse  y sus brazos, un actuador para manipular objetos \citep{siciliano2016springer}. Por lo tanto, se puede deducir que un \textit{robot bípedo} es un robot con dos piernas las cuales usa para moverse, de forma similar al caminado.
+Un robot con piernas es un robot móvil que debe tener un cuerpo, al menos una pierna (extremidad inferior) y un número arbitrario de brazos (extremidades superiores). Generalmente sus piernas deben tener un actuador final con el cual apoyarse e impusarse  y sus brazos, un actuador para manipular objetos \citep{siciliano2016springer}. Por lo tanto, un \textit{robot bípedo} debe tener dos piernas las cuales usa para moverse, de forma similar al caminado humano.
 \\
 
-Entre los \textit{robots bípedos} más conocidos se encuentran los \textit{robots humanoides} (figura \ref{fig:humanoids}) que poseen las siguientes características[]:
+Entre los \textit{robots bípedos} más conocidos se encuentran los \textit{robots humanoides} (figura \ref{fig:humanoids}) que poseen las siguientes características:
 
 \begin{itemize}
 \item Tienen la apariencia y forma de un ser humano, por lo que su cuerpo debe consistir de dos brazos, dos piernas y una cabeza ajustada a un tronco.
@@ -13,7 +13,7 @@ Entre los \textit{robots bípedos} más conocidos se encuentran los \textit{robo
 \item Los movimientos que son capaces de hacer deben ser cinenmáticamente equivalentes a los de un ser humano por ejemplo, las articulaciones de la rodilla no deben doblarse para atrás, la cabeza no debe girar a más de 180 grados, ni debe tener actuadores lineales en sus extremidades.
 \end{itemize}
 
-Uno de los mayores retos a la hora de diseñar y modelar a los robot bípedos es su movimiento. A comparación de otros robots móviles, los robots con piernas tienden a tener un mayor número de grados de libertad en sus extremidades y estos deben estar muy bien coordinados para no hacer caer al robot. 
+Uno de los mayores retos a la hora de diseñar y modelar a los robot bípedos es su condición de equilibrio. A comparación de otros robots móviles, los robots con piernas tienden a tener un mayor número de grados de libertad en sus extremidades y estos deben estar muy bien coordinados para evitar que el  robot caiga mientras avanza.
 \\
 			\subsubsection*{Características para el diseño de un robot con piernas}
 \begin{itemize}
@@ -23,7 +23,7 @@ Uno de los mayores retos a la hora de diseñar y modelar a los robot bípedos es
 
 \item \textbf{Bioinspiración mecánica:} Es el diseño que sirve para reproducir la robustez y versatilidad de la locomoción de animales, algunos diseñadores prestan más atención en la dinámica esencial de la locomoción que en la mecánica.
 
-\item \textbf{Simplicidad mecánica:} Con esto se pretende usar el menor número de actuadores posibles para cumplir sólo con las tareas realizadas.
+\item \textbf{Simplicidad mecánica:} Con la simplicidad se pretende usar el menor número de actuadores posibles para cumplir sólo con las tareas realizadas.
 
 \item \textbf{Espacio de trabajo de la extremidad: } Señala que una extremidad debería tener al menos 3GDL para moverse libremente en el espacio. Para que se pueda tener una arbitraria orientación en el efector final en un espacio 3-D se debe contar con almenos 6GDL.
 
@@ -62,14 +62,14 @@ Para el control del sistema dinámico no lineal hay  un número de conceptos rel
 
 	\section{Aplicaciones en el juego de Futbol Soccer}	
 		\subsubsection*{Futbol Soccer en el concurso RoboCup}
-		La \textit{RoboCup} es una internacional iniciativa para promover la inteligencia artificial y la tecnología robótica a través de la organización de competencias y encuentros científicos. Una de las categorías más famosas dentro de este concurso es el de robots humanoides para soccer (Humanoid League) cuyo objetivo es lograr que para la mitad del siglo XXI un equipo de robots humanoides autónomos sean capaces de ganar una partida de fútbol contra el recien campeón mundial de ese entonces, siguiendo las reglas oficiales de la FIFA.
+		La \textit{RoboCup Federation} es una iniciativa internacional para promover la inteligencia artificial y la tecnología robótica a través de la organización de competencias y encuentros científicos. Una de las categorías más famosas dentro de este concurso es el de fútbol soccer con robots humanoides (Humanoid League) cuyo objetivo es lograr que para la mitad del siglo XXI un equipo de robots humanoides autónomos sean capaces de ganar una partida de fútbol contra el recien campeón mundial de ese entonces, siguiendo las reglas oficiales de la FIFA.
 		
-		La categoría de soccer comenzó en el año de 1997 con simples y simulados robots con ruedas, desde entonces el desarrollo  fue creciendo hasta que en el 2002 se inició la liga de humanoides cuyos principales retos eran los comportamientos como caminar, patear y percibir el ambiente. Desde entonces, año con año las mejoras en los mecanismos, la electrónica y control han hecho evolucionar el desarrollo para que la \textit{biomímesis} sea la más parecida a la de un humano.\citep{gerndt2015humanoid}
+		Las competencias de soccer comenzaron en el año de 1997 con simples y simulados robots con ruedas, desde entonces el desarrollo  fue creciendo hasta que en el 2002 se inauguró la liga de humanoides. Para ese entonces los principales retos eran comportamientos como caminar, patear y percibir objetos del ambiente, de esta manera, las mejoras en los mecanismos, la electrónica y control han hecho evolucionar el desarrollo para que la \textit{biomímesis} sea la más parecida a la de un humano.\citep{gerndt2015humanoid}
 		
 		\subsubsection*{Liga de robots humanoides de categoría \textit{TeenSize}}
-		En los recientes años, la introducción de robots estandarizados, accesibles y de bajo costo ha tenido un formidable impacto para la creación y desarrollo de robots de soccer. Un ejemplo es el humanoide \textit{DARwIn-OP} (Figura \ref{fig:Darwin_OP}) que se organiza dentro de la categoría \textit{KidSize}. De esta manera, algunos comportamientos del soccer ya están implementados, de modo que los investigadores tienen la oportunidad de enfocarse en tareas de más alto nivel. \citep{schwarz2013humanoid}
+		En los recientes años, la introducción de robots estandarizados, accesibles y de bajo costo ha tenido una formidable aceptación para el desarrollo e investigación de robots para soccer. Un ejemplo, es el humanoide \textit{DARwIn-OP} (Figura \ref{fig:Darwin_OP}), este robot cuenta con una plataforma estable, y algunos comportamientos de soccer están ya implementados, de modo que los nuevos desarrolladores tienen la oportunidad de enfocarse en tareas de más alto nivel para hacer los partidos más dinánmicos y complejos. \citep{schwarz2013humanoid}. 
 		
-		A pesar que \textit{DARwIn-OP} ha facilitado que los equipos lleguen a tener el número necesario de jugadores, no es lo mismo para otras categorías en donde los robots tienden a tener mayor tamaño (como en \textit{TeenSize} o \textit{AdultSize}) no se llega a tener el número deseado de jugadores y algunos competidores se ven forzados a participar con robots hechos por ellos mismos. Consecuentemente esto altera el desempeño de los partidos y retraza el desarrollo de nuevos comportamientos. Para solucionar este problema fue desarrollado un primer prototipo de plataforma abierta basado el \textit{Darwin-OP} para la categoría \textit{TeenSize} llamado \textit{Nimbro-OP} (véase la sección 5.1) el cual tiene un diseño de fácil manufactura, ensamblaje y mantenimiento.	 
+		\textit{DARwIn-OP} (categorizado dentro de \textit{KidSize}) ha facilitado que los equipos lleguen a tener el número necesario de jugadores (robots) para los partidos, no obstante, para otras categorías en donde los robots tienden a tener mayor tamaño (\textit{TeenSize} o \textit{AdultSize}) no se llega a tener el número suficiente de jugadores para completar los equipos y algunos competidores se ven forzados a participar con robots hechos por ellos mismos. Consecuentemente esto altera el desempeño de los partidos y retraza el desarrollo de nuevos comportamientos. Para solucionar este problema fue desarrollado un primer prototipo de plataforma abierta basado el \textit{Darwin-OP} para la categoría \textit{TeenSize} llamado \textit{Nimbro-OP} (véase la sección 5.1) el cual tiene un diseño de fácil manufactura, ensamblaje y mantenimiento.	 
 
 \begin{figure}
 \centering
@@ -79,7 +79,7 @@ Para el control del sistema dinámico no lineal hay  un número de conceptos rel
 \end{figure}
 
 	\section{Usos de la visión computacional}
-	La \textit{visión computacional} es la transformación de datos desde una imagen o video cámara hacia una \textit{nueva representación} para lograr un fin en particular \cite{bradski2008learning}. Al decir esto, significa que se pueden usar ciertas características de la luz capturada en una imagen (o secuencia de imágenes) para transformarlas en variables numéricas que la computadora pueda abstraer y procesar (tómese de ejemplo la figura \ref{fig:camera_representation}).
+	La \textit{visión computacional} es la transformación de información lumínica desde una imagen o video a hacia una \textit{nueva representación} de datos \cite{bradski2008learning}. Con esta nueva representación se pueden usar ciertas características de la luz capturada para transformarlas en variables numéricas que la computadora pueda abstraer y procesar (tómese de ejemplo la figura \ref{fig:camera_representation}).
 
 \begin{figure}
 \centering
@@ -88,60 +88,57 @@ Para el control del sistema dinámico no lineal hay  un número de conceptos rel
 \label{fig:camera_representation}
 \end{figure}
 
-Para los fines de este trabajo solamente se utilizarán funciones para segmentar objetos con base en su color, para obtener la posición del objeto en el espacio se hizo el análisis matemático de la sección 4.1.
+Para los fines de esta tesis, no es será necesario hacer uso de software para reconocimiento de formas o patrones, solamente se utilizarán funciones para segmentar objetos con base en su color, lo cual es muy conveniente para determinar la posición del objeto en el espacio. Tal y como se puede ver en el análisis matemático de la sección 4.1.
 	
 	\section{El Filtro de Kalman}
 		\subsection*{Filtro de Kalman Discreto}
-	En 1060 Rudolf Emil Kalman publicó su famoso \textit{paper} en donde describe una recursiva solución para el problema del filtrado de datos discretos. Desde ese entonces el filtro ha sido sujeto de extensas investigaciones y aplicaciones en la ingeniería.
+	En 1060 Rudolf Emil Kalman publicó su famoso \textit{paper} donde describe una forma sencilla para filtrar datos discretos de manera recursiva. Este método ha sido usado ampliamente en investigaciones y aplicaciones de ingeniería ya que resulta útil para la predicción de estados con base en modelos matemáticos y datos estadísticos. Por ejemplo, la posición y velocidad de un avión en vuelo, la temperatura de una caldera a la que se le está suministrando combustible o las lecturas dispersas de posición en un GPS.
 
-	El Filtro de Kalman es un conjunto de ecuaciones matemáticas que proveen un eficiente método computacional para estimar el estado de un proceso, de modo que minimiza el error producido por el ruido. Este filtro es una poderosa herramienta en varios aspectos tales como la estimación del pasado, presente y futuro, incluso es capaz de precisar el modelo de un sistema cuya naturaleza es desconocida.
+	El Filtro de Kalman es un algoritmo computacionalmente eficiente cuyas ecuaciones matemáticas minimizan el error producido por el ruido inherente de las mediciones. Con la estimación es posible conocer con precisión el estado pasado, presente y futuro de un sistema, incluso si éste tiene un modelo de naturaleza desconocida.
 	
 		\subsection*{Proceso de estimación}
 		El Filtro de Kalman aborda el problema de tratar de estimar el estado $x \in \Re^n$ de un proceso de tiempo discreto que es modelado con la ecuación diferencial \ref{eq:kalman_filter}.
 		
 \begin{equation}
-x_k = Ax_{k-1} + Bu_{k-1}+w_{k-1}
+\hat{x}_{n+1,n} = F \hat{x}_{n,n} + G \hat{u}_{n,n}
 \label{eq:kalman_filter}
 \end{equation}
 
-En donde $A$ es una matriz de nxn que relaciona el estado anterior $k-1$ con el estado presente $k$. $B$ es una matriz de $nx1$ que relaciona la entrada de control opcional $u \in R^1$ al estado $x$. 
-La medición $z \in \Re^m$, también conocida como matriz de observación se puede modelar con la ecuación \ref{eq:measurement_equation}:
+	En donde $F$ es una matriz de nxn que relaciona el estado presente $n$ con el estado futuro $n+1$. $G$ es una matriz de nx1 que relaciona la entrada de control $u \in R^1$ al estado $x$. 
+\\
+	La medición $z \in \Re^m$, también conocida como vector de medición se puede modelar con la ecuación \ref{eq:measurement_equation}:
 
 \begin{equation}
-z_k = Hx_k+v_k
+z_n = Hx_n+v_n
 \label{eq:measurement_equation}
 \end{equation}
 
-En \ref{eq:measurement_equation} $H$ es una matriz de $mxn$ que relaciona el estado con la medición $z_k$.  Las variables aleatorias $w_k$ y $v_k$ representan el ruido del proceso y de la medición (respectivamente), asumiendo que son independientes una de la otra. Las expresiones en \ref{eq:normal_distribution_w} y \ref{eq:normal_distribution_R} representan su distribucion normal.
+En donde la matriz de observación $H$ de mxn es la que relaciona el estado $x_n$ con la medición $z_n$, el vector $v_n$ representa el ruido aleatorio en la medición. El Filtro de Kalman supone que el error en las mediciones debe tener una distribución normal, de esta manera la predicción de los estados tendrá un mayor grado de confiabilidad, por lo tanto la expresión \ref{eq:normal_distribution_R} representa cómo está distribuido el error del vector $v_n$. 
 
 \begin{equation}
-p(w) \sim N(0,Q),
-\label{eq:normal_distribution_w}
-\end{equation}
-\begin{equation}
-p(w) \sim N(0,R)
+p(v) \sim N(0,R)
 \label{eq:normal_distribution_R}
 \end{equation}
 
-Con el objetivo de encontrar una ecuación que calcule una estimación \textit{a posteriori} de un estado $\hat{x}_k$ como una combinación lineal de un estado \textit{a priori} $\hat{x}_k^-$ y una proporcional diferencia de una medición actual $z_k$ con una medición de la predicción $H\hat{x}_k^-$ se emplea la ecuación \ref{eq:posteriori_predicted}.
+Con el objetivo de encontrar una ecuación que calcule la estimación de un estado \textit{a posteriori} $\hat{x}_{n,n}$ como una combinación lineal de un estado \textit{a priori} $\hat{x}_{n, n-1}$ más una proporcional diferencia de la medición actual $z_n$ con la predicción $H\hat{x}_{n,n-1}$ se emplea la ecuación \ref{eq:posteriori_predicted}.
 
 \begin{equation}
-\hat{x}_k = \hat{x}_k^- + K(z_k-H\hat{x}_k^-)
+\hat{x}_{n,n} = \hat{x}_{n,n-1} + K_n (z_n-H\hat{x}_{n,n-1})
 \label{eq:posteriori_predicted}
 \end{equation}
 
-La diferencia $(z_k-H\hat{x}_k^-)$ dentro de la ecuación \ref{eq:posteriori_predicted} es llamada \textit{innovación} o \textit{residuo}. $K$ es una matriz de $nxm$ que representa la ganancia que reduce el error de covarianza \textit{a posteriori}. Esta ganancia está dada por la ecuación \ref{eq:k_gain}.
+$K_n$ es una matriz de nxm llamada \textit{Ganancia de Kalman}, esta ganancia está dada por la ecuación \ref{eq:k_gain} y su valor determina si es más confiable el valor de la medición o la predicción previa del modelo matemático.
 
 \begin{equation}
-K_k = P_k^-H^T(HP_k^-H^T+R)^{-1} = \frac{P_k^-H^T}{HP_k^-H^T+R}
+K_n = P_{n,n-1}H^T(HP_{n,n-1}H^T+R_n)^{-1} = \frac{P_{n,n-1}H^T}{HP_{n,n-1}H^T+R_n}
 \label{eq:k_gain}
 \end{equation}
 
-De esta manera, cuando el error de covarianza en la medición $R$ se aproxima a cero, la ganancia $K$  tiene un mayor peso en la ecuación. Por el contrario, cuando el error de covarianza \textit{a posteriori} $P_k^-$ se aproxima a cero, la ganancia $K$ obtiene menor peso. 
-
-Otra forma de entender la utilidad de la ganancia de $K$ es pensar que mientras la ganancia de aproxime a 1, hará que la medición sea más \textit{confiable}, cuando las mediciones se aproximen a cero, serán menos confiables y se tomará como confiable los datos relacionados con el modelo matemático.
-		\subsubsection{Algoritmo de filtrado}
-El algoritmo consta de dos fases, la fase \textit{predictiva} y la fase \textit{correctiva}. La fase predictiva consta de utilizar un modelo matemático para obtener las posibles mediciones de un fenómeno. La fase correctiva obtiene los valores de la medición y las compara con las obtenidas con el modelo matemático, de manera que se obtienen los valores de salida, tal y como se observa en la figura \ref{eq:kalman_filter}.
+Como puede observarse, cuando el error de covarianza de la medición $R_n$ se aproxima a cero, la ganancia $K_n$  tiene un mayor peso (cercano a uno). Por el contrario, cuando el error de covarianza \textit{a posteriori} $P_{n,n-1}$ se aproxima a cero, la ganancia $K_n$ obtiene menor peso (cercano a cero).
+	La matriz de mxm $Q$ o \textit{matriz de error de proceso} describe el error causado por situaciones imprevistas, causados por ambientes irregulares o fallas mecánicas .	
+\\
+\\
+	El algoritmo consta de dos fases, la fase \textit{predictiva} y la fase \textit{correctiva}. La fase predictiva consta de utilizar un modelo matemático para obtener las probables mediciones de un fenómeno. La fase correctiva obtiene los valores de la medición y las compara con las obtenidas con el modelo matemático, véase la figura \ref{fig:Kalman_scheme}.
 
 \begin{figure}
 \centering
@@ -163,8 +160,6 @@ El algoritmo consta de dos fases, la fase \textit{predictiva} y la fase \textit{
 \label{fig:ball_contour_1}
 \end{figure}
 
-	De acuerdo con \citep{behnke2006see} para este tipo de robots, la única fuente de información sobre el ambiente es la cámara, de modo que es conveniente que se disponga de una o más cámaras dentro o fuera del robot. Con una correcta configuración de cámaras se pueden obtener más parámetros del ambiente, tales como posicionamiento del robot, distancia con el objeto de interés, cercanía con otros robots y detección de obstáculos. 
-	
 	\textcolor{red}{Consulta los TDP de otros equipos de soccer para ver cómo hacen la estimación de posición y velocidad, o si solo hace estimación de posición, como lo hacen.}	
 	
 	

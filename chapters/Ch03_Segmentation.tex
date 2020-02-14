@@ -141,7 +141,7 @@ La gran mayoría de las veces, cuando se hace procesamiento de imágenes, se nec
 
 Los \textit{operadores morfológicos} son operadores matemáticos basados en la forma de una imagen comunmente binaria (con pixeles blancos y negros) y sirven para preservar sus características y eliminar las irrelevancias. Dado que toda imagen está compuesta por pixeles, se pueden crear ciertos conjuntos de pixeles dentro de un vector para así poder aplicar operaciones matemáticas. 
 
-La \textit{erosión} es el primer operador que se aplica cuando se desea eliminar el ruido en una segmentación, eso es porque elimina una gran cantidad de pixeles que tienden a tener mucha menor área que la figura de interés. Para lograr esto se establecen dos conjutos (de coordenadas de pixeles) $A$ y $B$. Si $A$ y $B$ son conjuntos dentro de un espacio euclidiano de N elementos, entonces la erosión de $A$ por $B$ es el conjunto de elementos $x$ para el cual $x + b \in  A$ para cada $b \in B$. Entonces, de una manera más formal, la operación de erosión se puede definir con la expresión \ref{eq:erosion}.
+La \textit{erosión} es el primer operador que se aplica cuando se desea eliminar el ruido en una segmentación, eso es porque elimina una gran cantidad de pixeles que tienden a tener mucha menor área que la figura de interés. Para lograr esto se establecen dos conjutos (de coordenadas de pixeles) $A$ y $B$. Si $A$ y $B$ son conjuntos dentro de un espacio euclidiano de N elementos, entonces la erosión de $A$ por $B$ es el conjunto de elementos $x$ para el cual $x + b \in  A$ para cada $b \in B$. Por lo tanto, de una manera más formal, la operación de erosión se puede definir con la expresión \ref{eq:erosion}.
 En la figura \ref{fig:erosion_diagram} se puede observar de una manera más visual cómo funciona la operación de erosión dentro de una imagen binaria.
 \begin{equation}
 A\thinspace\ominus\thinspace B\thinspace=\thinspace \left \{ x \in E^N  \mid x+b \in A \enspace \forall \; b \in B\right \}
@@ -159,7 +159,7 @@ A\thinspace\ominus\thinspace B\thinspace=\thinspace \left \{ x \in E^N  \mid x+b
 
 En la figura \ref{fig:erosion_example} se ve que la erosión ha eliminado el ruido y la imagen se ve más limpia de puntos blancos que rodean la región de interés. El problema de hacer este procedimiento es que la imagen original suele verse afectada y tiende a encogerse o a deformarse, esto puede representar un problema para la detección de contornos. Para solucionarlo se procede a aplicar una operación opuesta a la erosión, mejor conocida como \textit{dilatación}.
 
-Una vez eliminado el ruido gracias a la erosión, la \textit{dilatación} procede a ensanchar la figura de interés utilizando la adición de dos conjuntos de elementos. De la misma manera en que se hizo la erosión se procede a nombrar dos conjuntos $A$ y $B$. Si $A$ y $B$ son conjuntos dentro de un espacio euclidiano de N elementos. Sean $a \in A$ y $b \in B$ en donde $a=(a_1, ... ,a_n)$ y $b=(b_1,...,b_n)$, es decir conjuntos con coordenadas de pixeles, entonces la dilatación de $A$ por $B$ es el conjunto de todas las posibles sumas de elementos, de $A$ y $B$. De forma formal \ref{eq: dilation}:
+Una vez eliminado el ruido gracias a la erosión, la \textit{dilatación} procede a ensanchar la figura de interés utilizando la adición de dos conjuntos de elementos. De la misma manera en que se hizo la erosión se procede a nombrar dos conjuntos $A$ y $B$. Si $A$ y $B$ son conjuntos dentro de un espacio euclidiano de N elementos. Sean $a \in A$ y $b \in B$ en donde $a=(a_1, ... ,a_n)$ y $b=(b_1,...,b_n)$, es decir conjuntos con coordenadas de pixeles, entonces la dilatación de $A$ por $B$ es el conjunto de todas las posibles sumas de elementos, de $A$ y $B$. De forma formal se expresa como \ref{eq: dilation}.
 \begin{equation}
 A\thinspace\oplus\thinspace B\thinspace=\thinspace \left \{ c \in E^N  \mid c=a+b \quad\forall \quad a \in A \; y\; \; b \in B\right \}
 \label{eq: dilation}
@@ -173,7 +173,7 @@ A\thinspace\oplus\thinspace B\thinspace=\thinspace \left \{ c \in E^N  \mid c=a+
 \label{fig:erosion_example}
 \end{figure}
 
-En la figura \ref{fig:dilation_diagram} se puede imaginar que si se coloca el \textit{kernel} dentro de los pixeles pertenecientes al conjunto $A$ y se suman, queda como resultado de $A \oplus B$ una imagen ensanchada, lo que puede ayudar a que la figura erosionada tenga mayor parecido a la imagen original \cite{4767941}. En la figura \ref{fig:dilation_example} está ya un ejemplo de cómo se ensancha una figura al aplicar la dilatación.
+En la figura \ref{fig:dilation_diagram} se puede imaginar que si se coloca el \textit{kernel} dentro de los pixeles pertenecientes al conjunto $A$ y se suman, queda como resultado de $A \oplus B$ una imagen ensanchada, lo que puede ayudar a que la figura erosionada tenga mayor parecido a la imagen original \cite{4767941}. En la figura \ref{fig:dilation_example} está un ejemplo de cómo se ensancha una figura al aplicar la dilatación.
 
 \begin{figure}
 \centering
