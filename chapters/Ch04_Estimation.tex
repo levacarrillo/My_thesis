@@ -321,6 +321,7 @@ r_x & 0 & 0 & 0\\
 0 & 0 & r_{\dot{x}} & 0\\ 
 0 & 0 & 0 & r_{\dot{y}}
 \end{bmatrix}
+\label{matrix:measurement_error}
 \end{equation}
 
 		\subsubsection*{Corrección de estimación de estado}
@@ -338,7 +339,105 @@ P_{n,n} = (I - K_n H) P_{n,n-1}
 \end{equation}
 
 	\section{Obtencion de los parametros}
-		\subsection*{Obtención de la incertidumbre en la estimacion}
+		\subsection*{Coeficiente de fricción dinámica}
+	De acuerdo con la ecuación \ref{eq:position_prediction} y como se vio a lo largo de su deducción, el modelo de la posición del balón respecto al tiempo, depende únicamente del coeficiente de fricción dinámica entre el balón y el material el cual se desplaza. Para obtener dicho coeficiente se optó por la solución más simple, la cual consiste en medir diréctamente la fuerza que se opone al desplazamiento, por medio de un dinamómetro de resorte marca \textit{Pasco} con rango de 0 a 10[N] y una resolución de 0.1[N]. Véase la figura \ref{fig:dynamometer}. 
 	
+\begin{figure}
+\centering
+\includegraphics[scale=0.4]{images/dynamometer.jpg}
+\caption{Dynamómetro de resorte utilizado para obtener la fuerza de fricción}
+\label{fig:dynamometer}
+\end{figure}	
+
+	Las medidas del dinamómetro del peso del balón dio $2.2[N]$, de la fuerza de fricción estática $F_{e} = 1.5[N]$ y de la fuerza de fricción dinámica $F_{d} = 0.8[N]$. 
+
+	Por lo que se puede aplicar la segunda ley de Newton (de manera simplificada) para despejar el coeficiente de fricción deseado:
+\begin{equation}
+F_d = N\mu_d 
+\end{equation}
+	En donde $N$ es la fuerza normal a la superficie con la misma magnitud del peso del balón (por considerar que se está desplazando de manera horizontal). Por tanto la fuerza de fricción dinámica es:
+	
+\begin{equation}
+	\mu_d = \frac{F_d}{N}
+	      = 0.3636		
+\end{equation}
+	
+		%\subsection*{Obtención de la incertidumbre en la estimacion}	
 		\subsection*{Obtención de la incertidumbre en la medicion}
-		\subsection*{Obtención de la ganancia de Kalman}
+	De acuerdo con los datos de posición del balón (cuadro \ref{cuadro:x_position} y \ref{cuadro:y_position}) obtenidos por el sistema embebido, se puede obtener un promedio para el error de posición para recabar datos para la matriz de error de medición.
+
+\begin{table}[]
+\begin{tabular}{|c|c|c|}
+\hline
+\multicolumn{1}{|l|}{\textbf{Posición x real {[}m{]}}} & \multicolumn{1}{l|}{\textbf{Posición x obtenida {[}m{]}}} & \multicolumn{1}{l|}{\textbf{Error absoluto [m]}} \\ \hline
+0.2                                                    & 0.290                                                     & 0.090                                        \\ \hline
+0.3                                                    & 0.370                                                     & 0.070                                        \\ \hline
+0.4                                                    & 0.489                                                     & 0.089                                        \\ \hline
+0.5                                                    & 0.590                                                     & 0.090                                        \\ \hline
+0.6                                                    & 0.745                                                     & 0.145                                        \\ \hline
+0.7                                                    & 0.832                                                     & 0.132                                        \\ \hline
+                                                       & Promedio:                                                 & 0.1026                                       \\ \hline
+\end{tabular}
+\caption{Error absoluto de la en posición \textit{x} del balón}
+\label{cuadro:x_position}
+\end{table}
+
+\begin{table}[]
+\begin{tabular}{|c|c|c|}
+\hline
+\multicolumn{1}{|l|}{\textbf{Posición y real {[}m{]}}} & \multicolumn{1}{l|}{\textbf{Posición y obtenida {[}m{]}}} & \multicolumn{1}{l|}{\textbf{Error absoluto [m]}} \\ \hline
+-0.4                                                   & -0.39                                                     & 0.01                                         \\ \hline
+-0.3                                                   & -0.32                                                     & 0.02                                         \\ \hline
+-0.2                                                   & -0.22                                                     & 0.02                                         \\ \hline
+-0.1                                                   & -0.071                                                    & 0.029                                        \\ \hline
+0.1                                                    & 0.126                                                     & 0.026                                        \\ \hline
+0.2                                                    & 0.183                                                     & 0.017                                        \\ \hline
+0.3                                                    & 0.221                                                     & 0.079                                        \\ \hline
+0.4                                                    & 0.37                                                      & 0.03                                         \\ \hline
+                                                       & Promedio:                                                 & 0.0288                                       \\ \hline
+\end{tabular}
+\caption{Error absoluto de la posición en \textit{y} del balón}
+\label{cuadro:y_position}
+\end{table}
+
+	 Obtenido el error de la medición en la posición del balón $e_x$ y $e_y$, se procede a obtener el error en la velocidad y dado que es obtenida indirectamente al dividir la diferencia de distancia entre la diferencia de tiempo, se deduce de la siguiente forma:	 
+
+\begin{equation}
+v_x = \frac{dx + de_x}{dt} 
+    = \frac{dx}{dt} + \frac{de_x}{dt}
+\end{equation}
+
+\begin{equation}
+v_y = \frac{dy + de_y}{dt}
+    = \frac{dy}{dt} + \frac{de_y}{dt}
+\end{equation}
+
+	Por lo tanto, el error de medición en la velocidad de $e_{v_x}$ y $e_{v_y}$ es el cociente del error de distancia entre la diferencia de tiempo de muestreo. 
+
+\begin{equation}
+e_{v_x} = \frac{de_x}{dt}
+		= \frac{0.1026}{0.0333}
+		= 3.078 
+\label{eq:ev_x}
+\end{equation}
+
+\begin{equation}
+e_{v_y} = \frac{de_y}{dt}
+		= \frac{0.0288}{0.0333}
+		= 0.8648
+\label{eq:ev_y}
+\end{equation}
+
+	De acuerdo con la matriz \ref{matrix:measurement_error} se pueden substituir los valores del promedio de los cuadros \ref{cuadro:x_position} y  \ref{cuadro:y_position} y los valores obtenidos de \ref{eq:ev_x} y \ref{eq:ev_y}:
+	
+\begin{equation}
+R_n = 
+\begin{bmatrix}
+0.1026 & 0 & 0 & 0\\ 
+0 & 0.0288 & 0 & 0\\ 
+0 & 0 & 3.078 & 0\\ 
+0 & 0 & 0 & 0.8648
+\end{bmatrix}
+\end{equation}
+
+		%\subsection*{Obtención de la ganancia de Kalman}
