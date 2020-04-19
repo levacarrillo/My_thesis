@@ -16,11 +16,11 @@ white        37         47*/
 int main()
 {
 	//----------------Introducción--------------------
-	cout << "\033[1;37m1. Introducción\033[0m\n";
-	cout << "\033[1;37m	1.1 Motivación\033[0m\n";
-	cout << "\033[1;37m	1.2 Planteamiento del problema\033[0m\n";
-	cout << "\033[1;37m	1.3 Hipótesis\033[0m\n";
-	cout << "\033[1;37m	1.4 Objetivos\033[0m\n";
+	cout << "\033[1;33m1. Introducción\033[0m\n";
+	cout << "\033[1;33m	1.1 Motivación\033[0m\n";
+	cout << "\033[1;33m	1.2 Planteamiento del problema\033[0m\n";
+	cout << "\033[1;33m	1.3 Hipótesis\033[0m\n";
+	cout << "\033[1;33m	1.4 Objetivos\033[0m\n";
 	cout << "\033[1;37m	1.5 Descripción del documento\033[0m\n";
 	//----------------Antecedentes---------------------
 	cout << "\033[1;33m2. Antecedentes\033[0m\n";

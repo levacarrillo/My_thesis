@@ -148,21 +148,44 @@ Como puede observarse, cuando el error de covarianza de la medición $R_n$ se ap
 \end{figure}
 
 	\section{Trabajo relacionado}
-		\subsubsection{Percepción del color}
-	Una de las técnicas más comunes y prácticas para realizar la detección de objetos para un robot Nimbro-OP es la segmentación por color, es por eso que es muy conveniente que los balones de fútbol en las competencias RoboCup tengan un color diferente al piso en donde descanzan (que generalmente es verde). No obstante, el balón elegido por la comunidad puede tener diferentes matices, por lo que se deben emplear sistemas de aprendizaje para que el robot distinga un balón de cualquier color. 
 	
-	Tal y como hizo el robot \textit{Dynaped} en 2012 \citep{missura2012robocup}, se obtienen ciertos parámetros de color del tapete usado en la cancha,  para poder encerrar en un contorno el color que no coincida. Véase la figura \ref{fig:ball_contour_1}.
+	Como ya se ha mencionado, la detección del balón es el principal objetivo para la categoría de \textit{Soccer Humanoids}. Esto representa un reto para los sistemas de visión computacional, el cual debe encargarse tanto de la detección como del cálculo de la posición con base en un sistema egocéntrico. Según los TDP \textit{(Team Description Paper)} se puede saber cómo los equipos han abordado este desafío en los recientes años, por lo que ayuda en gran medida para saber qué técnicas se pueden reimplementar o mejorar según la necesidad. 
+\\	
+
+	En los siguientes párrafos se resumen los métodos utilizados por los equipos de distintos países, así será fácil diferenciar con los métodos implementados de esta tesis.
+	
+	\subsection*{ITAndroids}
+	El equipo \textit{ITAndroids} del Instituto Tecnológico de Aereonáutica de Brasil implementó un sistema basado en los sistemas de visión de los humanoides de la plataforma estándar. Tomaron como punto de partida la segmentación por color con algoritmos hechos en MATLAB y funciones de OpenCV como \textit{Hough Circle Transform} para la detección correcta del objetivo, tal y como se ve en la Figura \ref{fig:ITAndroids_vision}.
 	
 \begin{figure}
 \centering
-\includegraphics[scale=0.7]{images/ball_contour_1.png}
-\caption{(a) Región de interés con un balón desconocido; (b) Segmentación del objeto.}
-\label{fig:ball_contour_1}
+\includegraphics[scale=0.25]{images/ITAndroids_vision.png}
+\caption{Proceso de vision implementado por ITAndroids}
+\label{fig:ITAndroids_vision}
 \end{figure}
 
-	\textcolor{red}{Consulta los TDP de otros equipos de soccer para ver cómo hacen la estimación de posición y velocidad, o si solo hace estimación de posición, como lo hacen.}	
+	Debido al ruido inherente en el procesamiento de imágenes, un Filtro de Kalman es empleado para estimar la posición más probable si es que un objeto del mismo color del balón es detectado.
 	
+	Ya que se hace el reconocimiento del balón, se procede a calcular su posición relativa respecto al humanoide, transformando las coordenadas bidimensionales obtenidas por la imagen a tridimensionales haciendo uso de un método similar al de esta tesis (véase la Sección 4), suponiendo que la posición del balón en la coordenada \textit{z} es siempre 0 y calculando la cinemática directa desde la posición de la cámara a la posición de dicho objetivo.
 	
+	 \subsection*{NimbRo TeenSize}
+	 Debido a las nuevas reglas dadas por el comité organizador de la RoboCup en cuanto al color del balón (blanco como en las competencias de la FIFA), el equipo \textit{NimbRo} de la Universidad de \textit{Friedrich-Wilhelms} de Alemania optó por utilizar un sistema de reconocimiento que no se base sólo en color, pues las líneas divisorias de las canchas o la portería tienen la misma tonalidad. Es por eso que su sistema de reconocimiento está basado en histogramas HOG (histogram of oriented gradients).
 	
+	 Con el reconocimiento debidamente implementado, se usan las Transformaciones Homogéneas para obtener la posición del balón con cinemática directa, de este modo resulta muy útil la biblioteca \textit{tf2} de ROS. No obstante, aunque las posiciones del robot están bien definidas, algunas variaciones del hardware pueden dar pauta al error en la medición. Para resolver estos fallos este equipo usó el método de Nelder-Mead que consiste en hacer una triangulación convergente para las probables posiciones del balón.
+	 
+	 \subsection*{T-Flow}
+	 Otra forma para realizar la detección de objetos es obteniendo una forma tridimensional específica con una cámara estéreo, tal y como lo hizo el equipo \textit{T-Flow} del \textit{Centro de Investigación de Robótica} del Politécnico de Indonesia. 
+	 
+
+	 Este equipo emplea una cámara estéreo para obtener un par de imágenes, remapear y formar una imagen tridimensional con profundidad aproximada, para posteriormente compararse con un patrón esférico como lo es el balón. 	 
+
+
+	 El sistema de estereo-visión resulta ser muy útil y sencillo para la detección y posicionamiento del objeto, no obstante, se requiere un elevado coste computacional.
+	 
+	\subsection*{Ichiro}
+	De una manera muy similar al robot del Laboratorio de Bio-robótica de la UNAM, los humanoides del equipo \textit{Ichiro} del \textit{Instituto Tecnológico Diez de Noviembre} de Indonesia, poseen una web-cam Logitech C922 con alta definición.
 	
-	
+	En la detección del balón este equipo emplea un método de Patrones de Binarios Locales el cual es un descriptor de texturas que toma como base la transformación de las imágenes a escala de grises, para posteriormente tomar como contorno los cambios de tonalidad, este método representa bajo costo computacional y hace la segmentación más independiente a los cambios de luz. 
+\\
+
+	Como se observó en estos párrafos, existen distintos procedimientos para la detección y localización tridimesional del objeto, las cuales resultan muy prometedoras. No obstante, poco se menciona sobre la detección de objetos en movimiento, y los filtros empleado sólo comprenden modelos estáticos, por lo que esta tesis busca ampliar las fronteras de los algoritmos comunmente empleados. 	 

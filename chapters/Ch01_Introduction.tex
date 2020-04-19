@@ -1,14 +1,34 @@
 \chapter{Introducción}
 
 \section{Motivación}
-
+	Los robots humanoides tienen un gran potencial para la robótica de servicio debido a que su bioinspiración mecánica les permite realizar tareas muy similares a las de un ser humano. Sin embargo, con cada mejora de capacidades, la complejidad de los algoritmos incrementa considerablemente. Es por eso que los concursos de la RoboCup abrieron la categoría \textit{Humanoid} para impulsar el desarrollo e investigación de los humanoides.
+	\\
+	Una de las propuestas más convenientes para buscar dicho desarrollo, es formar equipos de humanoides con retos específicos del fútbol soccer, ya que engloba sistemas de visión computacional, inteligencia artificial y control automático análogos a los del sistema humano.
+\\	
+	A lo largo de los últimos años, se han creado extraordinarios algoritmos para realizar comportamientos complejos y cada vez más parecidos a los de los jugadores, pese a esto, aún resta mucho por perfeccionar. Por ejemplo al interactuar con objetos en movimiento, un humano puede fácilmente patear, cabecear o interceptar un balón que se mueve, con los humanoides estas son tareas complejas y requieren gran capacidad de cómputo. 
+	Por esta razón, la motivación de esta tesis es crear algoritmos para imitar dichas capacidades y hacer partidos más dinámicos.
+	
 \section{Planteamiento del problema}
-\section{Hipótesis}
+	Actualmente el desarrollo de los sistemas de visión computacional para humanoides ha postergado un poco el estudio de objetos en movimiento, debido en parte, a que los partidos se ejecutan de manera lenta y pausada, donde el balón permanece inmóvil la mayor parte del tiempo. No obstante, el avance en la complejidad de los concursos, ha hecho necesario obtener la velocidad y la trayectoria del balón, sobretodo en los tiros penales y en la prueba llamada \textit{kick from a moving ball}.  
 
+	En el Laboratorio de Bio-robótica de la UNAM se tiene a disposición un humanoide tipo \textit{Nimbro-OP} el cual es un prototipo en desarrollo que representa una gran oportunidad para implementar las herramientas anteriormente mencionadas. Con estas herramientas, el humanoide será capaz de competir en concursos tanto nacionales como internacionales.
+	 
+	
+\section{Hipótesis}
+	Debido a que se pretende obtener un posicionamiento tridimensional de un objeto teniendo como entrada de visión, una imagen bidimensional, lo más conveniente es hacer un sistema de segmentación por color para reconocimiento y una serie de cálculos de cinemática directa para obtener posición.
+	
+	Teniendo un muestreo constante de posición y velocidad del balón, se pretende estimar y filtrar los datos empleando un Filtro de Kalman. Posteriormente, este filtro servirá para hacer una extrapolación de posición en un tiempo determinado, lo suficiente para que el robot pueda patear con precisión objetos en movimiento. 
+	
+	
 \section{Objetivos}
-	\subsubsection{General}
 		\begin{itemize}
-			\item \textbf{Aplicar un Filtro de Kalman para la predicción de posición y velocidad de un objeto en movimiento para un robot bípedo tipo Nimbro-OP}
+			\item \textbf{Determinar la posición de un balón con base en un sistema de referencia egocéntrico para un robot humanoide utilizando técnicas de visión computacional.}
+			
+			\item \textbf{Aplicar un Filtro de Kalman para obtener la estimación de posición y velocidad de un balón en movimiento.}
+			
+			\item \textbf{Desarrollar un algoritmo de pateo basado en posiciones predefinidas.}
+			
+			\item \textbf{Integrar los distintos programas dentro de la plataforma ROS para que dicho humanoide patee un balón en movimiento.}
 		\end{itemize}
-	\subsubsection{Particulares}	
+
 \section{Descripción del documento}
