@@ -56,5 +56,9 @@ int main()
 	cout << "\033[1;37m	7.1 Conclusiones\033[0m\n";
 	cout << "\033[1;37m	7.2 Trabajo futuro\033[0m\n";
 
+//https://submission.robocuphumanoid.org/uploads//Ichiro_Teen_Size-tdp-5c4f57f4522a3.pdf
+//https://humanoid.robocup.org/qualification/2017/b3b640d7c0ccb8808547a87bbb88b0e6b2247b18/T_FLOW_Humanoid_TeenSize_regularanddrop_in_2017_TDP.pdf
+//https://humanoid.robocup.org/qualification/2017/cb4c8db9feb11f1c61fb7b7d5d4a7e1764058451/NimbRo_TeenSize_Humanoid_TeenSize_regularanddrop_in_2017_TDP.pdf
+//https://humanoid.robocup.org/qualification/2017/53f4ef65b44546bcb4711eb446f0caa402d7da16/ITAndroids_Humanoid_KidSize_regularanddrop_in_2017_TDP.pdf 
 	return 0;
 }
