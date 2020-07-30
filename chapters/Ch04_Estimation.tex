@@ -149,6 +149,31 @@ Integrando y despejando $x$ se obtiene:
 x = x_0 + \dot{x}_0 t - \frac{1}{2} \mu_d g t^2
 \label{eq:position_prediction}
 \end{equation}
+%ESta ecuación es la solución de la ecuación diferencial que modela el movimiento
+%De la eacuación 4.9 se tiene que:
+\[\ddot{x} = -\frac{1}{m}\mu_d m g + \frac{1}{m}F\]
+pero F = 0. Simplemente el balón comienza con v0 dif de cero y se va deteniendo.
+Planteando esto en variables de estado:
+\[ [x_1,x_2] = [x, \dot{x}]\]
+\begin{eqnarray*}
+\dot{x}_1 &=& x_2\\
+\dot{x}_2 &=& -\frac{1}{m}\mu_d m g + \frac{1}{m}F
+\end{eqnarray*}
+Este es el modelo en variables de estado, continuo. 
+Para el EKF se discretiza este modelo. Y la señal de entrada F = 0. 
+EL MODELO DISCRETO DEL SISTEMA ES CON RUIDO ES:
+\begin{eqnarray*}
+x_{1_{k+1}} &=& x_{1_k} + \Delta t x_2 + \omega_1\\ %Modelo1
+y_{1_{k+1}} &=& y_{1_k} + \Delta t y_2 + \omega_2\\ %Modelo2
+x_{2_{k+1}} &=& x_{2_k} - \Delta t \frac{1}{m}\mu_d m g + \frac{1}{m}F_x + \omega_3\\ %Modelo3
+y_{2_{k+1}} &=& y_{2_k} - \Delta t \frac{1}{m}\mu_d m g + \frac{1}{m}F_y + \omega_3 %Modelo4
+\end{eqnarray*}
+DE ESTOS CUATRO ESTADOS, TÚ MIDES 2:
+\begin{eqnarray*}
+z_1 &=& x_1 + v_1\\
+z_2 &=& x_2 + v_2
+\end{eqnarray*}
+$\Omega = [\omega_1, ... \omega_4]$ es un vector de ruido con distribución normal, media cero, y matriz de covarianza $Q\in \mathbb{R}^{4\times 4}$.
 
 \begin{figure}
 \centering
@@ -181,10 +206,21 @@ y_n\\
 \end{equation}
 
 Dado que la única fuerza de entrada en el balón es la fricción, la cual depende del coeficiente de fricción dinámica y la gravedad el vector \textit{û} queda representado como:
+%\begin{equation}
+%\hat{u}_n = \begin{bmatrix}
+%-\mu_d g\\
+%-\mu_d g
+%\end{bmatrix}
+%\label{eq:input_signal}
+%\end{equation}
 \begin{equation}
 \hat{u}_n = \begin{bmatrix}
--\mu_d g\\
--\mu_d g
+F_x\\
+F_y
+\end{bmatrix} = 
+\begin{bmatrix}
+0\\
+0
 \end{bmatrix}
 \label{eq:input_signal}
 \end{equation}
@@ -202,12 +238,21 @@ F = \begin{bmatrix}
 \end{equation}
 
 La matriz de control es:
+%\begin{equation}
+%G = \begin{bmatrix}
+%\frac{1}{2}  \Delta t ^2 & 0 \\ 
+%0 & \frac{1}{2} \Delta t ^2 \\ 
+% \Delta t & 0 \\ 
+%0 & \Delta t
+%\end{bmatrix}
+%\label{eq:control_matrix}
+%\end{equation}
 \begin{equation}
 G = \begin{bmatrix}
-\frac{1}{2}  \Delta t ^2 & 0 \\ 
-0 & \frac{1}{2} \Delta t ^2 \\ 
- \Delta t & 0 \\ 
-0 & \Delta t
+0 & 0 \\ %Parcial de modelo1 wrt entrada1  &   Parcial de modelo2 wrt entrada 2
+0 & 0 \\ %Parcial de modelo2 wrt entrada1  &   Parcial de modelo2 wrt entrada 2
+ 1/m & 0 \\ %Parcial de modelo3 wrt entrada1  &   Parcial de modelo3 wrt entrada 2
+0 & 1/m
 \end{bmatrix}
 \label{eq:control_matrix}
 \end{equation}
