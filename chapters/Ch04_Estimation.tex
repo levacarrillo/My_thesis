@@ -149,31 +149,31 @@ Integrando y despejando $x$ se obtiene:
 x = x_0 + \dot{x}_0 t - \frac{1}{2} \mu_d g t^2
 \label{eq:position_prediction}
 \end{equation}
+
 %ESta ecuación es la solución de la ecuación diferencial que modela el movimiento
 %De la eacuación 4.9 se tiene que:
-\[\ddot{x} = -\frac{1}{m}\mu_d m g + \frac{1}{m}F\]
-pero F = 0. Simplemente el balón comienza con v0 dif de cero y se va deteniendo.
+Ya obtenida la ecuación para obtener la posición, despejamos la aceleración del modelo \ref{eq:equivalency_2}:
+\begin{equation}
+\ddot{x} = -\frac{1}{m}\mu_d m g + \frac{1}{m}F
+\end{equation}
+
+Pero F = 0. Es decir, que simplemente el balón comienza con $v_{0}$ diferente de cero y se va deteniendo.
 Planteando esto en variables de estado:
 \[ [x_1,x_2] = [x, \dot{x}]\]
-\begin{eqnarray*}
-\dot{x}_1 &=& x_2\\
-\dot{x}_2 &=& -\frac{1}{m}\mu_d m g + \frac{1}{m}F
-\end{eqnarray*}
-Este es el modelo en variables de estado, continuo. 
-Para el EKF se discretiza este modelo. Y la señal de entrada F = 0. 
-EL MODELO DISCRETO DEL SISTEMA ES CON RUIDO ES:
-\begin{eqnarray*}
-x_{1_{k+1}} &=& x_{1_k} + \Delta t x_2 + \omega_1\\ %Modelo1
-y_{1_{k+1}} &=& y_{1_k} + \Delta t y_2 + \omega_2\\ %Modelo2
-x_{2_{k+1}} &=& x_{2_k} - \Delta t \frac{1}{m}\mu_d m g + \frac{1}{m}F_x + \omega_3\\ %Modelo3
-y_{2_{k+1}} &=& y_{2_k} - \Delta t \frac{1}{m}\mu_d m g + \frac{1}{m}F_y + \omega_3 %Modelo4
-\end{eqnarray*}
-DE ESTOS CUATRO ESTADOS, TÚ MIDES 2:
-\begin{eqnarray*}
-z_1 &=& x_1 + v_1\\
-z_2 &=& x_2 + v_2
-\end{eqnarray*}
-$\Omega = [\omega_1, ... \omega_4]$ es un vector de ruido con distribución normal, media cero, y matriz de covarianza $Q\in \mathbb{R}^{4\times 4}$.
+
+En donde:
+%\begin{eqnarray*}
+\begin{equation}
+\dot{x}_1 = x_2
+\label{eq:state_variable_1}
+\end{equation}
+
+\begin{equation}
+\dot{x}_2 = -\frac{1}{m}\mu_d m g + \frac{1}{m}F
+\label{eq:state_variable_2}
+\end{equation}
+
+%\end{eqnarray*}
 
 \begin{figure}
 \centering
@@ -197,22 +197,15 @@ Para desarrollar las ecuaciones de extrapolación de estado se considerará que 
 
 \begin{equation}
 \hat{x}_n = \begin{bmatrix}
-x_n\\ 
-y_n\\ 
-\dot{x}_n\\ 
-\dot{y}_n
+{x_1}_n\\ 
+{y_1}_n\\ 
+{x_2}_n\\ 
+{y_2}_n
 \end{bmatrix}
 \label{eq:state_vector}
 \end{equation}
 
 Dado que la única fuerza de entrada en el balón es la fricción, la cual depende del coeficiente de fricción dinámica y la gravedad el vector \textit{û} queda representado como:
-%\begin{equation}
-%\hat{u}_n = \begin{bmatrix}
-%-\mu_d g\\
-%-\mu_d g
-%\end{bmatrix}
-%\label{eq:input_signal}
-%\end{equation}
 \begin{equation}
 \hat{u}_n = \begin{bmatrix}
 F_x\\
@@ -224,6 +217,38 @@ F_y
 \end{bmatrix}
 \label{eq:input_signal}
 \end{equation}
+
+
+Como se vio en la sección 2.4, la ecuación de extrapolación de estado es:
+\begin{equation}
+\hat{x}_{n+1,n} = F \hat{x}_{n,n} + G \hat{u}_{n,n} + \omega_n
+\label{eq:extrapolation_equation}
+\end{equation}
+
+No obstante, como se vio en la deducción de la ecuación de posición, el modelo no es lineal, por lo que la ecuación \ref{eq:extrapolation_equation} se transforma a \ref{eq:efk} haciendo uso del Filtro de Kalman Extendido:
+
+\begin{equation}
+\hat{x}_{n+1,n} = f(\hat{x}_{n,n}, \hat{u}_{n,n}) + \omega_n
+\label{eq:efk}
+\end{equation}
+
+
+\ref{eq:state_variable_2} es el modelo en variables de estado, continuo. Para el EKF se discretiza este modelo. Y la señal de entrada F = 0. 
+
+El modelo discreto del sistema con ruido es:
+\begin{eqnarray*}
+x_{1_{n+1,n}} &=& x_{1_{n,n}} + \Delta t x_{2_{n,n}} + \omega_1\\ %Modelo1
+y_{1_{n+1,n}} &=& y_{1_{n,n}} + \Delta t y_{2_{n,n}} + \omega_2\\ %Modelo2
+x_{2_{n+1,n}} &=& x_{2_{n,n}} - \Delta t \frac{1}{m}\mu_d m g + \frac{1}{m} F_x + \omega_3\\ %Modelo3
+y_{2_{n+1,n}} &=& y_{2_{n,n}} - \Delta t \frac{1}{m}\mu_d m g + \frac{1}{m} F_y + \omega_4 %Modelo4
+\end{eqnarray*}
+De estos cuatro estados, se miden dos:
+\begin{eqnarray*}
+z_1 &=& x_1 + v_1\\
+z_2 &=& x_2 + v_2
+\end{eqnarray*}
+$\Omega = [\omega_1, ... \omega_4]$ es un vector de ruido con distribución normal, media cero, y matriz de covarianza $Q\in \mathbb{R}^{4\times 4}$.
+
 
 La matriz de transición \textit{F} es:
 
@@ -237,76 +262,6 @@ F = \begin{bmatrix}
 \label{eq:transition_matrix}
 \end{equation}
 
-La matriz de control es:
-%\begin{equation}
-%G = \begin{bmatrix}
-%\frac{1}{2}  \Delta t ^2 & 0 \\ 
-%0 & \frac{1}{2} \Delta t ^2 \\ 
-% \Delta t & 0 \\ 
-%0 & \Delta t
-%\end{bmatrix}
-%\label{eq:control_matrix}
-%\end{equation}
-\begin{equation}
-G = \begin{bmatrix}
-0 & 0 \\ %Parcial de modelo1 wrt entrada1  &   Parcial de modelo2 wrt entrada 2
-0 & 0 \\ %Parcial de modelo2 wrt entrada1  &   Parcial de modelo2 wrt entrada 2
- 1/m & 0 \\ %Parcial de modelo3 wrt entrada1  &   Parcial de modelo3 wrt entrada 2
-0 & 1/m
-\end{bmatrix}
-\label{eq:control_matrix}
-\end{equation}
-
-Por lo tanto, la ecuación de extrapolación de estado es:
-\begin{equation}
-\hat{x}_{n+1,n} = F \hat{x}_{n,n} + G \hat{u}_{n,n}
-\label{eq:extrapolation_equation}
-\end{equation}
-
-\begin{equation}
-\begin{bmatrix}
-x_{n+1,n}\\ 
-y_{n+1,n}\\ 
-\dot{x}_{n+1,n}\\ 
-\dot{y}_{n+1,n}
-\end{bmatrix}
-=
-\begin{bmatrix}
-1 & 0 & \Delta t & 0\\ 
-0 & 1 & 0 & \Delta t\\ 
-0 & 0 & 1 & 0\\ 
-0 & 0 & 0 & 1
-\end{bmatrix}
-\!
-\begin{bmatrix}
-x_{n,n}\\ 
-y_{n,n}\\ 
-\dot{x}_{n,n}\\ 
-\dot{y}_{n,n}
-\end{bmatrix}
-+
-\begin{bmatrix}
-\frac{1}{2}  \Delta t ^2 & 0 \\ 
-0 & \frac{1}{2} \Delta t ^2 \\ 
- \Delta t & 0 \\ 
-0 & \Delta t
-\end{bmatrix}
-\!
-\begin{bmatrix}
--\mu_d g\\
--\mu_d g
-\end{bmatrix}
-\end{equation}
-
-El resultado de la multiplicación matricial resulta:
-\begin{equation}
-\left\{\begin{matrix}
-x_{n+1, n} = & x_{n,n} + \dot{x}_{n,n} \Delta t - \frac{1}{2} \mu_d g \Delta t^2\\ 
-y_{n+1, n} = & y_{n,n} + \dot{y}_{n,n} \Delta t - \frac{1}{2} \mu_d g \Delta t^2\\ 
-\dot{x}_{n+1, n} = & \dot{x}_{n,n} - \mu_d g \Delta t\\ 
-\dot{y}_{n+1, n} = &\dot{y}_{n,n} - \mu_d g \Delta t 
-\end{matrix}\right.
-\end{equation}
 
 		\subsubsection*{Extrapolación de la incertidumbre de estimación}
 	El proceso de estimación en el Filtro de Kalman es un modelo basado en la \textit{esperanza} de una serie de variables aleatorias para obtener el valor \textit{oculto} que se considera el real. Este proceso de filtrado considera que todos los errores tanto en medición como en estimación tienen una \textit{distribución gaussiana} por lo que cada incertidumbre tiene que expresarse como la varianza de una recompilación de datos.
@@ -320,10 +275,10 @@ En donde:
 \begin{equation}
 Q =
 \begin{bmatrix}
-q_x & 0 & 0 & 0\\ 
-0 & q_y & 0 & 0\\ 
-0 & 0 & q_{\dot{x}} & 0\\ 
-0 & 0 & 0 & q_{\dot{y}}
+q_{x_1} & 0 & 0 & 0\\ 
+0 & q_{y_1} & 0 & 0\\ 
+0 & 0 & q_{x_2} & 0\\ 
+0 & 0 & 0   & q_{y_2}
 \end{bmatrix}
 \end{equation}	
 
@@ -351,8 +306,6 @@ H =
 \begin{bmatrix}
 1 & 0 & 0 & 0\\ 
 0 & 1 & 0 & 0\\ 
-0 & 0 & 1 & 0\\ 
-0 & 0 & 0 & 1
 \end{bmatrix}
 \end{equation}
 	
@@ -361,10 +314,8 @@ y la matriz para el error en la medición es:
 \begin{equation}
 R_n = 
 \begin{bmatrix}
-r_x & 0 & 0 & 0\\ 
-0 & r_y & 0 & 0\\ 
-0 & 0 & r_{\dot{x}} & 0\\ 
-0 & 0 & 0 & r_{\dot{y}}
+r_x & 0 \\ 
+0 & r_y \\ 
 \end{bmatrix}
 \label{matrix:measurement_error}
 \end{equation}
