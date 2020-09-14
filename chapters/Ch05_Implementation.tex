@@ -86,3 +86,67 @@ La plataforma ROS posee una \textit{bilioteca de clientes} para facilitar el tra
 En noviembre del 2007 la compañía estadounidense \textit{Willow Garage} empezó el desarrollo de ROS dentro del campo de los robots de servicio. De esta manera ROS vino al mundo oficialmente el 22 de Enero del 2010 con la versión llamada \textit{ROS 1.0}, sin embargo la versión más conocida fue \textit{Box Turtle} lanzada en Marzo del mismo año.
 
 La plataforma ROS es actualizada cada dos años (entre el lapso de Abril-Octubre), lo que significa que cada versión tiene soporte durante aproximadamente cinco años. Para propósitos de esta tesis se optó por utilizar la versión \textit{ROS-Kinetic} instalado en Ubuntu 16.04 \textit{Xenial Xerus (LTS)}.
+
+	\section{Integración de los diferentes programas}
+	Para hacer uso del humanoide se requiere clonar un repositorio que se encuentra en la siguiente liga: https://github.com/mnegretev/Humanoids . Este repositorio contiene distintos programas, unos para que el hardware del humanoide se pueda comunicar con un ordenador, otros para el procesamiento de datos, concernientes a las entradas de sensores y control de actuadores e incluso para hacer pruebas remotas con el simulador.
+	
+	Debido a las circunstancias extraordinarias dadas por la pandemia del coronavirus, el distanciamiento social dificultó la realización de pruebas con el robot físico, por lo que se optó por seguir el desarrollo de software de la parte simulada. Haciendo el software los suficientemente robusto para que sea capaz de usarse tanto en el robot real como en el simulado.
+	
+	Aunque actualmente no se puedan hacer pruebas con el robot en físico, trabajar con la parte simulada del humanoide representa claras ventajas, las cuales son: 
+	 
+	\begin{itemize}
+	 	\item Complementar el simulador con plug-ins y herramientas extra para la simulación de una cámara virtual dentro del simulador Gazebo.
+	 	\item Control del ruido inherente a la medición de los sistemas, ya que se puede probar la robustez del algoritmo de filtrado con diferentes niveles de ruido.
+	 	\item Desarrollo del código para el simulador, para su aprendizaje y complementación de la documentación.
+	 	\item Hacer el software más disponible para desarrolladores que no tengan la posibilidad de interactuar con el robot o que se encuentren en lugares distantes.
+	 	\item Evitar retrazos por fallas del hardware.
+	\end{itemize}
+	
+		\subsection*{Descripción de los principales nodos usados en este trabajo}
+		El repositorio anteriormente mencionado tiene instrucciones para la instalación del entorno de trabajo y corrimento de los programas. Para probar el simulador, el comando de inicio es  \textit{roslaunch $surge_-et_-ambula$ $humanoid_-simul.launch$} el cual es un comando que levanta distintos nodos que se comunican entre sí para simular las variables físicas del robot. 
+		
+		Cuando se levanta se puede observar que se abren algunas ventanas, las cuales son del visualizador del robot \textit{Rviz}, el simulador con variables físicas \textit{Gazebo}, una GUI (Graphical User Interface) para manipular las articulaciones del robot y una ventana que simula la imagen obtenida de la cámara simulada. Tal y como se observa en la Figura \ref{fig:gazebo}.
+		
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.2]{images/gazebo.png}
+	\caption{Simulador Gazebo para el humanoide.}
+	\label{fig:gazebo}
+\end{figure} 
+		
+			\subsubsection*{Nodo segmentador de color}
+			Ejecutano el comando \textit{rosrun $ball_-tracker$ $ball_-tracker_-simul$} se alza el nodo que se subscribe a los tópicos que contienen la información de la imagen RGB obtenida por la cámara. Con esa información se procesa la imagen para segmentar un color deseado guardando los parámetro HSV en un archivo .xml.
+			
+			\subsubsection*{Nodo que calcula la posición relativa del balón}
+			El nodo más importante de esta tesis es el que calcula la posición relativa del balón, ya que de éste depende la precisión y confiabilidad de las mediciones. Con el comando \textit{rosrun $ball_-position$ $ball_-position_-simul$} se levanta, se subscribe a los tópicos de la imagen y hace la segmentación del objeto de interés con base en la teoría vista en el capítulo 3. 
+			
+			Teniendo ya procesada la sementación, el punto de interés de la figura segmentada es el centroide, con el cual se hacen cálculos geométricos para el posicionamiento del balón, haciendo uso de las herramientas \textit{tf} para conocer la posición y orientación relativa de la cámara con respecto a los pies del robot. Como se ilustra en la Figura \ref{fig:tf}.
+			
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.2]{images/tf.png}
+	\caption{tf, herramienta de ROS para obtener la información relativa de las articulaciones de un robot (posición y orientación)}
+	\label{fig:tf}
+\end{figure}
+	
+			Al procesar la información de posición, el nodo $ball_-position_-simul$ publica un tópico que contiene la posición $X$ y $Y$ del balón, por lo que otros nodos pueden hacer uso de esa información. El código de este nodo puede verse en el Apéndice A.
+			
+			\subsubsection*{Nodo estimador de posición y velocidad utilizando el Filtro de Kalman Extendido}
+			El nodo llamado $kalman_-estimator$ es un \textit{script} escrito en el lenguaje Python, el cual se subscribe a los tópicos de posición del balón y hace una comparación entre ellos para obtener su velocidad instantánea. Con esto, el programa usa los parámetros de Kalman (véase la sección 4.3) para obtener una correción del ruido y su debida predicción de posiciones tomando una determinada cantidad de muestras con una frecuecia aproximada de 30 Hz. El código de este nodo puede verse en el Apéndice B.
+			
+			\subsubsection*{Nodo para movimiento del balón}
+			Ejecutando en una nueva terminal el comando \textit{rosrun $ball_-position$ $move_-ball_-node$ 2.5} se inicializa un nodo que mueve el balón simulado a una dirección y velocidad inicial determinada, con base el lo que se vio en la sección 4.2. 
+			
+			\subsubsection*{Nodo para la secuencia de pateo} 
+			El programa que ejecuta el nodo \textit{$ready_-2_-kick$} utiliza la clase Humanoid para hacer movimientos con posiciones predefinidas, en este caso pausandolas para mantenerse parado sobre un pie esperando a que el nodo $kalman_-estimator$ le de la señal para que patee el balón.
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		

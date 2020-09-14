@@ -36,21 +36,20 @@ int main()
 	cout << "\033[1;33m	3.3 Los espacios de color RGB y HSV\033[0m\n";
 	cout << "\033[1;33m	3.4 Operadores morfológicos\033[0m\n";
 	//-------Estimación de posición y velocidad-------
-	cout << "\033[1;37m4. Estimación de posición y velocidad\033[0m\n";
+	cout << "\033[1;33m4. Estimación de posición y velocidad\033[0m\n";
 	cout << "\033[1;33m	4.1 Cálculo de la posición del objeto de interés\033[0m\n";
 	cout << "\033[1;33m	4.2 Estimación de estados mediante el Filtro de Kalman\033[0m\n";
-	cout << "\033[1;37m	4.3 Obtención de los parámetros\033[0m\n";
+	cout << "\033[1;33m	4.3 Obtención de los parámetros\033[0m\n";
 	//----------------Implementación------------------
-	cout << "\033[1;37m5. Implementación\033[0m\n";
+	cout << "\033[1;33m5. Implementación\033[0m\n";
 	cout << "\033[1;33m	5.1 El robot bípedo Nimbro OP\033[0m\n";
 	cout << "\033[1;33m	5.2 Las bibliotecas OpenCV\033[0m\n";
 	cout << "\033[1;33m	5.3 La plataforma ROS\033[0m\n";
-	cout << "\033[1;37m	5.4 Integración de los diferentes programas\033[0m\n";
+	cout << "\033[1;33m	5.4 Integración de los diferentes programas\033[0m\n";
 	//-------------------Resultados--------------------
-	cout << "\033[1;37m6. Resultados\033[0m\n";
-	cout << "\033[1;37m	6.1 Pruebas de estimación de posición\033[0m\n";
-	cout << "\033[1;37m	6.2 Pruebas de estimación de velocidad\033[0m\n";
-	cout << "\033[1;37m	6.3 Pateo de un balón como prueba del sistema completo\033[0m\n";
+	cout << "\033[1;33m6. Resultados\033[0m\n";
+	cout << "\033[1;33m	6.1 Pruebas de estimación de posición y velocidad\033[0m\n";
+	cout << "\033[1;33m	6.2 Pateo de un balón como prueba del sistema completo\033[0m\n";
 	//-------------------Discusión---------------------
 	cout << "\033[1;37m7. Discusión\033[0m\n";
 	cout << "\033[1;37m	7.1 Conclusiones\033[0m\n";

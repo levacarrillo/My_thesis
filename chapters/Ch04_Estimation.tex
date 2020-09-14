@@ -44,14 +44,14 @@ Ya teniendo estas expresiones se procede a sustituir al vector unitario \textit{
 \hat{u}=(u_x, u_y, u_z)=(\sin{ \theta}\cos{\varphi},\sin{\theta}\sin{ \varphi},\cos{\theta})
 \end{equation}
 
-Sustituyendo la expresión (\ref{eq:LookAtUnitary}) dentro de los valores $x$ y $y$ quedan como:
+Sustituyendo la expresión (\ref{eq:LookAtUnitary}) dentro de los valores $x$ y $y$ da como resultado:
 \[x=r_x - \frac{r_z \sin{ \theta} \cos{\varphi}}{\cos{\theta}}\]
 \[y=r_y - \frac{r_z \sin{\theta} \sin{ \varphi}}{\cos{\theta}}\]
 
 Utilizando la identidad trigonométrica:
 \[\tan{\theta} = \frac{\sin{\theta}}{\cos{\theta}}\]
 
-Las ecuaciones para obtener la posición del objetivo siempre y cuando $z=0$ quedan:
+Las ecuaciones para obtener la posición del objetivo siempre y cuando $z=0$ son:
 \begin{equation}
 \label{eq:xBidimentionalPosition}
 x=r_x - r_z \tan{\theta}  \cos{\varphi}
@@ -62,7 +62,7 @@ x=r_x - r_z \tan{\theta}  \cos{\varphi}
 y=r_y - r_z \tan{\theta} \sin{\varphi}
 \end{equation}
 
-No obstante, el objeto a considerar no es un objeto bidimensional, es un balón con forma esférica que está sobre el plano del suelo, debido a esto se procede a hacer complementar las ecuaciones \ref{eq:xBidimentionalPosition} y \ref{eq:yBidimentionalPosition}, para obtener la posición (x,y,z) del centro del balón.
+No obstante, el objeto a considerar no es un objeto bidimensional, es un balón con forma esférica que está sobre el plano del suelo, debido a esto se pueden complementar las ecuaciones \ref{eq:xBidimentionalPosition} y \ref{eq:yBidimentionalPosition}, para obtener la posición (x,y,z) del centro del balón.
 
 En la figura \ref{fig:ballProjection}(a) se observa un diagrama del balón en donde el vector \textit{look at} atravieza su centro e intersecta con el suelo en un punto en donde el balón no está. Esto representa un problema, ya que la posición en $x$ sufre una proyección, la cual incrementa mientras el balón tenga mayor radio. A esta proyección se le pondrá la variable $x_c$. Véase la figura \ref{fig:ballProjection}(b)
 
@@ -101,7 +101,7 @@ De esta manera, se resta \ref{eq:xcForX}  a \ref{eq:xBidimentionalPosition} y \r
 
 		
 	\section{Estimación de estados mediante el Filtro de Kalman}
-	Para poder impementar el Filtro de Kalman, se necesita primero tener un modelo matemático del sistema que se pretende tomar mediciones. Analizando el digrama de cuerpo libre de la figura \ref{fig:dynamic_model} se puede hacer un análisis dinámico del balón utilizando la segunda ley de Newton.
+	Para poder impementar el Filtro de Kalman, se necesita primero tener un modelo matemático del sistema que se pretende tomar mediciones. Analizando el digrama de cuerpo libre de la Figura \ref{fig:dynamic_model} se puede hacer un análisis dinámico del balón utilizando la segunda ley de Newton.
 
 \begin{equation}
 \sum F = m \ddot{x}
@@ -119,7 +119,7 @@ F- \mu_d m g = m  \frac{\mathrm{d} \dot{x}}{\mathrm{d} t}
 \label{eq:equivalency_2}
 \end{equation}
 	
-Donde $\mu_d$ es el coeficiente de fricción dinámica, $m$ es la masa del balón y $g$ es la aceleración de la gravedad. Dado que ninguna fuerza mas que la de fricción es la que actúa sobre el balón, $F$ se iguala a cero, dejando el modelo el modelo cinemático de la expresión \ref{eq:mathematical_model_1}.
+Donde $\mu_d$ es el coeficiente de fricción dinámica, $m$ es la masa del balón y $g$ es la aceleración de la gravedad. Debido a que la fuerza de fricción es la única que actúa sobre el balón, $F$ se iguala a cero, dejando el modelo el modelo cinemático de la expresión \ref{eq:mathematical_model_1}.
 
 \begin{equation}
 \frac{\mathrm{d} \dot{x}}{\mathrm{d} t} = - \mu_d g
@@ -183,7 +183,7 @@ En donde:
 \end{figure}
 
 		\subsubsection*{Descripción del proceso de filtrado en el sistema}
-Una vez que se obtuvo el modelo dinámico que describe el movimiento del balón, se procede a escribir las ecuaciones matriciales del Filtro de Kalman (Véase la sección 2.4). De este modo, este filtro es una serie de pasos que iterativamente se deben ir completando para estimar posiciones y velocidades de un objeto en movimiento (Figura: \ref{fig:kalman_extended_diagram}).
+Con el modelo dinámico que describe el movimiento del balón, se procede a escribir las ecuaciones matriciales del Filtro de Kalman (Véase la sección 2.4). De este modo, este filtro es una serie de pasos que iterativamente se deben ir completando para estimar posiciones y velocidades de un objeto en movimiento (Figura: \ref{fig:kalman_extended_diagram}).
 
 \begin{figure}
 \centering
@@ -196,16 +196,16 @@ Una vez que se obtuvo el modelo dinámico que describe el movimiento del balón,
 Para desarrollar las ecuaciones de extrapolación de estado se considerará que el balón se desplazará en el suelo sin elevarse o tener rebotes, por lo que el vector de estado $\hat{x}_n$ que describe la estimación de posición y velocidad en el plano \textit{(x, y)} es \ref{eq:state_vector}, siguiendo la nomenclatura que se vio en la sección 2.4.
 
 \begin{equation}
-\hat{x}_n = \begin{bmatrix}
-{x_1}_n\\ 
-{y_1}_n\\ 
-{x_2}_n\\ 
-{y_2}_n
+\hat{x}_{n,n} = \begin{bmatrix}
+x_1\\ 
+y_1\\ 
+x_2\\ 
+y_2
 \end{bmatrix}
 \label{eq:state_vector}
 \end{equation}
 
-Dado que la única fuerza de entrada en el balón es la fricción, la cual depende del coeficiente de fricción dinámica y la gravedad el vector \textit{û} queda representado como:
+Dado que la única fuerza de entrada en el balón es la fricción, la cual depende del coeficiente de fricción dinámica y la gravedad el vector \textit{û} es representado como:
 \begin{equation}
 \hat{u}_n = \begin{bmatrix}
 F_x\\
@@ -219,13 +219,13 @@ F_y
 \end{equation}
 
 
-Como se vio en la sección 2.4, la ecuación de extrapolación de estado es:
+Como se vio en la sección 2.4, Figura \ref{fig:Kalman_scheme}, la ecuación de extrapolación de estado es:
 \begin{equation}
 \hat{x}_{n+1,n} = F \hat{x}_{n,n} + G \hat{u}_{n,n} + \omega_n
 \label{eq:extrapolation_equation}
 \end{equation}
 
-No obstante, como se vio en la deducción de la ecuación de posición, el modelo no es lineal, por lo que la ecuación \ref{eq:extrapolation_equation} se transforma a \ref{eq:efk} haciendo uso del Filtro de Kalman Extendido:
+No obstante, con la deducción de la ecuación de posición, el modelo no es lineal, por lo que la ecuación \ref{eq:extrapolation_equation}, usando el Filtro de Kalman Extendido se transforma en:
 
 \begin{equation}
 \hat{x}_{n+1,n} = f(\hat{x}_{n,n}, \hat{u}_{n,n}) + \omega_n
@@ -242,96 +242,122 @@ y_{1_{n+1,n}} &=& y_{1_{n,n}} + \Delta t y_{2_{n,n}} + \omega_2\\ %Modelo2
 x_{2_{n+1,n}} &=& x_{2_{n,n}} - \Delta t \frac{1}{m}\mu_d m g + \frac{1}{m} F_x + \omega_3\\ %Modelo3
 y_{2_{n+1,n}} &=& y_{2_{n,n}} - \Delta t \frac{1}{m}\mu_d m g + \frac{1}{m} F_y + \omega_4 %Modelo4
 \end{eqnarray*}
-De estos cuatro estados, se miden dos:
+
+O puesto en forma matricial:
+
+\begin{equation}
+\hat{x}_{n+1,n} =
+\begin{bmatrix}
+1 & 0 & \Delta t & 0\\ 
+0 & 1 & 0 & \Delta t\\
+0 & 0 & 1 & 0\\
+0 & 0 & 0 & 1\\
+\end{bmatrix}
+\begin{bmatrix}
+x_{1_{n,n}}\\ 
+y_{1_{n,n}}\\
+x_{2_{n,n}}\\
+y_{2_{n,n}}
+\end{bmatrix}
++
+\begin{bmatrix}
+0 \\
+0 \\
+- \Delta t \mu_d g \\
+- \Delta t \mu_d g 
+\end{bmatrix}
++
+\begin{bmatrix}
+\omega_1 \\ 
+\omega_2 \\
+\omega_3 \\
+\omega_4
+\end{bmatrix}
+\end{equation}	
+
+De las cuatro ecuaciones de estado, se miden dos:
 \begin{eqnarray*}
 z_1 &=& x_1 + v_1\\
-z_2 &=& x_2 + v_2
+z_2 &=& y_1 + v_2\\
+z_3 &=& x_2 + v_3\\
+z_3 &=& y_2 + v_4
 \end{eqnarray*}
-$\Omega = [\omega_1, ... \omega_4]$ es un vector de ruido con distribución normal, media cero, y matriz de covarianza $Q\in \mathbb{R}^{4\times 4}$.
 
-
-La matriz de transición \textit{F} es:
-
+o en forma matricial:
 \begin{equation}
-F = \begin{bmatrix}
-1 & 0 & \Delta t & 0\\ 
-0 & 1 & 0 & \Delta t\\ 
-0 & 0 & 1 & 0\\ 
-0 & 0 & 0 & 1
+\hat{z} =
+\begin{bmatrix}
+x_1 \\ 
+y_1\\
+x_2\\
+y_2
 \end{bmatrix}
-\label{eq:transition_matrix}
++
+\begin{bmatrix}
+v_1 \\ 
+v_2\\
+v_3\\
+v_4
+\end{bmatrix}
 \end{equation}
 
+$\Omega = [\omega_1, ... \omega_4]$ es un vector de ruido con distribución normal, media cero, y matriz de covarianza $Q\in \mathbb{R}^{4\times 1}$.
 
 		\subsubsection*{Extrapolación de la incertidumbre de estimación}
-	El proceso de estimación en el Filtro de Kalman es un modelo basado en la \textit{esperanza} de una serie de variables aleatorias para obtener el valor \textit{oculto} que se considera el real. Este proceso de filtrado considera que todos los errores tanto en medición como en estimación tienen una \textit{distribución gaussiana} por lo que cada incertidumbre tiene que expresarse como la varianza de una recompilación de datos.
-	
-\begin{equation}
-P_{n+1,n} = F P_{n,n} F^{T} + Q
-\label{eq:extrapolation_covariance}
-\end{equation}
+	El proceso de estimación en el Filtro de Kalman es un modelo basado en la \textit{esperanza} de una serie de variables aleatorias para obtener el valor \textit{oculto} que se considera el real. Este proceso de filtrado considera que todos los errores tanto en medición como en estimación tienen una \textit{distribución gaussiana} por lo que cada incertidumbre tiene que expresarse como la varianza de una recompilación de datos. De una manera análoga a la predicción de posición y velocidad en un tiempo $\Delta t$ la incertidumbre de estimación se puede calcular con las siguientes ecuaciones:
 
-En donde:
+\begin{eqnarray*}
+	Px_{1_{n+1,n}} = Px_{1_{n,n}} + \Delta t^{2} Px_{2_{n,n}} + q_{x_1}\\
+	Py_{1_{n+1,n}} = Py_{1_{n,n}} + \Delta t^{2} Py_{2_{n,n}} + q_{y_1}\\
+	Px_{2_{n+1,n}} = Px_{2_{n,n}} 				    		  + q_{x_2}\\
+	Py_{2_{n+1,n}} = Py_{2_{n,n}}							  + q_{y_2}\\
+\end{eqnarray*}
+
+O en su forma matricial:
+
 \begin{equation}
-Q =
+\hat{P}_{n+1,n} =
 \begin{bmatrix}
-q_{x_1} & 0 & 0 & 0\\ 
-0 & q_{y_1} & 0 & 0\\ 
-0 & 0 & q_{x_2} & 0\\ 
-0 & 0 & 0   & q_{y_2}
-\end{bmatrix}
-\end{equation}	
-
-Dado que no se tiene estimación inicial, es conveniente que la varianza de estimación sea la matriz identidad, de este modo, en la primera corrección la ganancia de Kalman sería muy alta (cercana a 1) y tomaría como más confiables las mediciones R.
-
-\begin{equation}
-P_{0,0} =
-\begin{bmatrix}
-1 & 0 & 0 & 0\\ 
-0 & 1 & 0 & 0\\ 
-0 & 0 & 1 & 0\\ 
+1 & 0 & \Delta t^{2} & 0 \\ 
+0 & 1 & 0 & \Delta t^{2} \\
+0 & 0 & 1 & 0\\
 0 & 0 & 0 & 1
 \end{bmatrix}
-\end{equation}	
+\begin{bmatrix}
+Px_{1_{n,n}}\\ 
+Py_{1_{n,n}}\\
+Px_{2_{n,n}}\\
+Py_{2_{n,n}}
+\end{bmatrix}
++
+\begin{bmatrix}
+q_{x_1}\\ 
+q_{y_1}\\
+q_{x_2}\\
+q_{y_2}
+\end{bmatrix}
+\end{equation}
+
 
 		\subsubsection*{Obtención de la ganancia de Kalman}
 	Una vez teniendo la predicción del estado siguiente, es posible comparar las mediciones con las predicciones préviamente hechas para hacer un proceso de corrección. Para esto es necesario obtener el peso de la ganancia de Kalman que se describe con la siguiente ecuación:
 \begin{equation}
-K_n = P_{n,n-1} H^T (H P_{n,n-1}H^T + R_n)^{-1}	
+	K_n = P_{n,n-1} (P_{n,n-1} + R_n)^{-1}
 \end{equation}
-	En dónde H es la matriz de observación que sirve para asegurar que se pueda realizar la suma de la matriz de la varianza de la estimación con la del error en medición. En este caso la matriz es igual a:
-	
-\begin{equation}
-H = 
-\begin{bmatrix}
-1 & 0 & 0 & 0\\ 
-0 & 1 & 0 & 0\\ 
-\end{bmatrix}
-\end{equation}
-	
-y la matriz para el error en la medición es:
 
-\begin{equation}
-R_n = 
-\begin{bmatrix}
-r_x & 0 \\ 
-0 & r_y \\ 
-\end{bmatrix}
-\label{matrix:measurement_error}
-\end{equation}
 
 		\subsubsection*{Corrección de estimación de estado}
 	Con cada nueva medición, se procede a hacer la corrección del estado presente, haciendo uso del la ganancia del filtro para poder \textit{decidir} si es más fiable la medición o la predicción.
 
 \begin{equation}
-\hat{x}_{n,n} = \hat{x}_{n,n-1} + K_n(z_n - H \hat{x}_{n,n-1})
+\hat{x}_{n,n} = \hat{x}_{n,n-1} + K_n(z_n - \hat{x}_{n,n-1})
 \end{equation}
 	
 		\subsubsection*{Corrección del error de covarianza}
 	De una manera muy similar el error de covarianza se puede actualizar utilizando la ganancia de Kalman:
 
 \begin{equation}
-P_{n,n} = (I - K_n H) P_{n,n-1}
+P_{n,n} = (I - K_n) P_{n,n-1}
 \end{equation}
 
 	\section{Obtencion de los parametros}
@@ -341,7 +367,7 @@ P_{n,n} = (I - K_n H) P_{n,n-1}
 \begin{figure}
 \centering
 \includegraphics[scale=0.4]{images/dynamometer.jpg}
-\caption{Dynamómetro de resorte utilizado para obtener la fuerza de fricción}
+\caption{Dinamómetro de resorte utilizado para obtener la fuerza de fricción}
 \label{fig:dynamometer}
 \end{figure}	
 
@@ -358,82 +384,62 @@ F_d = N\mu_d
 	      = 0.3636		
 \end{equation}
 	
-		%\subsection*{Obtención de la incertidumbre en la estimacion}	
-		\subsection*{Obtención de la incertidumbre en la medicion}
-	De acuerdo con los datos de posición del balón (cuadro \ref{cuadro:x_position} y \ref{cuadro:y_position}) obtenidos por el sistema embebido, se puede obtener un promedio para el error de posición para recabar datos para la matriz de error de medición.
-
-\begin{table}[]
-\begin{tabular}{|c|c|c|}
-\hline
-\multicolumn{1}{|l|}{\textbf{Posición x real {[}m{]}}} & \multicolumn{1}{l|}{\textbf{Posición x obtenida {[}m{]}}} & \multicolumn{1}{l|}{\textbf{Error absoluto [m]}} \\ \hline
-0.2                                                    & 0.290                                                     & 0.090                                        \\ \hline
-0.3                                                    & 0.370                                                     & 0.070                                        \\ \hline
-0.4                                                    & 0.489                                                     & 0.089                                        \\ \hline
-0.5                                                    & 0.590                                                     & 0.090                                        \\ \hline
-0.6                                                    & 0.745                                                     & 0.145                                        \\ \hline
-0.7                                                    & 0.832                                                     & 0.132                                        \\ \hline
-                                                       & Promedio:                                                 & 0.1026                                       \\ \hline
-\end{tabular}
-\caption{Error absoluto de la en posición \textit{x} del balón}
-\label{cuadro:x_position}
-\end{table}
-
-\begin{table}[]
-\begin{tabular}{|c|c|c|}
-\hline
-\multicolumn{1}{|l|}{\textbf{Posición y real {[}m{]}}} & \multicolumn{1}{l|}{\textbf{Posición y obtenida {[}m{]}}} & \multicolumn{1}{l|}{\textbf{Error absoluto [m]}} \\ \hline
--0.4                                                   & -0.39                                                     & 0.01                                         \\ \hline
--0.3                                                   & -0.32                                                     & 0.02                                         \\ \hline
--0.2                                                   & -0.22                                                     & 0.02                                         \\ \hline
--0.1                                                   & -0.071                                                    & 0.029                                        \\ \hline
-0.1                                                    & 0.126                                                     & 0.026                                        \\ \hline
-0.2                                                    & 0.183                                                     & 0.017                                        \\ \hline
-0.3                                                    & 0.221                                                     & 0.079                                        \\ \hline
-0.4                                                    & 0.37                                                      & 0.03                                         \\ \hline
-                                                       & Promedio:                                                 & 0.0288                                       \\ \hline
-\end{tabular}
-\caption{Error absoluto de la posición en \textit{y} del balón}
-\label{cuadro:y_position}
-\end{table}
-
-	 Obtenido el error de la medición en la posición del balón $e_x$ y $e_y$, se procede a obtener el error en la velocidad y dado que es obtenida indirectamente al dividir la diferencia de distancia entre la diferencia de tiempo, se deduce de la siguiente forma:	 
-
+		\subsection*{Parámetros de Kalman}
+		Como en muchos sistemas de control, siempre es mejor variar los parámetros conforme se hagan pruebas, a fin de obtener resultados más óptimos a lo que uno espera. Siendo así, los siguientes parámetros son los que se fueron variando con cada prueba y se decidió que fueron los mejores para filtrar los diversos errores inherentes al sistema. 
+		
+		\subsubsection*{Vector de ruido del proceso}
 \begin{equation}
-v_x = \frac{dx + de_x}{dt} 
-    = \frac{dx}{dt} + \frac{de_x}{dt}
-\end{equation}
-
-\begin{equation}
-v_y = \frac{dy + de_y}{dt}
-    = \frac{dy}{dt} + \frac{de_y}{dt}
-\end{equation}
-
-	Por lo tanto, el error de medición en la velocidad de $e_{v_x}$ y $e_{v_y}$ es el cociente del error de distancia entre la diferencia de tiempo de muestreo. 
-
-\begin{equation}
-e_{v_x} = \frac{de_x}{dt}
-		= \frac{0.1026}{0.0333}
-		= 3.078 
-\label{eq:ev_x}
-\end{equation}
-
-\begin{equation}
-e_{v_y} = \frac{de_y}{dt}
-		= \frac{0.0288}{0.0333}
-		= 0.8648
-\label{eq:ev_y}
-\end{equation}
-
-	De acuerdo con la matriz \ref{matrix:measurement_error} se pueden substituir los valores del promedio de los cuadros \ref{cuadro:x_position} y  \ref{cuadro:y_position} y los valores obtenidos de \ref{eq:ev_x} y \ref{eq:ev_y}:
-	
-\begin{equation}
-R_n = 
-\begin{bmatrix}
-0.1026 & 0 & 0 & 0\\ 
-0 & 0.0288 & 0 & 0\\ 
-0 & 0 & 3.078 & 0\\ 
-0 & 0 & 0 & 0.8648
+\Omega = \begin{bmatrix}
+0.015	\\ 
+0.0\\ 
+0.015\\ 
+0.0
 \end{bmatrix}
+\label{eq:process_noise_vector}
 \end{equation}
 
-		%\subsection*{Obtención de la ganancia de Kalman}
+		\subsubsection*{Matriz de covarianza del ruido del proceso}
+\begin{equation}
+Q = \begin{bmatrix}
+0.000001	\\ 
+0.0\\ 
+0.000001\\ 
+0.0
+\end{bmatrix}
+\label{eq:process_noise_matrix}
+\end{equation}
+
+		\subsubsection*{Matriz de error de medición}
+\begin{equation}
+R_n = \begin{bmatrix}
+0.00001	\\ 
+0.00001\\ 
+0.00001\\ 
+0.00001
+\end{bmatrix}
+\label{eq:noise_measurement}
+\end{equation}
+
+		\subsubsection*{Valores iniciales de entrada}
+		Debido a que el algoritmo se encarga de converger los valores de entrada con el valor esperado de cada estado, por lo tanto no son de mucha importancia los valores $\hat{x}_{0,0}$ y $\hat{P}_{0,0}$.
+\begin{equation}
+\hat{x}_{0,0} = \begin{bmatrix}
+-0.3\\ 
+-0.3\\ 
+0.3\\ 
+0.3
+\end{bmatrix}
+\label{eq:initial_state_vector}
+\end{equation}
+
+\begin{equation}
+P_{0,0} 
+=
+\begin{bmatrix}
+0.1 \\ 
+0.1 \\
+0.1 \\
+0.1 \\
+\end{bmatrix}
+\label{eq:initial_cov_vector}
+\end{equation}	
