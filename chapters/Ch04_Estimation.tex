@@ -168,6 +168,8 @@ En donde:
 \label{eq:state_variable_1}
 \end{equation}
 
+y 
+
 \begin{equation}
 \dot{x}_2 = -\frac{1}{m}\mu_d m g + \frac{1}{m}F
 \label{eq:state_variable_2}
@@ -177,7 +179,7 @@ En donde:
 
 \begin{figure}
 \centering
-\includegraphics[scale=1.5]{images/dynamic_model.pdf}
+\includegraphics[scale=0.1]{images/dynamic_model.png}
 \caption{Diagrama de cuerpo libre del objeto de interés}
 \label{fig:dynamic_model}
 \end{figure}
@@ -187,7 +189,7 @@ Con el modelo dinámico que describe el movimiento del balón, se procede a escr
 
 \begin{figure}
 \centering
-\includegraphics[scale=0.6]{images/kalman_extended_diagram.pdf}
+\includegraphics[scale=0.55]{images/kalman_extended_diagram.pdf}
 \caption{Diagrama extendidio del funcionamiento paso a paso del Filtro de Kalman}
 \label{fig:kalman_extended_diagram}
 \end{figure}
@@ -197,10 +199,10 @@ Para desarrollar las ecuaciones de extrapolación de estado se considerará que 
 
 \begin{equation}
 \hat{x}_{n,n} = \begin{bmatrix}
-x_1\\ 
-y_1\\ 
-x_2\\ 
-y_2
+x_{1_{n,n}}\\ 
+y_{1_{n,n}}\\ 
+x_{2_{n,n}}\\ 
+y_{2_{n,n}}
 \end{bmatrix}
 \label{eq:state_vector}
 \end{equation}
@@ -243,7 +245,7 @@ x_{2_{n+1,n}} &=& x_{2_{n,n}} - \Delta t \frac{1}{m}\mu_d m g + \frac{1}{m} F_x 
 y_{2_{n+1,n}} &=& y_{2_{n,n}} - \Delta t \frac{1}{m}\mu_d m g + \frac{1}{m} F_y + \omega_4 %Modelo4
 \end{eqnarray*}
 
-O puesto en forma matricial:
+O escrito en su forma matricial:
 
 \begin{equation}
 \hat{x}_{n+1,n} =
@@ -275,12 +277,13 @@ y_{2_{n,n}}
 \end{bmatrix}
 \end{equation}	
 
-De las cuatro ecuaciones de estado, se miden dos:
+$\Omega = [\omega_1, ... ,\omega_4]$ es un vector de ruido con distribución normal, media cero, y matriz de covarianza $Q\in \mathbb{R}^{4\times 4}$.
+
+Para estas ecuaciones se tienen dos entradas, que son las posiciones en $x$ y $y$ con su respectiva insertidumbre de medición.
+
 \begin{eqnarray*}
 z_1 &=& x_1 + v_1\\
-z_2 &=& y_1 + v_2\\
-z_3 &=& x_2 + v_3\\
-z_3 &=& y_2 + v_4
+z_2 &=& y_1 + v_2
 \end{eqnarray*}
 
 o en forma matricial:
@@ -288,24 +291,61 @@ o en forma matricial:
 \hat{z} =
 \begin{bmatrix}
 x_1 \\ 
-y_1\\
-x_2\\
-y_2
+y_1
 \end{bmatrix}
 +
 \begin{bmatrix}
 v_1 \\ 
-v_2\\
-v_3\\
-v_4
+v_2
 \end{bmatrix}
 \end{equation}
 
-$\Omega = [\omega_1, ... \omega_4]$ es un vector de ruido con distribución normal, media cero, y matriz de covarianza $Q\in \mathbb{R}^{4\times 1}$.
+$V = [v_1, v_2]$ es el vector de ruido de la medición, considerando que tiene una distribución normal, media cero y matriz de covarianza $R\in \mathbb{R}^{2\times 2}$.
+
+Se definirá como matriz de predicción F a la matriz:
+
+\begin{equation}
+F =
+\begin{bmatrix}
+1 & 0 & \Delta t & 0\\ 
+0 & 1 & 0 & \Delta t\\
+0 & 0 & 1 & 0\\
+0 & 0 & 0 & 1\\
+\end{bmatrix}
+\end{equation}
 
 		\subsubsection*{Extrapolación de la incertidumbre de estimación}
-	El proceso de estimación en el Filtro de Kalman es un modelo basado en la \textit{esperanza} de una serie de variables aleatorias para obtener el valor \textit{oculto} que se considera el real. Este proceso de filtrado considera que todos los errores tanto en medición como en estimación tienen una \textit{distribución gaussiana} por lo que cada incertidumbre tiene que expresarse como la varianza de una recompilación de datos. De una manera análoga a la predicción de posición y velocidad en un tiempo $\Delta t$ la incertidumbre de estimación se puede calcular con las siguientes ecuaciones:
+	El proceso de estimación en el Filtro de Kalman es un modelo basado en la \textit{esperanza} de una serie de variables aleatorias para obtener el valor \textit{oculto} que se considera el real. Este proceso de filtrado considera que todos los errores tanto en medición como en estimación tienen una \textit{distribución gaussiana} por lo que cada incertidumbre tiene que expresarse como la varianza de una recompilación de datos. De una manera análoga a la predicción de posición y velocidad en un tiempo $\Delta t$ la incertidumbre de estimación se puede calcular con la siguiente ecuación matricial:
+	
+\begin{equation}
+P_{n+1,n} = F P_{n,n} F^T + Q
+\label{eq:extrapolation_process_cov_matrix}
+\end{equation}
 
+Donde P es una matriz diagonal definida como: 
+\begin{equation}
+\hat{P}_{n,n} =
+\begin{bmatrix}
+Px_{1_{n,n}} & 0 & 0 & 0\\ 
+0 & Py_{1_{n,n}} & 0 & 0\\ 
+0 & 0 & Px_{2_{n,n}} & 0\\ 
+0 & 0 & 0 & Py_{2_{n,n}}
+\end{bmatrix}
+\end{equation}	
+
+Q es una matriz diagonal cuadrada: 
+\begin{equation}
+Q =
+\begin{bmatrix}
+q_{x_1} & 0 & 0 & 0\\ 
+0 & q_{y_1} & 0 & 0\\ 
+0 & 0 & q_{x_2} & 0\\ 
+0 & 0 & 0   & q_{y_2}
+\end{bmatrix}
+\end{equation}	
+
+Resolviendo la ecuación \ref{eq:extrapolation_process_cov_matrix}, tomando sólamente los valores de la diagonal principal, dan como resultados individuales las siguientes ecuaciones:
+	
 \begin{eqnarray*}
 	Px_{1_{n+1,n}} = Px_{1_{n,n}} + \Delta t^{2} Px_{2_{n,n}} + q_{x_1}\\
 	Py_{1_{n+1,n}} = Py_{1_{n,n}} + \Delta t^{2} Py_{2_{n,n}} + q_{y_1}\\
@@ -313,51 +353,88 @@ $\Omega = [\omega_1, ... \omega_4]$ es un vector de ruido con distribución norm
 	Py_{2_{n+1,n}} = Py_{2_{n,n}}							  + q_{y_2}\\
 \end{eqnarray*}
 
-O en su forma matricial:
-
-\begin{equation}
-\hat{P}_{n+1,n} =
-\begin{bmatrix}
-1 & 0 & \Delta t^{2} & 0 \\ 
-0 & 1 & 0 & \Delta t^{2} \\
-0 & 0 & 1 & 0\\
-0 & 0 & 0 & 1
-\end{bmatrix}
-\begin{bmatrix}
-Px_{1_{n,n}}\\ 
-Py_{1_{n,n}}\\
-Px_{2_{n,n}}\\
-Py_{2_{n,n}}
-\end{bmatrix}
-+
-\begin{bmatrix}
-q_{x_1}\\ 
-q_{y_1}\\
-q_{x_2}\\
-q_{y_2}
-\end{bmatrix}
-\end{equation}
-
-
 		\subsubsection*{Obtención de la ganancia de Kalman}
 	Una vez teniendo la predicción del estado siguiente, es posible comparar las mediciones con las predicciones préviamente hechas para hacer un proceso de corrección. Para esto es necesario obtener el peso de la ganancia de Kalman que se describe con la siguiente ecuación:
 \begin{equation}
-	K_n = P_{n,n-1} (P_{n,n-1} + R_n)^{-1}
+	K_n = P_{n,n-1} H^T (H P_{n,n-1} H^T +V R_n V^T)^{-1}
+	\label{eq:kalman_gain}
 \end{equation}
 
+Por las dimensiones de la matriz $P$ y por el hecho que la entrada $z$ sólo tiene dos valores, la matriz de observación $H$ tiene que ser una matriz de cuatro por cuatro con los siguientes valores:
+
+\begin{equation}
+	H =
+	\begin{bmatrix}
+	1 & 0 & 0 & 0\\
+	0 & 1 & 0 & 0\\
+	0 & 0 & 0 & 0\\
+	0 & 0 & 0 & 0
+	\end{bmatrix}
+\end{equation}
+
+Como ya se había mencionado, $R_n$ es una matriz cuadrada de $2x2$ la cual contiene la covarianza del ruido:
+\begin{equation}
+	R_n = 
+	\begin{bmatrix}
+	R_x & 0\\
+	0  & R_y
+	\end{bmatrix}
+\end{equation} 
+y la matriz $V$ sirve para que la matriz de covarianza de la medición se redimensione haciendo posible las operaciones de la ecuación \ref{eq:kalman_gain}:
+\begin{equation}
+	V=
+	\begin{bmatrix}
+	1 & 0\\
+	0 & 1\\
+	0 & 0\\
+	0 & 0
+	\end{bmatrix}
+\end{equation}
+
+Por lo tanto, la operación \ref{eq:kalman_gain} da como resultado una matriz de $4x4$ que se observa de la siguiente manera:
+
+\begin{equation}
+	K = 
+	\begin{bmatrix}
+	k_1 & 0 & 0 & 0   \\
+	 0  & k_2 & 0 & 0 \\
+	 0  & 0   & 0 & 0 \\
+	 0  & 0   & 0 & 0
+	\end{bmatrix}
+	=
+	\begin{bmatrix}
+	\frac{Px_{1_{n,n}}}{(Px_{1_{n,n}} + R_x)} & 0 & 0 & 0\\
+	                                        0 & \frac{Py_{1_{n,n}}}{(Py_{1_{n,n}} + R_y)} & 0 & 0\\
+	                                        0 & 0 & 0 & 0\\
+											0 & 0 & 0 & 0
+	\end{bmatrix}
+\end{equation}
 
 		\subsubsection*{Corrección de estimación de estado}
 	Con cada nueva medición, se procede a hacer la corrección del estado presente, haciendo uso del la ganancia del filtro para poder \textit{decidir} si es más fiable la medición o la predicción.
 
 \begin{equation}
-\hat{x}_{n,n} = \hat{x}_{n,n-1} + K_n(z_n - \hat{x}_{n,n-1})
+\hat{x}_{n,n} = \hat{x}_{n,n-1} + K_n(z_n - H \hat{x}_{n,n-1})
+\label{eq:prediction_eq}
+\end{equation}
+
+A primera instancia, se deduce que el vector de entrada $z_n$ es de dos elementos, no obstante, para lograr que se pueda sumar dentro de la ecuación \ref{eq:prediction_eq} se requiere que el vector tenga la siguiente forma:
+
+\begin{equation}
+	z_n =
+	\begin{bmatrix}
+		z_1\\
+		z_2\\
+		 0 \\
+		 0
+	\end{bmatrix}
 \end{equation}
 	
 		\subsubsection*{Corrección del error de covarianza}
 	De una manera muy similar el error de covarianza se puede actualizar utilizando la ganancia de Kalman:
 
 \begin{equation}
-P_{n,n} = (I - K_n) P_{n,n-1}
+P_{n,n} = (I - K_n H) P_{n,n-1}
 \end{equation}
 
 	\section{Obtencion de los parametros}
@@ -387,24 +464,14 @@ F_d = N\mu_d
 		\subsection*{Parámetros de Kalman}
 		Como en muchos sistemas de control, siempre es mejor variar los parámetros conforme se hagan pruebas, a fin de obtener resultados más óptimos a lo que uno espera. Siendo así, los siguientes parámetros son los que se fueron variando con cada prueba y se decidió que fueron los mejores para filtrar los diversos errores inherentes al sistema. 
 		
-		\subsubsection*{Vector de ruido del proceso}
-\begin{equation}
-\Omega = \begin{bmatrix}
-0.015	\\ 
-0.0\\ 
-0.015\\ 
-0.0
-\end{bmatrix}
-\label{eq:process_noise_vector}
-\end{equation}
 
 		\subsubsection*{Matriz de covarianza del ruido del proceso}
 \begin{equation}
 Q = \begin{bmatrix}
-0.000001	\\ 
-0.0\\ 
-0.000001\\ 
-0.0
+0.000001 & 0 & 0 & 0\\ 
+0        & 0.000001 & 0        & 0\\ 
+0        & 0        & 0.000001 & 0\\ 
+0.0      & 0        & 0        & 0.000001
 \end{bmatrix}
 \label{eq:process_noise_matrix}
 \end{equation}
@@ -412,10 +479,8 @@ Q = \begin{bmatrix}
 		\subsubsection*{Matriz de error de medición}
 \begin{equation}
 R_n = \begin{bmatrix}
-0.00001	\\ 
-0.00001\\ 
-0.00001\\ 
-0.00001
+0.025 & 0\\ 
+0     & 0.025
 \end{bmatrix}
 \label{eq:noise_measurement}
 \end{equation}
@@ -436,10 +501,10 @@ R_n = \begin{bmatrix}
 P_{0,0} 
 =
 \begin{bmatrix}
-0.1 \\ 
-0.1 \\
-0.1 \\
-0.1 \\
+0.1 & 0   & 0   & 0\\ 
+0   & 0.1 & 0   & 0\\
+0   & 0   & 0.1 & 0\\
+0   & 0   & 0   & 0.1
 \end{bmatrix}
 \label{eq:initial_cov_vector}
 \end{equation}	

@@ -147,6 +147,16 @@ Como puede observarse, cuando el error de covarianza de la medición $R_n$ se ap
 \label{fig:Kalman_scheme}
 \end{figure}
 
+	Como ser vio, este filtro utiliza modelos matemáticos lineales, sin embargo en diversas situaciones, el modelo matemático no es lineal, y la predicción resulta ser errónea. Para solucionar esto, se puede implementar el Filtro de Kalman Extendido, que es básicamente el mismo tomando como lineal el modelo en ciertos intervalos de tiempo, y modificando ligeramente las ecuaciones. Véase la figura \ref{fig:extended_kalman_scheme}.
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.05]{images/extended_kalman_algorithm.png}
+\caption{Esquema del Filtro de Kalman Extendido}
+\label{fig:extended_kalman_scheme}
+\end{figure}
+
+En el capítulo 4 se deduce el modelo matemático del sistema de estimación, y se decide si se trabajará con el filtro extendido o el normal. 
 	\section{Trabajo relacionado}
 	
 	Como ya se ha mencionado, la detección del balón es el principal objetivo para la categoría de \textit{Soccer Humanoids}. Esto representa un reto para los sistemas de visión computacional, el cual debe encargarse tanto de la detección como del cálculo de la posición con base en un sistema egocéntrico. Según los TDP \textit{(Team Description Paper)} se puede saber cómo los equipos han abordado este desafío en los recientes años, por lo que ayuda en gran medida para saber qué técnicas se pueden reimplementar o mejorar según la necesidad. 
