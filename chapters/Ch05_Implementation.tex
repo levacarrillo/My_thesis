@@ -115,7 +115,7 @@ La plataforma ROS es actualizada cada dos años (entre el lapso de Abril-Octubre
 \end{figure} 
 		
 			\subsubsection*{Nodo segmentador de color}
-			Ejecutano el comando \textit{rosrun $ball_-tracker$ $ball_-tracker_-simul$} se alza el nodo que se subscribe a los tópicos que contienen la información de la imagen RGB obtenida por la cámara. Con esa información se procesa la imagen para segmentar un color deseado guardando los parámetro HSV en un archivo .xml.
+			Ejecutando el comando \textit{rosrun $ball_-tracker$ $ball_-tracker_-simul$} se alza el nodo que se subscribe a los tópicos que contienen la información de la imagen RGB obtenida por la cámara. Con esa información se procesa la imagen para segmentar un color deseado guardando los parámetro HSV en un archivo .xml.
 			
 			\subsubsection*{Nodo que calcula la posición relativa del balón}
 			El nodo más importante de esta tesis es el que calcula la posición relativa del balón, ya que de éste depende la precisión y confiabilidad de las mediciones. Con el comando \textit{rosrun $ball_-position$ $ball_-position_-simul$} se levanta, se subscribe a los tópicos de la imagen y hace la segmentación del objeto de interés con base en la teoría vista en el capítulo 3. 
@@ -124,15 +124,18 @@ La plataforma ROS es actualizada cada dos años (entre el lapso de Abril-Octubre
 			
 \begin{figure}
 	\centering
-	\includegraphics[scale=0.2]{images/tf.png}
+	\includegraphics[scale=0.25]{images/tf.png}
 	\caption{tf, herramienta de ROS para obtener la información relativa de las articulaciones de un robot (posición y orientación)}
 	\label{fig:tf}
 \end{figure}
 	
-			Al procesar la información de posición, el nodo $ball_-position_-simul$ publica un tópico que contiene la posición $X$ y $Y$ del balón, por lo que otros nodos pueden hacer uso de esa información. El código de este nodo puede verse en el Apéndice A.
+			Al procesar la información de posición, el nodo $ball_-position_-simul$ publica un tópico que contiene la posición $X$ y $Y$ del balón, por lo que otros nodos pueden hacer uso de esa información.
 			
 			\subsubsection*{Nodo estimador de posición y velocidad utilizando el Filtro de Kalman Extendido}
-			El nodo llamado $kalman_-estimator$ es un \textit{script} escrito en el lenguaje Python, el cual se subscribe a los tópicos de posición del balón y hace una comparación entre ellos para obtener su velocidad instantánea. Con esto, el programa usa los parámetros de Kalman (véase la sección 4.3) para obtener una correción del ruido y su debida predicción de posiciones tomando una determinada cantidad de muestras con una frecuecia aproximada de 30 Hz. El código de este nodo puede verse en el Apéndice B.
+			El nodo llamado $kalman_-estimator$ es un \textit{script} escrito en el lenguaje Python, el cual se subscribe a los tópicos de posición del balón para saber la posición instantánea del balón en los ejes $x$ y $y$. Con esto, el programa usa los parámetros de Kalman (véase la sección 4.3) para obtener una correción del ruido y hacer la debida predicción de posiciones y velocidades tomando una determinada cantidad de muestras con una frecuecia aproximada de 30 Hz. Para entender este nodo de una manera más visual la Figura \ref{fig:kalman_flux_diagram} muestra el diagrama de flujo de los principales procesos. 
+			
+			Se puede revisar el código de este nodo en el \textbf{Apéndice A}.
+	Adicionalmente a este programa, hay un código escrito en python para hacer la comparación de la posición real, la medida y la estimación mediante una gráfica, éste no es un nodo sino simplemente un \textit{script} llamado $graph_-kalman_-estimator.py$.
 			
 			\subsubsection*{Nodo para movimiento del balón}
 			Ejecutando en una nueva terminal el comando \textit{rosrun $ball_-position$ $move_-ball_-node$ 2.5} se inicializa un nodo que mueve el balón simulado a una dirección y velocidad inicial determinada, con base el lo que se vio en la sección 4.2. 
@@ -141,12 +144,21 @@ La plataforma ROS es actualizada cada dos años (entre el lapso de Abril-Octubre
 			El programa que ejecuta el nodo \textit{$ready_-2_-kick$} utiliza la clase Humanoid para hacer movimientos con posiciones predefinidas, en este caso pausandolas para mantenerse parado sobre un pie esperando a que el nodo $kalman_-estimator$ le de la señal para que patee el balón.
 		
 		
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.071]{images/nodes_diagram.png}
+	\caption{Diagrama simplificado de los principales nodos empleados}
+	\label{fig:nodes_diagram}
+\end{figure}
+		
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.055]{images/kalman_flux_diagram.png}
+	\caption{Diagrama de flujo del nodo estimador de posición y velocidad}
+	\label{fig:kalman_flux_diagram}
+\end{figure}
+
 		
 		
 		
-		
-		
-		
-		
-		
-		
+	

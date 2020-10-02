@@ -230,7 +230,7 @@ Como se vio en la sección 2.4, Figura \ref{fig:Kalman_scheme}, la ecuación de 
 No obstante, con la deducción de la ecuación de posición, el modelo no es lineal, por lo que la ecuación \ref{eq:extrapolation_equation}, usando el Filtro de Kalman Extendido se transforma en:
 
 \begin{equation}
-\hat{x}_{n+1,n} = f(\hat{x}_{n,n}, \hat{u}_{n,n}) + \omega_n
+\hat{x}_{n+1,n} = f(\hat{x}_{n,n}, \hat{u}_{n,n}) 
 \label{eq:efk}
 \end{equation}
 
@@ -279,19 +279,24 @@ y_{2_{n,n}}
 
 $\Omega = [\omega_1, ... ,\omega_4]$ es un vector de ruido con distribución normal, media cero, y matriz de covarianza $Q\in \mathbb{R}^{4\times 4}$.
 
-Para estas ecuaciones se tienen dos entradas, que son las posiciones en $x$ y $y$ con su respectiva insertidumbre de medición.
+Para estas ecuaciones se tienen dos entradas, que son las posiciones en $x$ y $y$ con su respectiva insertidumbre de medición, para que estas entradas tengan el mismo sistema de coordenadas y las mismas unidades, generalmente deben estar dentro de una función de transformación $h$, sin embargo, como la entrada no requiere un mapeo de valores, el vector $z_n$ es:
 
-\begin{eqnarray*}
-z_1 &=& x_1 + v_1\\
-z_2 &=& y_1 + v_2
-\end{eqnarray*}
+\begin{equation}
+z_1 = h_1(x_1) + v_1 = x_1 + v_1 
+\label{eq:x_entry}
+\end{equation}
+
+\begin{equation}
+z_2 = h_2(y_1) + v_1 = y_1 + v_1 
+\label{eq:y_entry}
+\end{equation}
 
 o en forma matricial:
 \begin{equation}
-\hat{z} =
+z_n =
 \begin{bmatrix}
-x_1 \\ 
-y_1
+h_1(x_1) \\ 
+h_2(y_1)
 \end{bmatrix}
 +
 \begin{bmatrix}
@@ -300,9 +305,34 @@ v_2
 \end{bmatrix}
 \end{equation}
 
-$V = [v_1, v_2]$ es el vector de ruido de la medición, considerando que tiene una distribución normal, media cero y matriz de covarianza $R\in \mathbb{R}^{2\times 2}$.
+$V = [v_1, v_2]$ es el vector de ruido de la medición, considerando que tiene una distribución normal, media cero y matriz de covarianza $R_n\in\mathbb{R}^{2\times 2}$.
 
-Se definirá como matriz de predicción F a la matriz:
+Para poder definir la matriz de predicción F, la cual será de apoyo para el estado siguiente de la matriz P se tiene que tomar en cuenta que la ecuación \ref{eq:position_prediction} no es lineal por no cumplir con la condición de homogeneidad, lo cual hace que distribución no sea gaussiana y la predicción resultaría erronea. Para solucionar esto, es necesario hacer un procedimiento para liealizar el modelo utilizando la serie de Taylor con sólo los dos primeros términos (dado que si se agregan más el modelo dejaría de ser lineal otra vez).
+	
+La serie de Taylor aplicada con los dos primeros términos es:
+\begin{equation}
+	f(x) = f(a) + \frac{f'(a)}{1!} (x-a)
+\end{equation} 
+Ahora substituyendo $f(x)$ con nuestro modelo de predicción cercano a un punto $a$:
+\begin{equation}
+	f(\hat{x}_{n,n}) = f(\hat{x}^a_{n,n}) + F(\hat{x}^a_{n,n})(\hat{x}_{n,n} - \hat{x}^a_{n,n})
+\end{equation}
+
+F es el Jacobiano:
+
+\begin{equation}
+F =
+\begin{bmatrix}
+\frac{\partial f_{x_1}}{\partial x_1} & \frac{\partial f_{x_1}}{\partial y_1} & \frac{\partial f_{x_1}}{\partial x_2} & \frac{\partial f_{x_1}}{\partial y_2}\\
+\\
+\frac{\partial f_{y_1}}{\partial x_1} & \frac{\partial f_{y_1}}{\partial y_1} & \frac{\partial f_{y_1}}{\partial x_2} & \frac{\partial f_{y_1}}{\partial y_2}\\
+\\
+\frac{\partial f_{x_2}}{\partial x_1} & \frac{\partial f_{x_2}}{\partial y_1} & \frac{\partial f_{x_2}}{\partial x_2} & \frac{\partial f_{x_2}}{\partial y_2}\\
+\\
+\frac{\partial f_{y_2}}{\partial x_1} & \frac{\partial f_{y_2}}{\partial y_1} & \frac{\partial f_{y_2}}{\partial x_2} & \frac{\partial f_{y_2}}{\partial y_2}
+\end{bmatrix}
+\end{equation}
+Al substituir la nuestra función  f en la matriz F da como resultado:
 
 \begin{equation}
 F =
@@ -322,9 +352,8 @@ P_{n+1,n} = F P_{n,n} F^T + Q
 \label{eq:extrapolation_process_cov_matrix}
 \end{equation}
 
-Donde P es una matriz diagonal definida como: 
 \begin{equation}
-\hat{P}_{n,n} =
+P_{n,n} =
 \begin{bmatrix}
 Px_{1_{n,n}} & 0 & 0 & 0\\ 
 0 & Py_{1_{n,n}} & 0 & 0\\ 
@@ -333,6 +362,18 @@ Px_{1_{n,n}} & 0 & 0 & 0\\
 \end{bmatrix}
 \end{equation}	
 
+Donde $P$ es la matriz de covarianza:
+\begin{equation}
+P_{n,n} =
+\begin{bmatrix}
+\sigma^2_{x_1} & 0 & \sigma_{x_1}\sigma_{x_2} & 0\\ 
+0 & \sigma^2_{y_1} & 0 & \sigma_{y_1}\sigma_{y_2}\\ 
+\sigma_{x_2}\sigma_{x_1} & 0 & \sigma^2_{x_2} & 0\\ 
+0 & \sigma_{y_2}\sigma_{y_1} & 0 & \sigma^2_{y_2} 
+\end{bmatrix}
+\end{equation}	
+Nótese que a comparación de las otras matrices de covarianza, en ésta hay varianzas y covarianzas, esto se debe a que se tienen sólo entradas de posición y las velocidades están correlacionadas a éstas.
+\\
 Q es una matriz diagonal cuadrada: 
 \begin{equation}
 Q =
@@ -354,25 +395,33 @@ Resolviendo la ecuación \ref{eq:extrapolation_process_cov_matrix}, tomando sól
 \end{eqnarray*}
 
 		\subsubsection*{Obtención de la ganancia de Kalman}
-	Una vez teniendo la predicción del estado siguiente, es posible comparar las mediciones con las predicciones préviamente hechas para hacer un proceso de corrección. Para esto es necesario obtener el peso de la ganancia de Kalman que se describe con la siguiente ecuación:
+	Una vez teniendo la predicción del estado siguiente, es posible comparar las mediciones con las predicciones previamente hechas para hacer un proceso de corrección. Para esto es necesario obtener el peso de la ganancia de Kalman que se describe con la siguiente ecuación:
 \begin{equation}
-	K_n = P_{n,n-1} H^T (H P_{n,n-1} H^T +V R_n V^T)^{-1}
+	K_n = P_{n,n-1} H^T (H P_{n,n-1} H^T + R_n)^{-1}
 	\label{eq:kalman_gain}
 \end{equation}
 
-Por las dimensiones de la matriz $P$ y por el hecho que la entrada $z$ sólo tiene dos valores, la matriz de observación $H$ tiene que ser una matriz de cuatro por cuatro con los siguientes valores:
+	La matriz de observación $H$ es la que mapea los valores de la estimación para que se puedan sumar con los valores de la medición, está definida como el siguiente jacobiano:
 
 \begin{equation}
 	H =
 	\begin{bmatrix}
-	1 & 0 & 0 & 0\\
-	0 & 1 & 0 & 0\\
-	0 & 0 & 0 & 0\\
-	0 & 0 & 0 & 0
+	\frac{\partial h_1}{\partial x_1} & \frac{\partial h_1}{\partial y_1} & \frac{\partial h_1}{\partial x_2} & \frac{\partial h_1}{\partial y_2}\\
+	\\
+	\frac{\partial h_2}{\partial x_1} & \frac{\partial h_2}{\partial y_1} & \frac{\partial h_2}{\partial x_2} & \frac{\partial h_2}{\partial y_2}
 	\end{bmatrix}
 \end{equation}
 
-Como ya se había mencionado, $R_n$ es una matriz cuadrada de $2x2$ la cual contiene la covarianza del ruido:
+Substituyendo con los valores de la función $h$ el jacobiano es:
+\begin{equation}
+	H =
+	\begin{bmatrix}
+	1 & 0 & 0 & 0\\
+	0 & 1 & 0 & 0
+	\end{bmatrix}
+\end{equation}
+
+Como ya se había mencionado, $R_n$ es una matriz cuadrada de 2x2 la cual contiene la covarianza del ruido en la medición:
 \begin{equation}
 	R_n = 
 	\begin{bmatrix}
@@ -380,54 +429,13 @@ Como ya se había mencionado, $R_n$ es una matriz cuadrada de $2x2$ la cual cont
 	0  & R_y
 	\end{bmatrix}
 \end{equation} 
-y la matriz $V$ sirve para que la matriz de covarianza de la medición se redimensione haciendo posible las operaciones de la ecuación \ref{eq:kalman_gain}:
-\begin{equation}
-	V=
-	\begin{bmatrix}
-	1 & 0\\
-	0 & 1\\
-	0 & 0\\
-	0 & 0
-	\end{bmatrix}
-\end{equation}
-
-Por lo tanto, la operación \ref{eq:kalman_gain} da como resultado una matriz de $4x4$ que se observa de la siguiente manera:
-
-\begin{equation}
-	K = 
-	\begin{bmatrix}
-	k_1 & 0 & 0 & 0   \\
-	 0  & k_2 & 0 & 0 \\
-	 0  & 0   & 0 & 0 \\
-	 0  & 0   & 0 & 0
-	\end{bmatrix}
-	=
-	\begin{bmatrix}
-	\frac{Px_{1_{n,n}}}{(Px_{1_{n,n}} + R_x)} & 0 & 0 & 0\\
-	                                        0 & \frac{Py_{1_{n,n}}}{(Py_{1_{n,n}} + R_y)} & 0 & 0\\
-	                                        0 & 0 & 0 & 0\\
-											0 & 0 & 0 & 0
-	\end{bmatrix}
-\end{equation}
 
 		\subsubsection*{Corrección de estimación de estado}
 	Con cada nueva medición, se procede a hacer la corrección del estado presente, haciendo uso del la ganancia del filtro para poder \textit{decidir} si es más fiable la medición o la predicción.
 
 \begin{equation}
-\hat{x}_{n,n} = \hat{x}_{n,n-1} + K_n(z_n - H \hat{x}_{n,n-1})
+\hat{x}_{n,n} = \hat{x}_{n,n-1} + K_n(z_n - h (\hat{x}_{n,n-1}))
 \label{eq:prediction_eq}
-\end{equation}
-
-A primera instancia, se deduce que el vector de entrada $z_n$ es de dos elementos, no obstante, para lograr que se pueda sumar dentro de la ecuación \ref{eq:prediction_eq} se requiere que el vector tenga la siguiente forma:
-
-\begin{equation}
-	z_n =
-	\begin{bmatrix}
-		z_1\\
-		z_2\\
-		 0 \\
-		 0
-	\end{bmatrix}
 \end{equation}
 	
 		\subsubsection*{Corrección del error de covarianza}
@@ -459,10 +467,11 @@ F_d = N\mu_d
 \begin{equation}
 	\mu_d = \frac{F_d}{N}
 	      = 0.3636		
+	\label{eq:mu_d}
 \end{equation}
 	
 		\subsection*{Parámetros de Kalman}
-		Como en muchos sistemas de control, siempre es mejor variar los parámetros conforme se hagan pruebas, a fin de obtener resultados más óptimos a lo que uno espera. Siendo así, los siguientes parámetros son los que se fueron variando con cada prueba y se decidió que fueron los mejores para filtrar los diversos errores inherentes al sistema. 
+		El diagrama de bloques \ref{fig:kalman_block_diagram} muestra que el Filtro de Kalman es un sistema de control automático realimentado con su misma salida. Como en muchos sistemas de control, siempre es mejor variar los parámetros conforme se hagan pruebas, a fin de obtener resultados más óptimos a lo que uno espera. Siendo así, los siguientes parámetros son los que se fueron variando con cada prueba y se decidió que fueron los mejores para filtrar los diversos errores inherentes al sistema. 
 		
 
 		\subsubsection*{Matriz de covarianza del ruido del proceso}
@@ -486,7 +495,7 @@ R_n = \begin{bmatrix}
 \end{equation}
 
 		\subsubsection*{Valores iniciales de entrada}
-		Debido a que el algoritmo se encarga de converger los valores de entrada con el valor esperado de cada estado, por lo tanto no son de mucha importancia los valores $\hat{x}_{0,0}$ y $\hat{P}_{0,0}$.
+		Debido a que el algoritmo se encarga de converger los valores de entrada con el valor esperado de cada estado, por lo tanto no son de mucha importancia los valores $\hat{x}_{0,0}$ y $P_{0,0}$.
 \begin{equation}
 \hat{x}_{0,0} = \begin{bmatrix}
 -0.3\\ 
@@ -508,3 +517,10 @@ P_{0,0}
 \end{bmatrix}
 \label{eq:initial_cov_vector}
 \end{equation}	
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.07]{images/kalman_block_diagram.png}
+	\caption{Diagrama de bloques del proceso de Kalman}
+	\label{fig:kalman_block_diagram}
+\end{figure}
