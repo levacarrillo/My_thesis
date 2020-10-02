@@ -48,12 +48,13 @@ int main()
 	cout << "\033[1;33m	5.4 Integración de los diferentes programas\033[0m\n";
 	//-------------------Resultados--------------------
 	cout << "\033[1;33m6. Resultados\033[0m\n";
-	cout << "\033[1;33m	6.1 Pruebas de estimación de posición y velocidad\033[0m\n";
-	cout << "\033[1;33m	6.2 Pateo de un balón como prueba del sistema completo\033[0m\n";
+	cout << "\033[1;33m	6.1 Descripción del experimento\033[0m\n";
+	cout << "\033[1;33m	6.2 Parámetros del experimento\033[0m\n";
+    cout << "\033[1;33m        6.3 Pruebas de estimación de posición y velocidad\033[0m\n";
 	//-------------------Discusión---------------------
-	cout << "\033[1;37m7. Discusión\033[0m\n";
-	cout << "\033[1;37m	7.1 Conclusiones\033[0m\n";
-	cout << "\033[1;37m	7.2 Trabajo futuro\033[0m\n";
+	cout << "\033[1;33m7. Discusión\033[0m\n";
+	cout << "\033[1;33m	7.1 Conclusiones\033[0m\n";
+	cout << "\033[1;33m	7.2 Trabajo futuro\033[0m\n";
 
 //https://submission.robocuphumanoid.org/uploads//Ichiro_Teen_Size-tdp-5c4f57f4522a3.pdf
 //https://humanoid.robocup.org/qualification/2017/b3b640d7c0ccb8808547a87bbb88b0e6b2247b18/T_FLOW_Humanoid_TeenSize_regularanddrop_in_2017_TDP.pdf
