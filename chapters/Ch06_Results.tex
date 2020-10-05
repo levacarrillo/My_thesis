@@ -6,8 +6,7 @@
 
 	Teniendo ya el sistema de visión con su respectivo procesamiento de imagenes para el posicionamiento del balón se procedió a alimentar al estimador de Kalman con los valores calculados de posición con una doble finalidad, la primera de filtrar el ruido inerente a la medición y la segunda hacer una estimación a \textit{posteriori} de la posición del balón con un limitado número de muestras, dado que si se toman muchas mediciones, podría no dar tiempo para que el robot alcance a patear el balón.
 	
-	Una vez dejando que el estimador de Kalman logre estimar la posición más probable del balón en un tiempo $t$ el programa espera a que se cumpla cierto umbral de tiempo para comenzar a realizar el movimiento de pateo. Teniendo como objetivo que el pie llegue a una posición determinada por donde va a pasar el balón en movimiento, lo patee y el regrese a su posición inicial. En la Figura \ref{fig:estimator_graphics} se ve cómo es que funciona la prueba completa.
-	
+	Una vez dejando que el estimador de Kalman logre estimar la posición más probable del balón en un tiempo $t$ el programa espera a que se cumpla cierto umbral de tiempo para comenzar a realizar el movimiento de pateo. Teniendo como objetivo que el pie llegue a una posición determinada por donde va a pasar el balón en movimiento, lo patee y el regrese a su posición inicial.	
 \section{Parámetros del experimento}
 	La cámara simulada dentro de Gazebo tendrá un rango de visión horizontal estandar que viene por defecto en el \textit{plug-in} de $1.396$ $ rads$ u $80^o$ con una resolución de imagen de 640x480 que es más que suficiente para este experimento. Se consideró suficiente que cada imagen se publique a una frecuencia de 30Hz (un rango cercano al sistema óptico del ser humano), de esta manera le da tiempo al estimador de tomar las muestras necesarias para una oportuna predicción.
 
@@ -38,7 +37,7 @@
 \end{figure}
 	
 	\section{Pruebas de estimación de posición y velocidad}
-	La Figura \ref{fig:final_test} se muestra sólo una de varias pruebas que se hicieron en la simulación, variando diversos parámetros para verificar la robustez del sistema de visión y de estimación, entre los principales fueron las velocidades iniciales del balón en movimiento, los ángulos de posición de la cabeza de robot, distancias de recorrido del balón y los coeficientes de fricción dinámica del balón con la superficie.
+	La Figura \ref{fig:final_test} se muestra la secuencia de sólo una de varias pruebas que se hicieron en la simulación, variando diversos parámetros para verificar la robustez del sistema de visión y de estimación, entre los principales fueron las velocidades iniciales del balón en movimiento, los ángulos de posición de la cabeza de robot, distancias de recorrido del balón y los coeficientes de fricción dinámica del balón con la superficie.
 	
 	En la sección 4.3 se obtuvo de manera experimental el coeficiente de fricción dinámica del balón sobre una superficie de fieltro la cual se planea usar para hacer pruebas con el robot real, sin embargo en las pruebas simuladas se fueron observando los diversos comportamientos con coeficientes de ficción menores (desde 0.1 hasta 0.3636) para tener un movimiento más parecido al rectilíneo uniforme. No obstante las pruebas con el coeficiente de fricción obtenido experimentalmente no representaron problemas a la hora de hacer la estimación y se concluyeron los mismos resultados de la prueba de pateo. 
 	

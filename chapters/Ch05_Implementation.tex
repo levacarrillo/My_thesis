@@ -30,7 +30,7 @@
 	\item Chasis de fibra de carbono, aluminio y ABS plus
 	\end{itemize}
 	
-	\subsubsection*{características de software}
+	\subsubsection*{Características de software}
 	\begin{itemize}
 	\item El software es compatible tanto para Linux como Windows.
 	\item Tiene un desarrollo basado en la plataforma ROS para proporcionar la abstracción de hardware.
@@ -44,7 +44,7 @@
 \label{fig:Nimbro-OP}
 \end{figure} 
 	
-	\section{Las bilbiotecas OpenCV}
+	\section{La bilbioteca OpenCV}
 OpenCV (\textit{Open Computer Vision}) es una biblioteca \textit{open source} diseñada para visión computacional. Esta biblioteca está escrita principalmente en C y C$++$ y es capaz de ejecutarse en diversos sistemas operativos, tales como: \textit{Windows}, \textit{Linux}, o \textit{Mac OS X}.
 
 OpenCV fue desarrollada para hacer procesos más eficientes cuando se hace visión con aplicaciones en tiempo real. Una de las metas de OpenCV es proveer una infraestructura sencilla y sofisticada para  diferentes tipos de usuarios, que van desde profesores, estudiantes, profesionistas, desarrolladores, y autodidactas. La librería cuenta con más de 500 funciones que se extienden en diversas áreas de visión, incluyendo inspección en la fabricación de productos, seguridad, calibración de cámaras, visión estéreo, robótica, etc.
@@ -57,7 +57,7 @@ Citando a \cite{pyo2015ros} ROS es un meta sistema operativo \textit{open-source
 
 ROS es la abreviación en inglés de \textit{Robot Operating System} lo cual se prodría traducir al español como Sistema Operativo de Robots. Se podría pensar que ROS es un sistema operativo, sin embargo el término mejor empleado es el de \textit{Meta Sistema Operativo}, y aunque no está definido en el diccionario, se puede describir como un sistema que realiza procesos tales como programación, ejecución, monitoreo, y manejo de errores, utilizando una capa de visualización entre aplicaciones y recursos informáticos distribuidos.\\
 
-Dicho lo anterior, ROS no es un sistema operativo convencional, tal como \textit{Windows}, \textit{Linux}, o \textit{Android}, sino una plataforma que se ejecuta dentro del sistema operativo instalado. A menudo, para utilizar ROS se requiere tener instalado \textit{Ubuntu}, que es un sitema basado en las distribuciones de \textit{Linux}. No obstante, es posible usarse en distintos sitemas, tal y como se muestra la figura \ref{fig:meta_operating_system}. 
+Dicho lo anterior, ROS no es un sistema operativo convencional, tal como \textit{Windows}, \textit{Linux}, o \textit{Android}, sino una plataforma que se ejecuta dentro del sistema operativo instalado. A menudo, para utilizar ROS se requiere tener instalado \textit{Ubuntu}, que es un sitema basado en las distribuciones de \textit{Linux}. No obstante, es posible usarse en distintos sitemas, tal y como se muestra la Figura \ref{fig:meta_operating_system}. 
 \begin{figure}
 \centering
 \includegraphics[scale=0.5]{images/meta_operating_system.png}
@@ -85,7 +85,7 @@ La plataforma ROS posee una \textit{bilioteca de clientes} para facilitar el tra
 
 En noviembre del 2007 la compañía estadounidense \textit{Willow Garage} empezó el desarrollo de ROS dentro del campo de los robots de servicio. De esta manera ROS vino al mundo oficialmente el 22 de Enero del 2010 con la versión llamada \textit{ROS 1.0}, sin embargo la versión más conocida fue \textit{Box Turtle} lanzada en Marzo del mismo año.
 
-La plataforma ROS es actualizada cada dos años (entre el lapso de Abril-Octubre), lo que significa que cada versión tiene soporte durante aproximadamente cinco años. Para propósitos de esta tesis se optó por utilizar la versión \textit{ROS-Kinetic} instalado en Ubuntu 16.04 \textit{Xenial Xerus (LTS)}.
+La plataforma ROS es actualizada cada dos años (entre el lapso de Abril-Octubre), lo que significa que cada versión tiene soporte durante aproximadamente cinco años. Para propósitos de esta tesis se optó por utilizar la versión \textit{ROS-Melodic} instalado en Ubuntu 18.04 \textit{Bionic Beaver (LTS)}.
 
 	\section{Integración de los diferentes programas}
 	Para hacer uso del humanoide se requiere clonar un repositorio que se encuentra en la siguiente liga: https://github.com/mnegretev/Humanoids . Este repositorio contiene distintos programas, unos para que el hardware del humanoide se pueda comunicar con un ordenador, otros para el procesamiento de datos, concernientes a las entradas de sensores y control de actuadores e incluso para hacer pruebas remotas con el simulador.
@@ -103,9 +103,9 @@ La plataforma ROS es actualizada cada dos años (entre el lapso de Abril-Octubre
 	\end{itemize}
 	
 		\subsection*{Descripción de los principales nodos usados en este trabajo}
-		El repositorio anteriormente mencionado tiene instrucciones para la instalación del entorno de trabajo y corrimento de los programas. Para probar el simulador, el comando de inicio es  \textit{roslaunch $surge_-et_-ambula$ $humanoid_-simul.launch$} el cual es un comando que levanta distintos nodos que se comunican entre sí para simular las variables físicas del robot. 
-		
-		Cuando se levanta se puede observar que se abren algunas ventanas, las cuales son del visualizador del robot \textit{Rviz}, el simulador con variables físicas \textit{Gazebo}, una GUI (Graphical User Interface) para manipular las articulaciones del robot y una ventana que simula la imagen obtenida de la cámara simulada. Tal y como se observa en la Figura \ref{fig:gazebo}.
+		El repositorio anteriormente mencionado tiene instrucciones para la instalación del entorno de trabajo y corrimento de los programas. Para probar el simulador, el comando de inicio es: $$roslaunch surge_-et_-ambula humanoid_-simul.launch$$ 
+
+		Éste es un comando que levanta distintos nodos que se comunican entre sí para simular las variables físicas simuladas del robot. Cuando se levanta se puede observar que se abren algunas ventanas, las cuales son del visualizador del robot \textit{Rviz}, el simulador con variables físicas \textit{Gazebo}, una GUI (Graphical User Interface) para manipular las articulaciones del robot y una ventana que simula la imagen obtenida de la cámara simulada. Tal y como se observa en la Figura \ref{fig:gazebo}.
 		
 \begin{figure}
 	\centering
@@ -129,7 +129,7 @@ La plataforma ROS es actualizada cada dos años (entre el lapso de Abril-Octubre
 	\label{fig:tf}
 \end{figure}
 	
-			Al procesar la información de posición, el nodo $ball_-position_-simul$ publica un tópico que contiene la posición $X$ y $Y$ del balón, por lo que otros nodos pueden hacer uso de esa información.
+			Al procesar la información de posición, el nodo $ball_-position_-simul$ publica un tópico que contiene la posición $x$ y $y$ del balón, por lo que otros nodos pueden hacer uso de esa información.
 			
 			\subsubsection*{Nodo estimador de posición y velocidad utilizando el Filtro de Kalman Extendido}
 			El nodo llamado $kalman_-estimator$ es un \textit{script} escrito en el lenguaje Python, el cual se subscribe a los tópicos de posición del balón para saber la posición instantánea del balón en los ejes $x$ y $y$. Con esto, el programa usa los parámetros de Kalman (véase la sección 4.3) para obtener una correción del ruido y hacer la debida predicción de posiciones y velocidades tomando una determinada cantidad de muestras con una frecuecia aproximada de 30 Hz. Para entender este nodo de una manera más visual la Figura \ref{fig:kalman_flux_diagram} muestra el diagrama de flujo de los principales procesos. 
@@ -138,7 +138,7 @@ La plataforma ROS es actualizada cada dos años (entre el lapso de Abril-Octubre
 	Adicionalmente a este programa, hay un código escrito en python para hacer la comparación de la posición real, la medida y la estimación mediante una gráfica, éste no es un nodo sino simplemente un \textit{script} llamado $graph_-kalman_-estimator.py$.
 			
 			\subsubsection*{Nodo para movimiento del balón}
-			Ejecutando en una nueva terminal el comando \textit{rosrun $ball_-position$ $move_-ball_-node$ 2.5} se inicializa un nodo que mueve el balón simulado a una dirección y velocidad inicial determinada, con base el lo que se vio en la sección 4.2. 
+			Ejecutando en una nueva terminal el comando \textit{rosrun $ball_-position$ $move_-ball_-node$} se inicializa un nodo que mueve el balón simulado a una dirección y velocidad inicial determinada, con base el lo que se vio en la sección 4.2. 
 			
 			\subsubsection*{Nodo para la secuencia de pateo} 
 			El programa que ejecuta el nodo \textit{$ready_-2_-kick$} utiliza la clase Humanoid para hacer movimientos con posiciones predefinidas, en este caso pausandolas para mantenerse parado sobre un pie esperando a que el nodo $kalman_-estimator$ le de la señal para que patee el balón.

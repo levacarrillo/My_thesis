@@ -235,7 +235,7 @@ No obstante, con la deducción de la ecuación de posición, el modelo no es lin
 \end{equation}
 
 
-\ref{eq:state_variable_2} es el modelo en variables de estado, continuo. Para el EKF se discretiza este modelo. Y la señal de entrada F = 0. 
+La igualdad que se encuentra en \ref{eq:state_variable_2} es el modelo en variables de estado, continuo. Para el EKF se discretiza este modelo. Y la señal de entrada F = 0. 
 
 El modelo discreto del sistema con ruido es:
 \begin{eqnarray*}
@@ -313,7 +313,7 @@ La serie de Taylor aplicada con los dos primeros términos es:
 \begin{equation}
 	f(x) = f(a) + \frac{f'(a)}{1!} (x-a)
 \end{equation} 
-Ahora substituyendo $f(x)$ con nuestro modelo de predicción cercano a un punto $a$:
+Ahora al substituir $f(x)$ con nuestro modelo de predicción cercano a un punto $a$:
 \begin{equation}
 	f(\hat{x}_{n,n}) = f(\hat{x}^a_{n,n}) + F(\hat{x}^a_{n,n})(\hat{x}_{n,n} - \hat{x}^a_{n,n})
 \end{equation}
@@ -332,7 +332,7 @@ F =
 \frac{\partial f_{y_2}}{\partial x_1} & \frac{\partial f_{y_2}}{\partial y_1} & \frac{\partial f_{y_2}}{\partial x_2} & \frac{\partial f_{y_2}}{\partial y_2}
 \end{bmatrix}
 \end{equation}
-Al substituir la nuestra función  f en la matriz F da como resultado:
+Substituyendo la nuestra función  f en la matriz F da como resultado:
 
 \begin{equation}
 F =
@@ -352,16 +352,6 @@ P_{n+1,n} = F P_{n,n} F^T + Q
 \label{eq:extrapolation_process_cov_matrix}
 \end{equation}
 
-\begin{equation}
-P_{n,n} =
-\begin{bmatrix}
-Px_{1_{n,n}} & 0 & 0 & 0\\ 
-0 & Py_{1_{n,n}} & 0 & 0\\ 
-0 & 0 & Px_{2_{n,n}} & 0\\ 
-0 & 0 & 0 & Py_{2_{n,n}}
-\end{bmatrix}
-\end{equation}	
-
 Donde $P$ es la matriz de covarianza:
 \begin{equation}
 P_{n,n} =
@@ -372,7 +362,7 @@ P_{n,n} =
 0 & \sigma_{y_2}\sigma_{y_1} & 0 & \sigma^2_{y_2} 
 \end{bmatrix}
 \end{equation}	
-Nótese que a comparación de las otras matrices de covarianza, en ésta hay varianzas y covarianzas, esto se debe a que se tienen sólo entradas de posición y las velocidades están correlacionadas a éstas.
+Nótese que a comparación de las otras matrices de covarianza, en ésta hay varianzas y covarianzas, esto se debe a que se tienen sólo entradas de posición es decir, las velocidades están correlacionadas a la medición de posición.
 \\
 Q es una matriz diagonal cuadrada: 
 \begin{equation}
@@ -385,14 +375,6 @@ q_{x_1} & 0 & 0 & 0\\
 \end{bmatrix}
 \end{equation}	
 
-Resolviendo la ecuación \ref{eq:extrapolation_process_cov_matrix}, tomando sólamente los valores de la diagonal principal, dan como resultados individuales las siguientes ecuaciones:
-	
-\begin{eqnarray*}
-	Px_{1_{n+1,n}} = Px_{1_{n,n}} + \Delta t^{2} Px_{2_{n,n}} + q_{x_1}\\
-	Py_{1_{n+1,n}} = Py_{1_{n,n}} + \Delta t^{2} Py_{2_{n,n}} + q_{y_1}\\
-	Px_{2_{n+1,n}} = Px_{2_{n,n}} 				    		  + q_{x_2}\\
-	Py_{2_{n+1,n}} = Py_{2_{n,n}}							  + q_{y_2}\\
-\end{eqnarray*}
 
 		\subsubsection*{Obtención de la ganancia de Kalman}
 	Una vez teniendo la predicción del estado siguiente, es posible comparar las mediciones con las predicciones previamente hechas para hacer un proceso de corrección. Para esto es necesario obtener el peso de la ganancia de Kalman que se describe con la siguiente ecuación:
@@ -421,7 +403,7 @@ Substituyendo con los valores de la función $h$ el jacobiano es:
 	\end{bmatrix}
 \end{equation}
 
-Como ya se había mencionado, $R_n$ es una matriz cuadrada de 2x2 la cual contiene la covarianza del ruido en la medición:
+Como ya se había mencionado, $R_n$ es una matriz cuadrada de 2x2 que contiene la covarianza del ruido en la medición:
 \begin{equation}
 	R_n = 
 	\begin{bmatrix}
@@ -447,7 +429,7 @@ P_{n,n} = (I - K_n H) P_{n,n-1}
 
 	\section{Obtencion de los parametros}
 		\subsection*{Coeficiente de fricción dinámica}
-	De acuerdo con la ecuación \ref{eq:position_prediction} y como se vio a lo largo de su deducción, el modelo de la posición del balón respecto al tiempo, depende únicamente del coeficiente de fricción dinámica entre el balón y el material el cual se desplaza. Para obtener dicho coeficiente se optó por la solución más simple, la cual consiste en medir diréctamente la fuerza que se opone al desplazamiento, por medio de un dinamómetro de resorte marca \textit{Pasco} con rango de 0 a 10[N] y una resolución de 0.1[N]. Véase la figura \ref{fig:dynamometer}. 
+	De acuerdo con la ecuación \ref{eq:position_prediction} y como se vio a lo largo de su deducción, el modelo de la posición del balón respecto al tiempo, depende únicamente del coeficiente de fricción dinámica entre el balón y el material el cual se desplaza. Para obtener dicho coeficiente se optó por la solución más simple, midiendo diréctamente la fuerza que se opone al desplazamiento, por medio de un dinamómetro de resorte marca \textit{Pasco} con rango de 0 a 10[N] y una resolución de 0.1[N]. Véase la figura \ref{fig:dynamometer}. 
 	
 \begin{figure}
 \centering
@@ -471,16 +453,16 @@ F_d = N\mu_d
 \end{equation}
 	
 		\subsection*{Parámetros de Kalman}
-		El diagrama de bloques \ref{fig:kalman_block_diagram} muestra que el Filtro de Kalman es un sistema de control automático realimentado con su misma salida. Como en muchos sistemas de control, siempre es mejor variar los parámetros conforme se hagan pruebas, a fin de obtener resultados más óptimos a lo que uno espera. Siendo así, los siguientes parámetros son los que se fueron variando con cada prueba y se decidió que fueron los mejores para filtrar los diversos errores inherentes al sistema. 
+		El diagrama de bloques de la Figura \ref{fig:kalman_block_diagram} muestra que el Filtro de Kalman es un sistema de control automático realimentado con su misma salida. Como en muchos sistemas de control, siempre es mejor variar los parámetros conforme se hagan pruebas, a fin de obtener resultados más óptimos a lo que uno espera. Siendo así, los siguientes parámetros son los que se fueron variando con cada prueba y se decidió que fueron los mejores para filtrar los diversos errores inherentes al sistema. 
 		
 
 		\subsubsection*{Matriz de covarianza del ruido del proceso}
 \begin{equation}
 Q = \begin{bmatrix}
-0.000001 & 0 & 0 & 0\\ 
-0        & 0.000001 & 0        & 0\\ 
-0        & 0        & 0.000001 & 0\\ 
-0.0      & 0        & 0        & 0.000001
+0.000002 & 0 & 0 & 0\\ 
+0        & 0.000002 & 0        & 0\\ 
+0        & 0        & 0.000002 & 0\\ 
+0.0      & 0        & 0        & 0.000002
 \end{bmatrix}
 \label{eq:process_noise_matrix}
 \end{equation}
@@ -510,14 +492,15 @@ R_n = \begin{bmatrix}
 P_{0,0} 
 =
 \begin{bmatrix}
-0.1 & 0   & 0   & 0\\ 
-0   & 0.1 & 0   & 0\\
-0   & 0   & 0.1 & 0\\
-0   & 0   & 0   & 0.1
+5   & 0 & 0 & 0\\ 
+0   & 5 & 0 & 0\\
+0   & 0 & 5 & 0\\
+0   & 0 & 0 & 5
 \end{bmatrix}
 \label{eq:initial_cov_vector}
 \end{equation}	
 
+Nótese que $P_{0,0}$ tiene valores relativamente grandes, esto es para ayudar que el valor estimado converja más rápido a la curva de mediciones.
 \begin{figure}
 	\centering
 	\includegraphics[scale=0.07]{images/kalman_block_diagram.png}

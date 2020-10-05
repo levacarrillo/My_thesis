@@ -147,7 +147,7 @@ Como puede observarse, cuando el error de covarianza de la medición $R_n$ se ap
 \label{fig:Kalman_scheme}
 \end{figure}
 
-	Como ser vio, este filtro utiliza modelos matemáticos lineales, sin embargo en diversas situaciones, el modelo matemático no es lineal, y la predicción resulta ser errónea. Para solucionar esto, se puede implementar el Filtro de Kalman Extendido, que es básicamente el mismo tomando como lineal el modelo en ciertos intervalos de tiempo, y modificando ligeramente las ecuaciones. Véase la figura \ref{fig:extended_kalman_scheme}.
+	Como ser vio, este filtro utiliza modelos matemáticos lineales, sin embargo en diversas situaciones, el modelo matemático no es lineal, y la predicción resulta ser errónea. Para solucionar esto, se puede implementar el Filtro de Kalman Extendido, que es básicamente el mismo tomando como lineal el modelo en ciertos intervalos de tiempo, y linealizando la predicción de la covarianza del proceso con base en la serie de Taylor. Véase la figura \ref{fig:extended_kalman_scheme}.
 
 \begin{figure}
 \centering
