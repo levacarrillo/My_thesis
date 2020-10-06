@@ -4,7 +4,7 @@
 	Los robots humanoides tienen un gran potencial para la robótica de servicio debido a que su bioinspiración mecánica les permite realizar tareas muy similares a las de un ser humano. Sin embargo, con cada mejora de capacidades, la complejidad de los algoritmos incrementa considerablemente. Es por eso que los concursos de la RoboCup abrieron la categoría \textit{Humanoid} para impulsar el desarrollo e investigación de los humanoides.
 	\\
 	Una de las propuestas más convenientes para buscar dicho desarrollo, es formar equipos de humanoides con retos específicos del fútbol soccer, ya que engloba sistemas de visión computacional, inteligencia artificial y control automático análogos a los del sistema humano.
-\\	
+	\\	
 	A lo largo de los últimos años, se han creado extraordinarios algoritmos para realizar comportamientos complejos y cada vez más parecidos a los de los jugadores, pese a esto, aún resta mucho por perfeccionar. Por ejemplo al interactuar con objetos en movimiento, un humano puede fácilmente patear, cabecear o interceptar un balón que se mueve, con los humanoides estas son tareas complejas y requieren gran capacidad de cómputo. 
 	Por esta razón, la motivación de esta tesis es crear algoritmos para imitar dichas capacidades y hacer partidos más dinámicos.
 	
@@ -32,3 +32,16 @@
 		\end{itemize}
 
 \section{Descripción del documento}
+	Este trabajo explica el sistema de visión computacional implementado en un robot bípedo para la medición de posición de objetos en movimiento circundantes a él, y hacer una predicción de estado dentro de un intervalo de tiempo.
+	
+	En el capítulo dos se aborda el estado del arte de los robots bípedos actuales y el potencial que tienen para poder hacer tareas parecidas a las de los seres humanos, generalmente más visibles en el juego de Fútbol Soccer. También se describen y se hacen comparativas entre los distintos sitemas de visión que se han empleado dentro de los concursos de la RoboCup. Al final de este capítulo, se plantea lo que es el Filtro de Kalman y la ventaja que puede representar al filtrar datos cuando se obtienen mediciones de posición.
+	
+	Dentro del capítulo tres se expone el marco teórico de los principios físicos y matemáticos para implementar si se requiere hacer uso de la visión computacional, así como el hardware y la adecuación de los modelos matemáticos al mundo físico.
+	
+	El capítulo cuatro tiene las deducciones del modelo matemático del sistema que se quiere analizar, la comparación entre el Filtro de Kalman y el Filtro de Kalman extendido, la descripción de cada estado y los parámetros convenientes a usar a fin de hacer una óptima predicción.
+	
+	Las herramientas de software, su integración y las características del hardware del Humanoide están ampliamente explicadas dentro del capítulo 5, a fin de conocer los alcances y limitantes de este robot a la hora de desarrollarle un sistema nuevo.
+	
+	En la parte de Resultados están descritas las diversas pruebas que se hicieron con base en la teoría que se vio en los capítulos previos dejando en claro, el desempeño del robot con resultados cualitativos.
+	
+	La discusión se plantea en el capítulo siete, dentro de éste se encuentran las Conclusiones (para entender cuáles objetivos se cumplieron y cuáles pueden mejorarse) y el Trabajo a Futuro que sirve para ver las posibles mejoras que se le pueden implementar tanto al robot como a los sistemas de medición y control.
