@@ -8,7 +8,7 @@ El modelo más simple de cómo sucede la captura de luz, es el de la cámara est
 \begin{figure}
 	\centering		
 	\includegraphics[scale=0.7]{images/pinholeCamera.pdf}
-	\caption{Ejemplo en la vida real de la proyección de una imagen con la cámara estenopéica (Tomada de: https://www.pinterest.com.mx/pin/371828512962028619/).}		
+	\caption{Ejemplo en la vida real de la proyección de una imagen con la cámara estenopéica. Imagen tomada de: https://www.pinterest.com.mx/pin/371828512962028619.}		
 	\label{fig:pinholeCamera}
 \end{figure}
 
@@ -19,7 +19,7 @@ El punto dentro del Pinhole es reinterpretado como el centro de proyección. Par
 \begin{figure}
 	\centering		
 	\includegraphics[scale=0.8]{images/pinholeScheme.pdf}
-	\caption{Esquema del modelo de cámara estenopeica (Modificado de: Bradski and Kaehler, 2008).}		
+	\caption{Esquema del modelo de cámara estenopeica. Imagen modificada de: \cite{bradski2008learning}.}		
 	\label{fig:pinholeScheme}
 \end{figure}
 
@@ -31,7 +31,7 @@ Para fines prácticos, el modelo \textit{Pinhole} no es conveniente de usar en e
 \begin{figure}
 	\centering
 	\includegraphics[scale=0.8]{images/rearrange_pinhole_scheme.pdf}
-    \caption{Rearreglo de una cámara estenopeica (Modificado de: Bradski and Kaehler, 2008).}
+    \caption{Rearreglo de una cámara estenopeica. Imagen modificada de: \cite{bradski2008learning}.}
     \label{fig:rearrange_pinhole_scheme}
 \end{figure} 
 
@@ -74,7 +74,7 @@ Debido a diversos factores en la manufactura, las lentes de una cámara no son p
 \begin{figure}
 \centering
 \includegraphics[scale=0.5]{images/image_distorted.png}
-\caption{Ejemplo de distorsión de una cámara.}
+\caption{Ejemplo de distorsión de una cámara. Imagen tomada de: https://answers.opencv.org/question/114056/chessboard-detection-fails-on-fisheye-image/?sort=votes}
 \label{fig:image_distorted}
 \end{figure}
 
@@ -87,7 +87,7 @@ En donde $(x,y)$ son las coordenadas de la imagen, \textit{r} es la distancia de
 \begin{figure}
 \centering
 \includegraphics[scale=0.75]{images/radial_distortion.png}
-\caption{Distribución de la distorsión radial de una imagen.}
+\caption{Distribución de la distorsión radial de una imagen. Imagen tomada de: https://www.i-ciencias.com/pregunta/96683/que-es-el-tangencial-distorsion-de-opencv-en-realidad-tangencial .}
 \label{fig:radial_distortion}
 \end{figure}
 
@@ -100,7 +100,7 @@ La estimación de los parámetros internos es importante en la calibración de l
 \begin{figure}
 \centering
 \includegraphics[scale=0.66]{images/tangential_distortion.png}
-\caption{Distribución de la distorsión tangencial en una imagen.}
+\caption{Distribución de la distorsión tangencial en una imagen. Imagen tomada de: https://www.i-ciencias.com/pregunta/96683/que-es-el-tangencial-distorsion-de-opencv-en-realidad-tangencial .}
 \label{fig:tangential_distortion}
 \end{figure}
 
@@ -125,13 +125,13 @@ El espacio de color \textit{HSV (Hue-Saturation-Value)} es especificado por tres
 \begin{figure}
 	\centering		
 	\includegraphics[scale=0.8]{images/RGB_model.pdf}
-	\caption{Modelo tridimensional del espacio de color RGB (Foto tomada de: ).}		
+	\caption{Modelo tridimensional del espacio de color RGB. Imagen tomada de: https://lpurpura.wordpress.com/2011/05/03/modo-de-color/ .}		
 \end{figure}
 
 \begin{figure}
 	\centering		
 	\includegraphics[scale=0.4]{images/hsv_space.pdf}
-	\caption{Modelo tridimensional del espacio de color HSV (Foto tomada de: \cite{agoston2005computer}).}		
+	\caption{Modelo tridimensional del espacio de color HSV. Imagen tomada de: $https://es.wikipedia.org/wiki/Modelo_-de_-color_-HSV$ .}		
 \end{figure}
 
 Tanto el espacio de color RGB y el HSV pueden representar la totalidad de los colores del espectro de luz visible, no obstante para el procesamiento de imágenes se utiliza el HSV ya que es una forma más sencilla para segmentar colores y es una forma más parecida a la que los seres humanos percibimos los colores.
@@ -169,7 +169,7 @@ A\thinspace\oplus\thinspace B\thinspace=\thinspace \left \{ c \in E^N  \mid c=a+
 \begin{figure}
 \centering
 \includegraphics[scale=1]{images/erosion_example.png}
-\caption{Eliminación de ruido alrededor de una figura de interés usando la erosión.}
+\caption{Eliminación de ruido alrededor de una figura de interés usando la erosión.  Imagen tomada de: $https://docs.opencv.org/3.4/d9/d61/tutorial_-py_-morphological_-ops.html$ .}
 \label{fig:erosion_example}
 \end{figure}
 
@@ -185,6 +185,6 @@ En la figura \ref{fig:dilation_diagram} se puede imaginar que si se coloca el \t
 \begin{figure}
 \centering
 \includegraphics[scale=0.7]{images/dilation_example.jpg}
-\caption{Ejemplificación de la dilatación aplicada en una segmentación de color.}
+\caption{Ejemplificación de la dilatación aplicada en una segmentación de color. Imagen tomada de: $https://unipython.com/segmentacion-imagenes-algoritmo-watershed/$ .}
 \label{fig:dilation_example}
 \end{figure}
