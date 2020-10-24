@@ -100,7 +100,7 @@ De esta manera, se resta \ref{eq:xcForX}  a \ref{eq:xBidimentionalPosition} y \r
 
 
 		
-	\section{Estimación de estados mediante el Filtro de Kalman}
+	\section[Estimación mediante EKF]{Estimación de estados mediante el Filtro de Kalman}
 	Para poder impementar el Filtro de Kalman, se necesita primero tener un modelo matemático del sistema que se pretende tomar mediciones. Analizando el digrama de cuerpo libre de la Figura \ref{fig:dynamic_model} se puede hacer un análisis dinámico del balón utilizando la segunda ley de Newton.
 
 \begin{equation}
@@ -248,7 +248,7 @@ y_{2_{n+1,n}} &=& y_{2_{n,n}} - \Delta t \frac{1}{m}\mu_d m g + \frac{1}{m} F_y 
 O escrito en su forma matricial:
 
 \begin{equation}
-\hat{x}_{n+1,n} =
+\bar{x}_{n+1,n} =
 \begin{bmatrix}
 1 & 0 & \Delta t & 0\\ 
 0 & 1 & 0 & \Delta t\\
@@ -307,7 +307,7 @@ v_2
 
 $V = [v_1, v_2]$ es el vector de ruido de la medición, considerando que tiene una distribución normal, media cero y matriz de covarianza $R_n\in\mathbb{R}^{2\times 2}$.
 
-Para poder definir la matriz de predicción F, la cual será de apoyo para el estado siguiente de la matriz P se tiene que tomar en cuenta que la ecuación \ref{eq:position_prediction} no es lineal por no cumplir con la condición de homogeneidad, lo cual hace que distribución no sea gaussiana y la predicción resultaría erronea. Para solucionar esto, es necesario hacer un procedimiento para liealizar el modelo utilizando la serie de Taylor con sólo los dos primeros términos (dado que si se agregan más el modelo dejaría de ser lineal otra vez).
+    Para poder definir la matriz de predicción F, la cual será de apoyo para el estado siguiente de la matriz P se tiene que tomar en cuenta que la ecuación \ref{eq:position_prediction} no es lineal por no cumplir con la condición de homogeneidad, lo cual hace que distribución no sea gaussiana y la predicción resultaría erronea. Para solucionar esto, es necesario hacer un procedimiento para liealizar el modelo utilizando la serie de Taylor con sólo los dos primeros términos (dado que si se agregan más el modelo dejaría de ser lineal otra vez).
 	
 La serie de Taylor aplicada con los dos primeros términos es:
 \begin{equation}
