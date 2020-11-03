@@ -51,7 +51,7 @@
 	\section{La bilbioteca OpenCV}
 OpenCV (\textit{Open Computer Vision}) es una biblioteca \textit{open source} diseñada para visión computacional. Esta biblioteca está escrita principalmente en C y C$++$ y es capaz de ejecutarse en diversos sistemas operativos, tales como: \textit{Windows}, \textit{Linux}, o \textit{Mac OS X}.
 
-OpenCV fue desarrollada para hacer procesos más eficientes cuando se hace visión con aplicaciones en tiempo real. Una de las metas de OpenCV es proveer una infraestructura sencilla y sofisticada para  diferentes tipos de usuarios, que van desde profesores, estudiantes, profesionistas, desarrolladores, y autodidactas. La librería cuenta con más de 500 funciones que se extienden en diversas áreas de visión, incluyendo inspección en la fabricación de productos, seguridad, calibración de cámaras, visión estéreo, robótica, etc.
+OpenCV fue desarrollada para hacer procesos más eficientes cuando se hace visión con aplicaciones en tiempo real. Una de las metas de OpenCV es proveer una infraestructura sencilla y sofisticada para  diferentes tipos de usuarios, que van desde profesores, estudiantes, profesionistas, desarrolladores, y autodidactas. La librería cuenta con más de 500 funciones que se extienden en diversas áreas de visión, incluyendo inspección en la fabricación de productos, seguridad, calibración de cámaras, visión estéreo, robótica, etc. \citep{culjak2012brief}.
 
 	Las principales funciones de OpenCV que se utilizaron para la elaboración de este trabajo fueron:  \textit{cv::calibrateCamera()} para hacer la corrección de las distorsiones (véase la sección 3.2), \textit{cv::cvtColor()} para cambiar del espacio de color RGB al HSV, \textit{cv::InRange()} para realizar la segmentación de color del objeto de interés (véase la sección 3.3), \textit{cv::erode()} y \textit{cv::dilate()} para implementar los operadores morfológicos, junto con \textit{cv::findNonZero()} para obtener el centroide de la figura proyectada en la imagen. 
 	
@@ -94,9 +94,7 @@ La plataforma ROS es actualizada cada dos años (entre el lapso de Abril-Octubre
 	\section{Integración de los diferentes programas}
 	Para hacer uso del humanoide se requiere clonar un repositorio que se encuentra en la siguiente liga: https://github.com/mnegretev/Humanoids . Este repositorio contiene distintos programas, unos para que el hardware del humanoide se pueda comunicar con un ordenador, otros para el procesamiento de datos, concernientes a las entradas de sensores y control de actuadores e incluso para hacer pruebas remotas con el simulador.
 	
-	Debido a las circunstancias extraordinarias dadas por la pandemia del coronavirus, el distanciamiento social dificultó la realización de pruebas con el robot físico, por lo que se optó por seguir el desarrollo de software de la parte simulada. Haciendo el software los suficientemente robusto para que sea capaz de usarse tanto en el robot real como en el simulado.
-	
-	Aunque actualmente no se puedan hacer pruebas con el robot en físico, trabajar con la parte simulada del humanoide representa claras ventajas, las cuales son: 
+	En esta tesis se optó por seguir el desarrollo de software de la parte simulada. Haciendolo lo suficientemente robusto para que sea capaz de usarse tanto en el robot real como en el simulado. Aunque actualmente no se puedan hacer pruebas con el robot en físico, trabajar con la parte simulada del humanoide representa claras ventajas, las cuales son: 
 	 
 	\begin{itemize}
 	 	\item Complementar el simulador con plug-ins y herramientas extra para la simulación de una cámara virtual dentro del simulador Gazebo.
@@ -107,7 +105,7 @@ La plataforma ROS es actualizada cada dos años (entre el lapso de Abril-Octubre
 	\end{itemize}
 	
 		\subsection*{Descripción de los principales nodos usados en este trabajo}
-		El repositorio anteriormente mencionado tiene instrucciones para la instalación del entorno de trabajo y corrimento de los programas. Para probar el simulador, el comando de inicio es: $$roslaunch surge_-et_-ambula humanoid_-simul.launch$$ 
+		El repositorio anteriormente mencionado tiene instrucciones para la instalación del entorno de trabajo y corrimento de los programas. Para probar el simulador, el comando de inicio es: $$roslaunch \quad surge_-et_-ambula \quad humanoid_-simul.launch$$ 
 
 		Éste es un comando que levanta distintos nodos que se comunican entre sí para simular las variables físicas simuladas del robot. Cuando se levanta se puede observar que se abren algunas ventanas, las cuales son del visualizador del robot \textit{Rviz}, el simulador con variables físicas \textit{Gazebo}, una GUI (Graphical User Interface) para manipular las articulaciones del robot y una ventana que simula la imagen obtenida de la cámara simulada. Tal y como se observa en la Figura \ref{fig:gazebo}.
 		

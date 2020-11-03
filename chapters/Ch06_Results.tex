@@ -1,10 +1,10 @@
 \chapter{Resultados}
 \section{Descripción del experimento}
-	Como este documento es una tesis de tipo experimental, las validaciones de la hipótesis deben obtenerse de caracter cuantitativo con una prueba empírica. Una forma de hacerlo es implementando el análisis de los datos de las mediciones de posición dentro del sistema embebido, en este caso el robot humanoide. De esta misma forma, se puede hacer dicha implementación desarrollando la prueba del \textit{RoboCup} llamada \textit{kick from a moving ball}, la cual consiste en patear un balón en movimiento.
+	Como este documento es una tesis de tipo experimental, las validaciones de la hipótesis deben obtenerse de caracter cuantitativo con una prueba empírica. Una forma de hacerlo es implementando el análisis de los datos de las mediciones de posición dentro del sistema simulado, en este caso el robot humanoide. De esta misma forma, se puede hacer dicha implementación desarrollando la prueba del \textit{RoboCup} llamada \textit{kick from a moving ball}, la cual consiste en patear un balón en movimiento.
 
-	En primera instancia, se tuvo que hacer un desarrollo del sistema de visión del robot, para el robot en físico se tuvo que hacer un nodo que se conecte con el sistema a bajo nivel del hardware de la cámara y publique la imagen 30 veces por segundo en un tópico, para el robot simulado se requirió instalar un \textit{plug-in} dentro del archivo de configuración del robot (.xml) para que sea capaz de simular una cámara y visualice lo que se encuentra dentro del ambiente de Gazebo, véase la Figura: \ref{fig:gazebo}.
+	En primera instancia, se tuvo que hacer un desarrollo del sistema de visión, para el robot en físico se tuvo que hacer un nodo que se conecte con el sistema a bajo nivel del hardware de la cámara y publique la imagen 30 veces por segundo en un tópico, para el robot simulado se requirió instalar un \textit{plug-in} dentro del archivo de configuración del robot (.xml) para que sea capaz de simular una cámara y visualice lo que se encuentra dentro del ambiente de Gazebo, véase la Figura: \ref{fig:gazebo}.
 
-	Teniendo ya el sistema de visión con su respectivo procesamiento de imagenes para el posicionamiento del balón se procedió a alimentar al estimador de Kalman con los valores calculados de posición con una doble finalidad, la primera de filtrar el ruido inerente a la medición y la segunda hacer una estimación a \textit{posteriori} de la posición del balón con un limitado número de muestras, dado que si se toman muchas mediciones, podría no dar tiempo para que el robot alcance a patear el balón.
+	Teniendo ya el sistema de visión con su respectivo procesamiento de imagenes para el posicionamiento del balón se procedió a alimentar al estimador de Kalman con los valores calculados de posición haciendo una doble finalidad, la primera de filtrar el ruido inerente a la medición y la segunda hacer una estimación a \textit{posteriori} de la posición del balón con un limitado número de muestras, dado que si se toman muchas mediciones, podría no dar tiempo para que el robot alcance a patear el balón.
 	
 	Una vez dejando que el estimador de Kalman logre estimar la posición más probable del balón en un tiempo $t$ el programa espera a que se cumpla cierto umbral de tiempo para comenzar a realizar el movimiento de pateo. Teniendo como objetivo que el pie llegue a una posición determinada por donde va a pasar el balón en movimiento, lo patee y el regrese a su posición inicial.	
 \section{Parámetros del experimento}
@@ -36,14 +36,50 @@
 	\label{fig:estimator_graphic_3}
 \end{figure}
 	
-	\section{Pruebas de estimación de posición y velocidad}
-	La Figura \ref{fig:final_test} se muestra la secuencia de sólo una de varias pruebas que se hicieron en la simulación, variando diversos parámetros para verificar la robustez del sistema de visión y de estimación, entre los principales fueron las velocidades iniciales del balón en movimiento, los ángulos de posición de la cabeza de robot, distancias de recorrido del balón y los coeficientes de fricción dinámica del balón con la superficie.
+	\section[Pruebas de estimación]{Pruebas de estimación de posición y velocidad}
 	
 	En la sección 4.3 se obtuvo de manera experimental el coeficiente de fricción dinámica del balón sobre una superficie de fieltro la cual se planea usar para hacer pruebas con el robot real, sin embargo en las pruebas simuladas se fueron observando los diversos comportamientos con coeficientes de ficción menores (desde 0.1 hasta 0.3636) para tener un movimiento más parecido al rectilíneo uniforme. No obstante las pruebas con el coeficiente de fricción obtenido experimentalmente no representaron problemas a la hora de hacer la estimación y se concluyeron los mismos resultados de la prueba de pateo. 
+
+	Se hicieron diversas pruebas en la simulación, variando diversos parámetros para verificar la robustez del sistema de visión y estimación, entre los principales fueron las velocidades iniciales del balón, los ángulos de posición de la cabeza del robot y las distancias de recorrido del balón. A continuación se presentan ejemplos de las pruebas y cómo se desempeña el los algoritmos si se varían las velocidades del balón.
+	
+	\subsubsection*{Prueba 1: Movimiento horizontal con una velocidad inicial de 3.0 m/s}
+	En la figura \ref{fig:prueba_1} se observa la secuencia de una prueba del estimador del balón con un movimiento horizontal de derecha a izquierda en dode la velocidad inicial está fuera la ventana de velocidades. Esta secuencia consta de tres elementos los cuales se puede observar cómo se desempeña el robot en una prueba final, en cada uno está el estado del robot (latente para patear) y las entradas de imagen simulada(la primaria y la segmentada).
+	Debido a que el balón tiene bastante ímpetu, al sistema de visión no le da el tiempo suficiente para hacer las mediciones mínimas para estimar una posición antes de que el balón llegue a cierto umbral. Otra situacion en la que no le daría tiempo es si se toman demasiadas muestras antes de realizar el movimiento de pateo.
 	
 \begin{figure}
 \centering
-	\includegraphics[scale=0.26]{images/final_test.png}
-	\caption{Secuencia que ilustra el pateo del balón en movimiento como implementación del filtro.}
+	\includegraphics[scale=0.26]{images/prueba_1.png}
+	\caption{Prueba con una velocidad inicial del balón de 3.0 m/s. En este caso el balón tiene una energía cinética más elevada de lo que el sistema puede admitir para una oportuna estimación de posición. Puede verse que el balón viaja de derecha a izquierda sin que el robot intente patear.}
+	\label{fig:prueba_1}
+\end{figure}
+
+	\subsubsection*{Prueba 2: Movimiento horizontal con una velocidad inicial de 1.8 m/s}
+
+	De manera similar a la Prueba 1, en esta prueba se hizo mover al balón con la misma trayectoria pero con una velocidad menor a la recomendada para realizar la prueba (alrededor de 2.0 m/s). En esta secuencia (figura \ref{fig:prueba_2}) se visualiza que aunque el estimador tenga el tiempo suficiente para hacer una estimación, el balón no tiene suficiente impulso para llegar hasta el pie que se supone va a patear cuando pase justo enfrente. En estos casos, el programa sólamente indica que no dará el tiempo suficiente y no intenta patear.
+\begin{figure}
+\centering
+	\includegraphics[scale=0.26]{images/prueba_2.png}
+	\caption{Prueba con una velocidad inicial del balón de 1.8 m/s. Con una velocidad inicial relativamente baja como en este caso, el estimador calcula de manera inmediata la extrapolación de la trayectoria, en la cual es posible saber si la velocidad del balón será de cero antes de llegar al punto donde el robot pueda patearlo.}
+	\label{fig:prueba_2}
+\end{figure}
+	
+	\subsubsection*{Prueba 3: Movimiento horizontal con una velocidad inicial de 2.2 m/s}	
+	
+	Finalmente cuando se realizó una prueba con una velocidad que está dentro del rango aceptado se observa (figura \ref{fig:prueba_3}) que el balón es pateado por el robot, indicando que el estimador cumplió exitosamente su proceso.
+\begin{figure}
+\centering
+	\includegraphics[scale=0.26]{images/prueba_3.png}
+	\caption{Prueba con una velocidad inicial del balón de 1.8 m/s. En esta prueba final, se ve cómo al ir en una velocidad óptima al estimador le da tiempo de calcular el tiempo de llegada del balón al punto de pateo y posteriormente patearlo con un movimiento muy similar al que hacen los seres humanos.}
+	\label{fig:prueba_3}
+\end{figure}
+	
+	La figura \ref{fig:final_test} muestra la secuencia de una prueba similar, con la misma velocidad inicial pero con una trayectoria diferente con movimiento en los ejes $x$ y $y$ (utilizando el sistema de referencia que se vio en el capítulo 4). En este caso el balón pasa hacia un punto cercano al pie que patea.
+	
+%	La Figura \ref{fig:final_test} se muestra la secuencia de sólo una de varias pruebas que se hicieron en la simulación, variando diversos parámetros para verificar la robustez del sistema de visión y de estimación, entre los principales fueron las velocidades iniciales del balón en movimiento, los ángulos de posición de la cabeza de robot, distancias de recorrido del balón y los coeficientes de fricción dinámica del balón con la superficie.
+	
+\begin{figure}
+\centering
+	\includegraphics[scale=0.45]{images/final_test.png}
+	\caption{Secuencia que ilustra el pateo del balón con una distinta dirección en movimiento, mostrando la robustez del sistema hacia distintas trayectorias.}
 \label{fig:final_test}
 \end{figure} 

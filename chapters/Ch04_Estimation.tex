@@ -38,7 +38,7 @@ En donde $(r_x, r_y, r_z)$ es la posición en el espacio de la cámara utilizada
 Despejando $\lambda$ del tercer término de la expresión anterior se obtiene:
 \[\lambda = -\frac{r_z}{u_z}\]
 
-De esta manera, substituyendo $\lambda$ en (\ref{eq:LookAt}), se obtiene:
+De esta manera, substituyendo $\lambda$ en (\ref{eq:LookAt}):
 \[x = r_x-\frac{r_z u_x}{u_z}\]
 \[y = r_y-\frac{r_z u_y}{u_z}\]
 
@@ -193,7 +193,7 @@ Con el modelo dinámico que describe el movimiento del balón, se procede a escr
 
 \begin{figure}
 \centering
-\includegraphics[scale=0.55]{images/kalman_extended_diagram.pdf}
+\includegraphics[scale=0.055]{images/kalman_extended_diagram.png}
 \caption{Diagrama extendidio del funcionamiento paso a paso del Filtro de Kalman. Imagen modificada de: https://www.kalmanfilter.net/kalman1d.html}
 \label{fig:kalman_extended_diagram}
 \end{figure}
@@ -457,7 +457,7 @@ F_d = N\mu_d
 \end{equation}
 	
 		\subsection*{Parámetros de Kalman}
-		El diagrama de bloques de la Figura \ref{fig:kalman_block_diagram} muestra que el Filtro de Kalman es un sistema de control automático realimentado con su misma salida. Como en muchos sistemas de control, siempre es mejor variar los parámetros conforme se hagan pruebas, a fin de obtener resultados más óptimos a lo que uno espera. Siendo así, los siguientes parámetros son los que se fueron variando con cada prueba y se decidió que fueron los mejores para filtrar los diversos errores inherentes al sistema. 
+		El diagrama de bloques de la Figura \ref{fig:kalman_block_diagram} muestra que el Filtro de Kalman es un sistema de control automático realimentado con su misma salida. Como en muchos sistemas de control, siempre es mejor variar los parámetros conforme se hagan pruebas, a fin de obtener resultados más óptimos a lo que uno espera. Los parámetros que se presentan a continuación se establecieron con base en la experiencia del error en el sensado y la estimación. De esta forma se pueden obtener resultados óptimos sin necesidad de hacer cientos de mediciones a fin de obtener resultados estadísticos, además que podría resultar impráctico a la hora de hacer experimentos con el robot real.
 		
 
 		\subsubsection*{Matriz de covarianza del ruido del proceso}
@@ -474,8 +474,8 @@ Q = \begin{bmatrix}
 		\subsubsection*{Matriz de error de medición}
 \begin{equation}
 R_n = \begin{bmatrix}
-0.025 & 0\\ 
-0     & 0.025
+0.00002 & 0\\ 
+0     & 0.00002
 \end{bmatrix}
 \label{eq:noise_measurement}
 \end{equation}

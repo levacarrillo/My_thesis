@@ -1,4 +1,4 @@
-\chapter{Segmentación de imágenes con base en color}
+\chapter[Segmentación de imágenes]{Segmentación de imágenes con base en color}
 
 	En este capítulo se desarrollan los conceptos necesarios para entender la visión computacional que se empleará en este trabajo. Comenzando con definiciones importantes y entendiendo cómo es que funcionan las cámaras, con sus capacidades y limitaciones.
 	
@@ -146,7 +146,7 @@ Tanto el espacio de color RGB y el HSV pueden representar la totalidad de los co
 	\section{Operadores morfológicos}	
 La gran mayoría de las veces, cuando se hace procesamiento de imágenes, se necesitan ciertos procesos para eliminar el ruido circundante y dejar al elemento de interés aislado. Los \textit{operadores morfológicos} (erosión y dilatación) se pueden usar para este propósito.
 
-Los \textit{operadores morfológicos} son operadores matemáticos basados en la forma de una imagen comunmente binaria (con pixeles blancos y negros) y sirven para preservar sus características y eliminar las irrelevancias. Dado que toda imagen está compuesta por pixeles, se pueden crear ciertos conjuntos de pixeles dentro de un vector para así poder aplicar operaciones matemáticas. 
+Los \textit{operadores morfológicos} son operadores matemáticos basados en la forma de una imagen comunmente binaria (con pixeles blancos y negros) y sirven para preservar sus características y eliminar las irrelevancias. Dado que toda imagen está compuesta por pixeles, se pueden crear ciertos conjuntos de pixeles dentro de un vector para así poder aplicar operaciones matemáticas. \ref{heijmans1999connected}. 
 
 La \textit{erosión} es el primer operador que se aplica cuando se desea eliminar el ruido en una segmentación, eso es porque elimina una gran cantidad de pixeles que tienden a tener mucha menor área que la figura de interés. Para lograr esto se establecen dos conjutos (de coordenadas de pixeles) $A$ y $B$. Si $A$ y $B$ son conjuntos dentro de un espacio euclidiano de N elementos, entonces la erosión de $A$ por $B$ es el conjunto de elementos $x$ para el cual $x + b \in  A$ para cada $b \in B$. Por lo tanto, de una manera más formal, la operación de erosión se puede definir con la expresión \ref{eq:erosion}.
 En la figura \ref{fig:erosion_diagram} se puede observar de una manera más visual cómo funciona la operación de erosión dentro de una imagen binaria.

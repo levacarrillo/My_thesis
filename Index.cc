@@ -21,7 +21,7 @@ int main()
 	cout << "\033[1;33m	1.2 Planteamiento del problema\033[0m\n";
 	cout << "\033[1;33m	1.3 Hipótesis\033[0m\n";
 	cout << "\033[1;33m	1.4 Objetivos\033[0m\n";
-	cout << "\033[1;37m	1.5 Descripción del documento\033[0m\n";
+	cout << "\033[1;33m	1.5 Descripción del documento\033[0m\n";
 	//----------------Antecedentes---------------------
 	cout << "\033[1;33m2. Antecedentes\033[0m\n";
 	cout << "\033[1;33m	2.1 Robots bípedos\033[0m\n";

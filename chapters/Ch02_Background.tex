@@ -1,6 +1,6 @@
 \chapter{Antecedentes}
 
-	En este capítulo se describen los principales criterios para definir lo que es un robot con piernas y sus variantes. También se hace mención de las características principales para su diseño, tomando en cuenta su control y robustez a la hora de ejecución, haciendo incapié en los robots bípedos. Con base en esto, se describen sus diferentes aplicaciones, y las ventajas que tienen a comparación de los robots con ruedas.
+	En este capítulo se describen los criterios para definir lo que es un robot con piernas y sus variantes. También se hace mención de las características principales para su diseño, tomando en cuenta su control y robustez a la hora de ejecución, haciendo incapié en los robots bípedos. Con base en esto, se describen sus diferentes aplicaciones, y las ventajas que tienen a comparación de los robots con ruedas.
 
 	Para iniciar un marco teórico, se hace una introducción de lo que es la visión computacional y sus usos más prácticos, por lo que resulta conveniente desarrollar el concepto del Filtro de Kalman. Las aplicaciones y las implementaciones más comunes dentro del mundo de los robots bípedos (muy similares a los de esta tesis) se describen ampliamente en la última sección llamada Trabajo Relacionado.
 	
@@ -18,7 +18,7 @@ Entre los \textit{robots bípedos} más conocidos se encuentran los \textit{robo
 \item Los movimientos que son capaces de hacer deben ser cinenmáticamente equivalentes a los de un ser humano por ejemplo, las articulaciones de la rodilla no deben doblarse para atrás, la cabeza no debe girar a más de 180 grados, ni debe tener actuadores lineales en sus extremidades.
 \end{itemize}
 
-Uno de los mayores retos a la hora de diseñar y modelar a los robot bípedos es su condición de equilibrio. A comparación de otros robots móviles, los robots con piernas tienden a tener un mayor número de grados de libertad en sus extremidades y estos deben estar muy bien coordinados para evitar que el  robot caiga mientras avanza.
+Uno de los mayores retos a la hora de diseñar y modelar a los robot bípedos es su condición de equilibrio. A comparación de otros robots móviles, los robots con piernas tienden a tener un mayor número de grados de libertad en sus extremidades y estos deben estar muy bien coordinados para evitar que el  robot caiga mientras avanza. No obstante, aunque la complejidad aumenta se tienen algunas ventajas, por ejemplo, los robots con ruedas no pueden subir escaleras y les resulta extremadamente difícil cambiar de entorno como en superficies llanas o con pendientes pronunciadas.
 \\
 			\subsubsection*{Características para el diseño de un robot con piernas}
 \begin{itemize}
@@ -84,7 +84,7 @@ Para el control del sistema dinámico no lineal hay  un número de conceptos rel
 \end{figure}
 
 	\section{Usos de la visión computacional}
-	La \textit{visión computacional} es la transformación de información lumínica desde una imagen o video a hacia una \textit{nueva representación} de datos \cite{bradski2008learning}. Con esta nueva representación se pueden usar ciertas características de la luz capturada para transformarlas en variables numéricas que la computadora pueda abstraer y procesar (tómese de ejemplo la figura \ref{fig:camera_representation}).
+	La \textit{visión computacional} es la transformación de información lumínica desde una imagen o video a hacia una \textit{nueva representación} de datos, \cite{bradski2008learning}. Con esta nueva representación se pueden usar ciertas características de la luz capturada para transformarlas en variables numéricas que la computadora pueda abstraer y procesar (tómese de ejemplo la figura \ref{fig:camera_representation}).
 
 \begin{figure}
 \centering
@@ -99,7 +99,7 @@ Para los fines de esta tesis, no es será necesario hacer uso de software para r
 		\subsection*{Filtro de Kalman Discreto}
 	En 1060 Rudolf Emil Kalman publicó su famoso \textit{paper} donde describe una forma sencilla para filtrar datos discretos de manera recursiva. Este método ha sido usado ampliamente en investigaciones y aplicaciones de ingeniería ya que resulta útil para la predicción de estados con base en modelos matemáticos y datos estadísticos. Por ejemplo, la posición y velocidad de un avión en vuelo, la temperatura de una caldera a la que se le está suministrando combustible o las lecturas dispersas de posición en un GPS.
 
-	El Filtro de Kalman es un algoritmo computacionalmente eficiente cuyas ecuaciones matemáticas minimizan el error producido por el ruido inherente de las mediciones. Con la estimación es posible conocer con precisión el estado pasado, presente y futuro de un sistema, incluso si éste tiene un modelo de naturaleza desconocida.
+	El Filtro de Kalman es un algoritmo computacionalmente eficiente cuyas ecuaciones matemáticas minimizan el error producido por el ruido inherente de las mediciones. Con la estimación es posible conocer con precisión el estado pasado, presente y futuro de un sistema, incluso si éste tiene un modelo de naturaleza desconocida \citep{welch1995introduction}.
 	
 		\subsection*{Proceso de estimación}
 		El Filtro de Kalman aborda el problema de tratar de estimar el estado $x \in \Re^n$ de un proceso de tiempo discreto que es modelado con la ecuación diferencial \ref{eq:kalman_filter}.
@@ -152,7 +152,7 @@ Como puede observarse, cuando el error de covarianza de la medición $R_n$ se ap
 \label{fig:Kalman_scheme}
 \end{figure}
 
-	Como ser vio, este filtro utiliza modelos matemáticos lineales, sin embargo en diversas situaciones, el modelo matemático no es lineal, y la predicción resulta ser errónea. Para solucionar esto, se puede implementar el Filtro de Kalman Extendido, que es básicamente el mismo tomando como lineal el modelo en ciertos intervalos de tiempo, y linealizando la predicción de la covarianza del proceso con base en la serie de Taylor. Véase la figura \ref{fig:extended_kalman_scheme}.
+	Como se vio, este filtro utiliza modelos matemáticos lineales, sin embargo en diversas situaciones, el modelo matemático no es lineal, y la predicción resulta ser errónea. Para solucionar esto, se puede implementar el Filtro de Kalman Extendido, que es básicamente el mismo tomando como lineal el modelo en ciertos intervalos de tiempo, y linealizando la predicción de la covarianza del proceso con base en la serie de Taylor. Véase la figura \ref{fig:extended_kalman_scheme}.
 
 \begin{figure}
 \centering
@@ -181,12 +181,12 @@ En el capítulo 4 se deduce el modelo matemático del sistema de estimación, y 
 
 	Debido al ruido inherente en el procesamiento de imágenes, un Filtro de Kalman es empleado para estimar la posición más probable si es que un objeto del mismo color del balón es detectado.
 	
-	Ya que se hace el reconocimiento del balón, se procede a calcular su posición relativa respecto al humanoide, transformando las coordenadas bidimensionales obtenidas por la imagen a tridimensionales haciendo uso de un método similar al de esta tesis (véase la Sección 4), suponiendo que la posición del balón en la coordenada \textit{z} es siempre 0 y calculando la cinemática directa desde la posición de la cámara a la posición de dicho objetivo.
+	Ya que se hace el reconocimiento del balón, se procede a calcular su posición relativa respecto al humanoide, transformando las coordenadas bidimensionales obtenidas por la imagen a tridimensionales haciendo uso de un método similar al de esta tesis (véase la Sección 4), suponiendo que la posición del balón en la coordenada \textit{z} es siempre 0 y calculando la cinemática directa desde la posición de la cámara a la posición de dicho objetivo, \cite{davi2017ITAndroids}.
 	
 	 \subsection*{NimbRo TeenSize}
 	 Debido a las nuevas reglas dadas por el comité organizador de la RoboCup en cuanto al color del balón (blanco como en las competencias de la FIFA), el equipo \textit{NimbRo} de la Universidad de \textit{Friedrich-Wilhelms} de Alemania optó por utilizar un sistema de reconocimiento que no se base sólo en color, pues las líneas divisorias de las canchas o la portería tienen la misma tonalidad. Es por eso que su sistema de reconocimiento está basado en histogramas HOG (histogram of oriented gradients).
 	
-	 Con el reconocimiento debidamente implementado, se usan las Transformaciones Homogéneas para obtener la posición del balón con cinemática directa, de este modo resulta muy útil la biblioteca \textit{tf2} de ROS. No obstante, aunque las posiciones del robot están bien definidas, algunas variaciones del hardware pueden dar pauta al error en la medición. Para resolver estos fallos este equipo usó el método de Nelder-Mead que consiste en hacer una triangulación convergente para las probables posiciones del balón.
+	 Con el reconocimiento debidamente implementado, se usan las Transformaciones Homogéneas para obtener la posición del balón con cinemática directa, de este modo resulta muy útil la biblioteca \textit{tf2} de ROS. No obstante, aunque las posiciones del robot están bien definidas, algunas variaciones del hardware pueden dar pauta al error en la medición. Para resolver estos fallos este equipo usó el método de Nelder-Mead que consiste en hacer una triangulación convergente para las probables posiciones del balón, \cite{farazi2016nimbro}.
 	 
 	 \subsection*{T-Flow}
 	 Otra forma para realizar la detección de objetos es obteniendo una forma tridimensional específica con una cámara estéreo, tal y como lo hizo el equipo \textit{T-Flow} del \textit{Centro de Investigación de Robótica} del Politécnico de Indonesia. 
@@ -195,12 +195,11 @@ En el capítulo 4 se deduce el modelo matemático del sistema de estimación, y 
 	 Este equipo emplea una cámara estéreo para obtener un par de imágenes, remapear y formar una imagen tridimensional con profundidad aproximada, para posteriormente compararse con un patrón esférico como lo es el balón. 	 
 
 
-	 El sistema de estereo-visión resulta ser muy útil y sencillo para la detección y posicionamiento del objeto, no obstante, se requiere un elevado coste computacional.
+	 El sistema de estereo-visión resulta ser muy útil y sencillo para la detección y posicionamiento del objeto, no obstante, se requiere un elevado coste computacional.\cite{suryantot}.
 	 
 	\subsection*{Ichiro}
 	De una manera muy similar al robot del Laboratorio de Bio-robótica de la UNAM, los humanoides del equipo \textit{Ichiro} del \textit{Instituto Tecnológico Diez de Noviembre} de Indonesia, poseen una web-cam Logitech C922 con alta definición.
 	
 	En la detección del balón este equipo emplea un método de Patrones de Binarios Locales el cual es un descriptor de texturas que toma como base la transformación de las imágenes a escala de grises, para posteriormente tomar como contorno los cambios de tonalidad, este método representa bajo costo computacional y hace la segmentación más independiente a los cambios de luz. 
-\\
 
-	Como se observó en estos párrafos, existen distintos procedimientos para la detección y localización tridimesional del objeto, las cuales resultan muy prometedoras. No obstante, poco se menciona sobre la detección de objetos en movimiento, y los filtros empleado sólo comprenden modelos estáticos, por lo que esta tesis busca ampliar las fronteras de los algoritmos comunmente empleados. 	 
+	Como se observó en estos párrafos, existen distintos procedimientos para la detección y localización tridimesional del objeto, las cuales resultan muy prometedoras. No obstante, poco se menciona sobre la detección de objetos en movimiento, y los filtros empleado sólo comprenden modelos estáticos, por lo que esta tesis busca ampliar las fronteras de los algoritmos comunmente empleados. \cite{raziichiro}.
